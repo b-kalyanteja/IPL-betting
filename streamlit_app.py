@@ -12,8 +12,6 @@ df_01 = conn.read(worksheet="2026_summary", ttl=1)
 df_02 = conn.read(worksheet="2026_bets",  ttl=1)
 
 if not df_01.empty:
-    st.subheader("💰 Rolling amount ")
-
     # 1. Clean column names
     df_01.columns = [str(c).strip().lower() for c in df_01.columns]
 
@@ -21,7 +19,7 @@ if not df_01.empty:
     if "amount" in df_01.columns:
         df_01["amount"] = pd.to_numeric(df_01["amount"], errors='coerce').fillna(0)
 
-        st.subheader("Wager Summary")
+        st.subheader("💰 Rolling amount ")
         # Identify the user column (usually the first column)
         user_col = df_01.columns[0]
         st.bar_chart(data=df_01, x=user_col, y="amount")
