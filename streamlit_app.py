@@ -8,8 +8,8 @@ conn = st.connection("gsheets", type=GSheetsConnection)
 st.title("🏆 2026 Betting Dashboard")
 
 # --- LOAD DATA ---
-df_01 = conn.read(worksheet="2026_summary")
-df_02 = conn.read(worksheet="2026_bets")
+df_01 = conn.read(worksheet="2026_summary", ttl=1)
+df_02 = conn.read(worksheet="2026_bets",  ttl=1)
 
 if not df_01.empty:
     st.subheader("💰 Rolling amount ")
