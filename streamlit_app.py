@@ -15,7 +15,7 @@ if not df_01.empty:
     st.subheader("💰 Rolling amount ")
 
     # 1. Clean column names
-    df_01.columns = df_01.columns.str.strip()
+    df_01.columns = [str(c).strip().lower() for c in df_01.columns]
 
     # 2. Convert Wager to numbers (so the chart handles it correctly)
     df_01["amount"] = pd.to_numeric(df_01["amount"], errors='coerce').fillna(0)
