@@ -12,8 +12,19 @@ df_01 = conn.read(worksheet="2026_summary")
 df_02 = conn.read(worksheet="2026_bets")
 
 if not df_01.empty:
-    st.subheader("Wager Summary by Team")
-    st.bar_chart(data=df_01, x="Choice", y="Wager")
+    st.subheader("💰 Rolling amount ")
+
+    # 1. Clean column names
+    df_01.columns = df_01.columns.str.strip()
+
+    # 2. Convert Wager to numbers (so the chart handles it correctly)
+    df_01["amount"] = pd.to_numeric(df_01["amount"], errors='coerce').fillna(0)
+
+    # 3. Sort by highest wager
+    df_01 = df_01.sort_values(by="amount", ascending=False)
+
+    # 4. Display chart: X is the User, Y is the Total Amount
+    st.bar_chart(data=df_01, x="User", y="amount")
 else:
     st.info("No data found to graph yet.")
 
