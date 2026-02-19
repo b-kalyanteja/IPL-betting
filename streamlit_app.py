@@ -39,4 +39,3 @@ if st.user.get("is_logged_in"):
 
             st.balloons()
             st.success("Bet saved")
-
