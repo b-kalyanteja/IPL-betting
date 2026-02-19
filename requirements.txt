@@ -2,3 +2,4 @@ streamlit
 st-gsheets-connection==0.1.0
 pandas
 google-api-python-client
+Authlib>=1.3.2
