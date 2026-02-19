@@ -18,13 +18,15 @@ if not df_01.empty:
     df_01.columns = [str(c).strip().lower() for c in df_01.columns]
 
     # 2. Convert Wager to numbers (so the chart handles it correctly)
-    df_01["amount"] = pd.to_numeric(df_01["amount"], errors='coerce').fillna(0)
+    if "amount" in df_01.columns:
+        df_01["amount"] = pd.to_numeric(df_01["amount"], errors='coerce').fillna(0)
 
-    # 3. Sort by highest wager
-    df_01 = df_01.sort_values(by="amount", ascending=False)
-
-    # 4. Display chart: X is the User, Y is the Total Amount
-    st.bar_chart(data=df_01, x="User", y="amount")
+        st.subheader("Wager Summary")
+        # Identify the user column (usually the first column)
+        user_col = df_01.columns[0]
+        st.bar_chart(data=df_01, x=user_col, y="amount")
+    else:
+        st.error(f"Could not find 'amount' column. Found these instead: {list(df_01.columns)}")
 else:
     st.info("No data found to graph yet.")
 
