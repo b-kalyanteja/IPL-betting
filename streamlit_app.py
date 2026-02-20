@@ -45,8 +45,7 @@ else:
     current_email = st.user.get("email")
 
     if current_email not in players:
-        st.error(f"🚫 {current_email} is not authorized to bet.")
-        st.warning("Please logout and use your registered account.")
+        st.error(f" {current_email} is not authorized to bet 🤬🤬.")
 
         if st.button("Log out"):
             st.logout()
