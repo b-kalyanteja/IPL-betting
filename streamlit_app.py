@@ -5,7 +5,7 @@ import time
 import random
 # from utils import players
 
-players = ["b.kalyanteja@gmail.com", "mvr08626@gmail.com", "sravanteja10@gmail.com", "narasimharao416@gmail.com", "jaggu"]
+players = ["b.kalyanteja@gmail.com", "mvr08626@gmail.com", "sravanteja10@gmail.com", "narasimharao416@gmail.com", "jagadeeswarabojja@gmail.com"]
 # CREATE connection to Google sheets
 conn = st.connection("gsheets", type=GSheetsConnection)
 
@@ -43,6 +43,7 @@ else:
         st.write(f" ✅ Active Player: **{current_email}**")
 
         if st.button("Log out"):
+            st.session_state.clear()  # added newly
             st.logout()
             st.rerun()
 
