@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
-from defs.verify_user import verify_user
+from utils.verify_user import verify_user
 
 # CREATE connection to Google sheets
 conn = st.connection("gsheets", type=GSheetsConnection)
