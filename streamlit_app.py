@@ -47,13 +47,14 @@ else:
     current_email = st.user.get("email")
 
     if current_email not in players:
-        st.error(f" {current_email} is not authorized to bet 🤬🤬.")
-        placeholder = st.empty()
+        words = ["పోరా సన్నాసి", "పోరా వెధవ" "మింగేయ్ రా "]
+        word = random.choice(words)
+
+        st.error(f" {word} 🤬🤬 {current_email} is not authorized to bet ")
        # 3. Run the 3-second timer automatically
-        for seconds in range(5, 0, -1):
-            words= ["పోరా సన్నాసి", "పోరా వెధవ" "మింగేయ్ రా "  ]
-            word = random.choice(words)
-            placeholder.metric(f"{word}...", f"{seconds}s")
+        placeholder = st.empty()
+        for seconds in range(10, 0, -1):
+            placeholder.metric(f"loggin off in ", f"{seconds}s")
             time.sleep(0.5)
 
         st.logout()
