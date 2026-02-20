@@ -32,7 +32,7 @@ else:
 
     if current_email not in players:
         st.error(f" పోరా సన్నాసి 🤬🤬 {current_email} is not authorized to bet ")
-        time.sleep(0.5)
+        time.sleep(1)
 
         st.logout()
         st.rerun()
