@@ -1,8 +1,9 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
-from utils import players
+# from utils import players
 
+players = ["b.kalyanteja@gmail.com", "mvr08626@gmail.com", "sravanteja10@gmail.com", "narasimharao416@gmail.com", "jaggu"]
 # CREATE connection to Google sheets
 conn = st.connection("gsheets", type=GSheetsConnection)
 
@@ -44,7 +45,6 @@ else:
     current_email = st.user.get("email")
 
     if current_email not in players:
-        # STATE 2: Logged in but NOT in the list
         st.error(f"🚫 {current_email} is not authorized to bet.")
         st.warning("Please logout and use your registered account.")
 
