@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
+from defs.verify_user import verify_user
 
 # CREATE connection to Google sheets
 conn = st.connection("gsheets", type=GSheetsConnection)
@@ -40,13 +41,14 @@ if not st.user.get("is_logged_in"):
         st.login("google")
 
 else:
-   st.write(f"Logged in as: **{st.user.email}**")
+    verify_user.(st.user.email)
+    st.write(f"Logged in as: **{st.user.email}**")
 
-   if st.button("Log out"):
+    if st.button("Log out"):
         st.logout()
         st.rerun()
 
-   with st.form("betting_form"):
+    with st.form("betting_form"):
        choice = st.selectbox("Pick your team:", ["CSK", "MI"])
        amount = st.number_input("bet Amount (Zl)", min_value=5, step=1, max_value=10)
        submit = st.form_submit_button("Lock Bet 🔒")
