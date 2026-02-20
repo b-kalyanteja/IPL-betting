@@ -39,31 +39,33 @@ if not st.user.get("is_logged_in"):
     if st.button("Log in with Google"):
         st.login("google")
 else:
-    # Get the email safely from the st.user object
     current_email = st.user.get("email")
 
     if current_email:
-        # Pass the email variable, NOT st.email
-        verify_user(current_email)
+        if verify_user(current_email):
+            st.write(f"Logged in as: **{current_email}**")
 
-        st.write(f"Logged in as: **{current_email}**")
-
-        if st.button("Log out"):
-            st.logout()
-            st.rerun()
-
-        with st.form("betting_form"):
-            choice = st.selectbox("Pick your team:", ["CSK", "MI"])
-            amount = st.number_input("Bet Amount (Zl)", min_value=5, step=1, max_value=10)
-
-            # This must be the form submit button
-            submit = st.form_submit_button("Lock Bet 🔒")
-
-            if submit:
-                new_bet = pd.DataFrame([{"Email": current_email, "Choice": choice, "Wager": amount}])
-                updated_df = pd.concat([df_02, new_bet], ignore_index=True)
-                conn.update(worksheet="2026_bets", data=updated_df)
-
-                st.balloons()
-                st.success("Bet saved!")
+            if st.button("Log out"):
+                st.logout()
                 st.rerun()
+
+            with st.form("betting_form"):
+                choice = st.selectbox("Pick your team:", ["CSK", "MI"])
+                amount = st.number_input("Bet Amount (Zl)", min_value=5, step=1, max_value=10)
+                submit = st.form_submit_button("Lock Bet 🔒")
+
+                if submit:
+                    new_bet = pd.DataFrame([{"Email": current_email, "Choice": choice, "Wager": amount}])
+                    updated_df = pd.concat([df_02, new_bet], ignore_index=True)
+                    conn.update(worksheet="2026_bets", data=updated_df)
+
+                    st.balloons()
+                    st.success("Bet saved!")
+                    st.rerun()
+        else:
+            # Handle logged-in but unauthorized users
+            st.warning(f"The email **{current_email}** is not registered.")
+            if st.button("Log out"):
+                st.logout()
+                st.rerun()
+            st.stop()
