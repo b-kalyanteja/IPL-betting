@@ -41,7 +41,7 @@ if not st.user.get("is_logged_in"):
         st.login("google")
 
 else:
-    verify_user.(st.user.email)
+    verify_user(st.user.email)
     st.write(f"Logged in as: **{st.user.email}**")
 
     if st.button("Log out"):
