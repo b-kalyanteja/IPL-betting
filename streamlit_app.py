@@ -23,8 +23,7 @@ st.divider()
 # --- 2. LOGIN LOGIC  PRIVATE SESSION ---
 if not st.user.get("is_logged_in"):
     # STATE 1: Not Logged In
-    st.subheader("📍 Place Your Bet")
-    st.info("Log in to join the action!")
+    st.info("📍 Log in to place your bet!")
     if st.button("Log in with Google"):
         st.login("google")
 
