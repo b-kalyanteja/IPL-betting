@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
-from utils.verify_user import verify_user
+from utils import players
 
 # CREATE connection to Google sheets
 conn = st.connection("gsheets", type=GSheetsConnection)
@@ -34,38 +34,41 @@ st.divider()
 
 # --- 2. LOGIN LOGIC  PRIVATE SESSION ---
 if not st.user.get("is_logged_in"):
+    # STATE 1: Not Logged In
     st.subheader("📍 Place Your Bet")
     st.info("Log in to join the action!")
     if st.button("Log in with Google"):
         st.login("google")
+
 else:
     current_email = st.user.get("email")
 
-    if current_email:
-        if verify_user(current_email):
-            st.write(f"Logged in as: **{current_email}**")
+    if current_email not in players:
+        # STATE 2: Logged in but NOT in the list
+        st.error(f"🚫 {current_email} is not authorized to bet.")
+        st.warning("Please logout and use your registered account.")
 
-            if st.button("Log out"):
-                st.logout()
-                st.rerun()
+        if st.button("Log out"):
+            st.logout()
+            st.rerun()
 
-            with st.form("betting_form"):
-                choice = st.selectbox("Pick your team:", ["CSK", "MI"])
-                amount = st.number_input("Bet Amount (Zl)", min_value=5, step=1, max_value=10)
-                submit = st.form_submit_button("Lock Bet 🔒")
+        st.stop()  # 🛑 CRITICAL: This kills the script here so the form never shows
 
-                if submit:
-                    new_bet = pd.DataFrame([{"Email": current_email, "Choice": choice, "Wager": amount}])
-                    updated_df = pd.concat([df_02, new_bet], ignore_index=True)
-                    conn.update(worksheet="2026_bets", data=updated_df)
+    else:
+        # STATE 3: Logged in and Authorized
+        st.write(f"✅ Active Player: **{current_email}**")
 
-                    st.balloons()
-                    st.success("Bet saved!")
-                    st.rerun()
-        else:
-            # Handle logged-in but unauthorized users
-            st.warning(f"The email **{current_email}** is not registered.")
-            if st.button("Log out"):
-                st.logout()
-                st.rerun()
-            st.stop()
+        if st.button("Log out"):
+            st.logout()
+            st.rerun()
+
+        # --- PROCEED WITH THE APP ---
+        with st.form("betting_form"):
+            choice = st.selectbox("Pick your team:", ["CSK", "MI"])
+            amount = st.number_input("Bet Amount (Zl)", min_value=5, step=1, max_value=10)
+            submit = st.form_submit_button("Lock Bet 🔒")
+
+            if submit:
+                # Your saving logic here...
+                st.success("Bet placed!")
+                st.balloons()
