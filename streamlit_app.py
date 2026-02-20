@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import time
+import random
 # from utils import players
 
 players = ["b.kalyanteja@gmail.com", "mvr08626@gmail.com", "sravanteja10@gmail.com", "narasimharao416@gmail.com", "jaggu"]
@@ -49,8 +50,10 @@ else:
         st.error(f" {current_email} is not authorized to bet 🤬🤬.")
         placeholder = st.empty()
        # 3. Run the 3-second timer automatically
-        for seconds in range(3, 0, -1):
-            placeholder.metric("FUCK off !!...", f"{seconds}s")
+        for seconds in range(5, 0, -1):
+            words= ["పోరా సన్నాసి", "పోరా వెధవ" "మింగేయ్ రా "  ]
+            word = random.choice(words)
+            placeholder.metric(f"{word}...", f"{seconds}s")
             time.sleep(0.5)
 
         st.logout()
