@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
+import time
 # from utils import players
 
 players = ["b.kalyanteja@gmail.com", "mvr08626@gmail.com", "sravanteja10@gmail.com", "narasimharao416@gmail.com", "jaggu"]
@@ -46,16 +47,19 @@ else:
 
     if current_email not in players:
         st.error(f" {current_email} is not authorized to bet 🤬🤬.")
+        placeholder = st.empty()
+       # 3. Run the 3-second timer automatically
+        for seconds in range(3, 0, -1):
+            placeholder.metric("FUCK off !!...", f"{seconds}s")
+            time.sleep(0.5)
 
-        if st.button("Log out"):
-            st.logout()
-            st.rerun()
-
-        st.stop()  # 🛑 CRITICAL: This kills the script here so the form never shows
+        st.logout()
+        st.rerun()
+        st.stop()  #  CRITICAL: This kills the script here so the form never shows
 
     else:
         # STATE 3: Logged in and Authorized
-        st.write(f"✅ Active Player: **{current_email}**")
+        st.write(f" ✅ Active Player: **{current_email}**")
 
         if st.button("Log out"):
             st.logout()
