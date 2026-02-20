@@ -15,22 +15,7 @@ st.title("🏆 2026 Betting Dashboard")
 df_01 = conn.read(worksheet="2026_summary", ttl=1)
 df_02 = conn.read(worksheet="2026_bets",  ttl=1)
 
-if not df_01.empty:
-    # 1. Clean column names
-    df_01.columns = [str(c).strip().lower() for c in df_01.columns]
 
-    # 2. Convert Wager to numbers (so the chart handles it correctly)
-    if "amount" in df_01.columns:
-        df_01["amount"] = pd.to_numeric(df_01["amount"], errors='coerce').fillna(0)
-
-        st.subheader("💰 Rolling amount ")
-        # Identify the user column (usually the first column)
-        user_col = df_01.columns[0]
-        st.bar_chart(data=df_01, x=user_col, y="amount")
-    else:
-        st.error(f"Could not find 'amount' column. Found these instead: {list(df_01.columns)}")
-else:
-    st.info("No data found to graph yet.")
 
 
 st.divider()
@@ -47,15 +32,8 @@ else:
     current_email = st.user.get("email")
 
     if current_email not in players:
-        words = ["పోరా సన్నాసి", "పోరా వెధవ" "మింగేయ్ రా "]
-        word = random.choice(words)
-
-        st.error(f" {word} 🤬🤬 {current_email} is not authorized to bet ")
-       # 3. Run the 3-second timer automatically
-        placeholder = st.empty()
-        for seconds in range(10, 0, -1):
-            placeholder.metric(f"loggin off in ", f"{seconds}s")
-            time.sleep(0.5)
+        st.error(f" పోరా సన్నాసి 🤬🤬 {current_email} is not authorized to bet ")
+        time.sleep(0.5)
 
         st.logout()
         st.rerun()
@@ -79,3 +57,22 @@ else:
                 # Your saving logic here...
                 st.success("Bet placed!")
                 st.balloons()
+
+st.divider()
+
+if not df_01.empty:
+    # 1. Clean column names
+    df_01.columns = [str(c).strip().lower() for c in df_01.columns]
+
+    # 2. Convert Wager to numbers (so the chart handles it correctly)
+    if "amount" in df_01.columns:
+        df_01["amount"] = pd.to_numeric(df_01["amount"], errors='coerce').fillna(0)
+
+        st.subheader("💰 Rolling amount ")
+        # Identify the user column (usually the first column)
+        user_col = df_01.columns[0]
+        st.bar_chart(data=df_01, x=user_col, y="amount")
+    else:
+        st.error(f"Could not find 'amount' column. Found these instead: {list(df_01.columns)}")
+else:
+    st.info("No data found to graph yet.")
