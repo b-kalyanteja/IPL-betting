@@ -5,7 +5,7 @@ import time
 import random
 # from utils import players
 
-players = ["b.kalyanteja@gmail.com", "mvr08626@gmail.com", "sravanteja10@gmail.com", "narasimharao416@gmail.com", "jagadeeswarabojja@gmail.com"]
+players = ["b.kalyanteja@gmail.com", "mvr08626@gmail.com", "sravanteja10@gmail.com", "narasimharao416@gmail.com", "jagadeeswarabojja@gmail.com", "gbmkrishnayadav@gmail.com"]
 # CREATE connection to Google sheets
 conn = st.connection("gsheets", type=GSheetsConnection)
 
