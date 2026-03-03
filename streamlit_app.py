@@ -3,7 +3,7 @@ from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import time
 
-from utils.sheets_data import df_02
+from utils.sheets_data import df_02, df_07, df_05
 
 from utils.betting_form import betting_manager
 import random
