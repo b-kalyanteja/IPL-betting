@@ -46,7 +46,7 @@ def match_bet(match_id, team_1, team_2, current_email, connection):
             st.rerun()
 
 
-def betting_manager(current_email, df_07, df_05, connection):
+def betting_manager(current_email, df_07, connection):
     # check latest match & how many matches per day
 
     # 1. Get Today's Date in same format as Excel (adjust format if needed)

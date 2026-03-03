@@ -10,8 +10,6 @@ from utils.betting_form import betting_manager
 import random
 
 
-#players = ["b.kalyanteja@gmail.com", "mvr08626@gmail.com", "sravanteja10@gmail.com", "narasimharao416@gmail.com", "jagadeeswarabojja@gmail.com", "gbmkrishnayadav@gmail.com"]
-
 # CREATE connection to Google sheets
 conn = st.connection("gsheets", type=GSheetsConnection)
 
@@ -60,7 +58,7 @@ else:
             st.rerun()
 
         # --- PROCEED WITH THE APP ---
-        betting_manager(current_email, df_07, df_05, conn)
+        betting_manager(current_email, df_07, conn)
 
 st.divider()
 
