@@ -33,12 +33,16 @@ def match_bet(match_id, team_1, team_2, current_email, connection):
                 "player": player_map.get(current_email)
             }])
 
-            updated_log = pd.concat([df_05, new_row], ignore_index=True)
+            # 3. CONCAT: Add the new row to the FRESHLY fetched data
+            fresh_df_05 = connection.read(worksheet="2026_bets_log")
+            updated_log = pd.concat([fresh_df_05, new_row], ignore_index=True)
+
 
             # 3. Push back to Google Sheets
             connection.update(worksheet="2026_bets_log", data=updated_log)
             st.balloons()
             time.sleep(1)
+            st.cache_data.clear()
             st.rerun()
 
 
