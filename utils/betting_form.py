@@ -13,11 +13,11 @@ from utils.sheets_data import df_04,df_05, df_07
 
 
 
-def match_bet(match_id, team1, team2, current_email, connection):
+def match_bet(match_id, team_1, team_2, current_email, connection):
     # Passing the team & match id
     with st.form(key=f"form_{match_id}", clear_on_submit=True):
-        st.subheader(f"🏏 upper.{team1} vs upper.{team2}")
-        choice = st.radio("choose your side", [team1, team2], horizontal=True)
+        st.subheader(f"🏏 upper.{team_1} vs upper.{team_2}")
+        choice = st.radio("choose your side", [team_1, team_2], horizontal=True)
         amount = st.number_input(f"Bet Amount (Zl)", min_value=5, max_value=10, step=1)
 
         submit = st.form_submit_button("Lock Bet 🔒")
@@ -62,4 +62,4 @@ def betting_manager(current_email, df_07, df_05, connection):
 
     for i, (_, match) in enumerate(upcoming.iterrows()):
         with cols[i]:
-            match_bet(match['match_id'], match['team_1'], match['team_2'], current_email, df_05, connection)
+            match_bet(match_id=['match_id'],team_1= match['team_1'],team_2= match['team_2'],current_email= current_email,  connection= connection)
