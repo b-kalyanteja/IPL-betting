@@ -2,15 +2,14 @@ import pandas as pd
 import streamlit as st
 import time
 from datetime import datetime
-from players import player_map
-from sheets_data import df_04,df_05, df_07
+from utils.players import player_map
+from utils.sheets_data import df_04,df_05, df_07
 
-'''
-df_07 = schedule of matches
-df_05 =  transactions log
-df_06 = 
 
-'''
+#df_07 = schedule of matches
+#df_05 =  transactions log
+#df_06 =
+
 
 
 def match_bet(match_id, team1, team2, current_email, connection):
