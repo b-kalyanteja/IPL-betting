@@ -62,4 +62,4 @@ def betting_manager(current_email, df_07, df_05, connection):
 
     for i, (_, match) in enumerate(upcoming.iterrows()):
         with cols[i]:
-            match_bet(match_id=['match_id'],team_1= match['team_1'],team_2= match['team_2'],current_email= current_email,  connection= connection)
+            match_bet(match_id=match['match_id'],team_1= match['team_1'],team_2= match['team_2'],current_email= current_email,  connection= connection)
