@@ -58,7 +58,7 @@ else:
             st.rerun()
 
         # --- PROCEED WITH THE APP ---
-        betting_form(current_email, df_02, conn)
+        betting_form(current_email, df_07, df_05, conn)
 
 st.divider()
 
