@@ -3,13 +3,15 @@ from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import time
 
+from utils.players import player_map
 from utils.sheets_data import df_02, df_07, df_05
-
 from utils.betting_form import betting_manager
-import random
-# from utils import players
 
-players = ["b.kalyanteja@gmail.com", "mvr08626@gmail.com", "sravanteja10@gmail.com", "narasimharao416@gmail.com", "jagadeeswarabojja@gmail.com", "gbmkrishnayadav@gmail.com"]
+import random
+
+
+#players = ["b.kalyanteja@gmail.com", "mvr08626@gmail.com", "sravanteja10@gmail.com", "narasimharao416@gmail.com", "jagadeeswarabojja@gmail.com", "gbmkrishnayadav@gmail.com"]
+
 # CREATE connection to Google sheets
 conn = st.connection("gsheets", type=GSheetsConnection)
 
@@ -40,7 +42,7 @@ if not st.user.get("is_logged_in"):
 else:
     current_email = st.user.get("email")
 
-    if current_email not in players:
+    if current_email not in player_map.keys():
         st.error(f" పోరా సన్నాసి 🤬🤬 {current_email} is not authorized to bet ")
         time.sleep(1)
 

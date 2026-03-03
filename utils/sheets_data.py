@@ -15,12 +15,6 @@ df_07 = conn.read(worksheet="2026_schedule", ttl=1)
 df_08 = conn.read(worksheet="2026_status", ttl=1)
 
 
-PLAYERS_MAP = {
-    "b.kalyanteja@gmail.com": "Kalyan",
-    "jaggu.bet@gmail.com": "Jaggu",
-    "subba.pro@gmail.com": "Subba"
-}
-
 #TODO
 #shorten the list by using dictionary
 
