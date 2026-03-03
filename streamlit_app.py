@@ -5,7 +5,7 @@ import time
 
 from utils.sheets_data import df_02
 
-from utils import betting_form
+from utils.betting_form import betting_manager
 import random
 # from utils import players
 
@@ -58,7 +58,7 @@ else:
             st.rerun()
 
         # --- PROCEED WITH THE APP ---
-        betting_form(current_email, df_07, df_05, conn)
+        betting_manager(current_email, df_07, df_05, conn)
 
 st.divider()
 
