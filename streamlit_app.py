@@ -2,6 +2,10 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import time
+
+from utils.sheets_data import df_02
+
+from utils import betting_form
 import random
 # from utils import players
 
@@ -11,11 +15,17 @@ conn = st.connection("gsheets", type=GSheetsConnection)
 
 st.title("🏆 2026 Betting Dashboard")
 
-# --- LOAD DATA ---
-df_01 = conn.read(worksheet="2026_summary", ttl=1)
-df_02 = conn.read(worksheet="2026_bets",  ttl=1)
 
 
+st.divider()
+
+if not st.user.get("is_logged_in"):
+    # STATE 1: Not Logged In
+    st.info("Predictor's Dashboard")
+    if st.button("Log in with Google"):
+        st.login("google")
+else:
+    current_email = st.user.get("email")
 
 
 st.divider()
@@ -48,15 +58,7 @@ else:
             st.rerun()
 
         # --- PROCEED WITH THE APP ---
-        with st.form("betting_form"):
-            choice = st.selectbox("Pick your team:", ["CSK", "MI"])
-            amount = st.number_input("Bet Amount (Zl)", min_value=5, step=1, max_value=10)
-            submit = st.form_submit_button("Lock Bet 🔒")
-
-            if submit:
-                # Your saving logic here...
-                st.success("Bet placed!")
-                st.balloons()
+        betting_form(current_email, df_02, conn)
 
 st.divider()
 
