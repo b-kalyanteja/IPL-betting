@@ -6,6 +6,7 @@ from utils.players import player_map
 from utils.sheets_data import df_04,df_05, df_07
 
 
+
 #df_07 = schedule of matches
 #df_05 =  transactions log
 #df_06 =
@@ -49,7 +50,8 @@ def betting_manager(current_email, df_07, df_05, connection):
 
     # 2. Filter for matches TODAY that don't have a result yet
     # We sort by match_time to get the early match first
-    upcoming = df_07[(df_07['match_date'] == today) &(df_07['result'].isna())].sort_values('match_time')
+    to_day = pd.Timestamp.now().strftime("%d-%m-%Y")
+    upcoming = df_07[(df_07['match_date'] == to_day) &(df_07['result'].isna())].sort_values('match_time')
 
     if upcoming.empty:
         st.info("📅 No matches scheduled for today!")
