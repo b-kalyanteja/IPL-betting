@@ -16,7 +16,7 @@ from utils.sheets_data import df_04,df_05, df_07
 def match_bet(match_id, team_1, team_2, current_email, connection):
     # Passing the team & match id
     with st.form(key=f"form_{match_id}", clear_on_submit=True):
-        st.subheader(f"🏏 {team_1.upper()} vs upper.{team_2.upper()}")
+        st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
         choice = st.radio("choose your side", [team_1, team_2], horizontal=True)
         amount = st.number_input(f"Bet Amount (Zl)", min_value=5, max_value=10, step=1)
 
