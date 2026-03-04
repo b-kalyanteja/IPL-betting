@@ -17,7 +17,8 @@ conn = st.connection("gsheets", type=GSheetsConnection)
 st.set_page_config(
     page_title="IPL 2026 Bets",
     page_icon="🏏",
-    layout="wide" # This makes your graphs look better on desktop
+    layout="wide",
+    initial_sidebar_state="collapsed"
 )
 
 st.title("🏆 IPL 2026 Bets")
