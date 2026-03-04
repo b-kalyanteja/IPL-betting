@@ -30,6 +30,6 @@ def hall_of_fame(img_file_name, percent_2026, values_2026):
 
 def predictor_stats():
 
-    prediction_results= df_04.iloc[0:77, 7]
+    prediction_results= df_04.iloc[0:77, 7].astype(str)
     r_list: list = prediction_results.tolist()
     st.write(r_list)
