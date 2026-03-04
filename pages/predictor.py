@@ -1,10 +1,10 @@
 import streamlit as st
-from utils.predictor_hall_of_fame import hall_of_fame
+from utils.predictor_hall_of_fame import hall_of_fame, predictor_stats
 from utils.prediction import values_2026, percent_2026
 
 
 st.set_page_config(
-    page_title="about",
+    page_title="predictor",
     page_icon="🧞‍♂️",
     layout="wide" # This makes your graphs look better on desktop
 )
