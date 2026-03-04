@@ -5,7 +5,7 @@ import os
 
 st.set_page_config(
     page_title="about",
-    page_icon="📝",
+    page_icon="🧞‍♂️",
     layout="wide" # This makes your graphs look better on desktop
 )
 
@@ -16,10 +16,13 @@ st.title("🧞‍♂️ Predictor's Dashboard")
 def hall_of_fame():
     st.divider()
 
+    current_dir = os.path.dirname(__file__)
+    img_path = os.path.join(current_dir,".." "img", "predictor.png")
+
     col1, col2 = st.columns([1, 2])
     with col1:
         # Add your photo or a cool avatar
-        st.image("img/predictor.png", width=200)
+        st.image("img_path", width=200)
 
     with col2:
         st.markdown("### 📅 2024 Season")
