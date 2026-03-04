@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.predictor_hall_of_fame import hall_of_fame, predictor_stats
+from utils.predictor_hall_of_fame import hall_of_fame #predictor_stats
 from utils.prediction import values_2026, percent_2026
 
 from utils.sheets_data import df_07
@@ -19,6 +19,7 @@ hall_of_fame(img_file_name="predictor.png", percent_2026=percent_2026, values_20
 st.divider()
 
 #predictor_stats()
+
 def predictor_statsss():
 
     prediction_results= df_07.iloc[0:77, 7]
