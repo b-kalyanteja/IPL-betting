@@ -1,5 +1,14 @@
-print ("hello")
+import streamlit as st
 
+st.set_page_config(
+    page_title="about",
+    page_icon="📝",
+    layout="wide" # This makes your graphs look better on desktop
+)
+
+st.title("🏆 about the bettings")
+
+st.divider()
 
 def show_about_page():
     st.title("👨‍💻 The Brain Behind the Bets")
@@ -26,3 +35,5 @@ def show_about_page():
         """)
 
     st.info("💡 Found a bug? Don't texll me. Just bet better.")
+
+show_about_page()
