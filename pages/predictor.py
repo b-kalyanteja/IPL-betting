@@ -1,5 +1,6 @@
 import streamlit as st
 from utils.prediction import values_2026, percent_2026
+import os
 
 
 st.set_page_config(
