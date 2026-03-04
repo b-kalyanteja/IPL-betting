@@ -1,6 +1,6 @@
 import streamlit as st
+from utils.predictor_hall_of_fame import hall_of_fame
 from utils.prediction import values_2026, percent_2026
-from pathlib import Path
 
 
 st.set_page_config(
@@ -12,32 +12,13 @@ st.set_page_config(
 st.title("🧞‍♂️ Predictor's Dashboard")
 
 
+hall_of_fame(img_file_name="predictor.png", percent_2026=percent_2026, values_2026=values_2026)
 
-def hall_of_fame():
-    st.divider()
+st.divider()
 
-    root_path = Path(__file__).parent.parent
-    img_path = root_path / "img" / "predictor.png"
+predictor_stats()
 
-    col1, col2 = st.columns([1, 2])
-    with col1:
-        # Add your photo or a cool avatar
-        st.image(img_path, width=200)
-
-    with col2:
-        st.markdown("### 📅 2024 Season : 84.6%")
-        st.write("🟢🟢🟢🟢🦜🟢🦜🟢🟢🟢🟢🟢🟢")
-
-        st.markdown("### 📅 2025 Season 38.1%")
-        st.write("🦜🦜🦜🦜🟢🦜🦜🦜🦜🦜🟢🦜🦜🟢🟢🦜🦜🟢🟢🟢🟢")
-
-        st.markdown(f"### 📅 2026 Season : {percent_2026}")
-        st.write(values_2026)
-
-    st.divider()
-
-hall_of_fame()
-
+st.divider()
 
 if not st.user.get("is_logged_in"):
     # STATE 1: Not Logged In
