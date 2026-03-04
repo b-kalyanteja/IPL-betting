@@ -1,6 +1,7 @@
 import streamlit as st
 from pathlib import Path
-from utils.sheets_data import df_04
+from streamlit_gsheets import GSheetsConnection
+
 
 
 def hall_of_fame(img_file_name, percent_2026, values_2026):
@@ -29,6 +30,8 @@ def hall_of_fame(img_file_name, percent_2026, values_2026):
 
 
 def predictor_stats():
-
+    # Establish connection
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    df_04 = conn.read(worksheet="2026_bets_raw", ttl=0)
     prediction_list = df_04.iloc[0:77, 7].astype(str).tolist()
     st.write(prediction_list)
