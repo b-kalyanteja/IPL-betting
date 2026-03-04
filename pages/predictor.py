@@ -5,7 +5,7 @@ from utils.sheets_data import df_04
 
 
 st.set_page_config(
-    page_title="predictor",
+    page_title="🧞‍predictor stats",
     page_icon="🧞‍♂️",
     layout="wide" # This makes your graphs look better on desktop
 )
