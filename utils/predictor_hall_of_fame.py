@@ -1,5 +1,3 @@
-from itertools import count
-
 import streamlit as st
 from pathlib import Path
 from streamlit_gsheets import GSheetsConnection
