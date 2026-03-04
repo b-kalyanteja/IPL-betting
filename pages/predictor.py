@@ -1,6 +1,7 @@
 import streamlit as st
 from utils.prediction import values_2026, percent_2026
 import os
+from pathlib import Path
 
 
 st.set_page_config(
@@ -16,8 +17,11 @@ st.title("🧞‍♂️ Predictor's Dashboard")
 def hall_of_fame():
     st.divider()
 
-    current_dir = os.path.dirname(__file__)
-    img_path = os.path.join(current_dir,".." "img", "predictor.png")
+    #current_dir = os.path.dirname(__file__)
+    #img_path = os.path.join(current_dir, "img", "predictor.png")
+
+    root_path = Path(__file__).parent.parent
+    img_path = root_path / "img" / "predictor.png"
 
     col1, col2 = st.columns([1, 2])
     with col1:
