@@ -21,7 +21,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-st.title("🏆 IPL 2026 Bets")
+st.title("🏆 IPL'26 Bets")
 
 st.divider()
 
