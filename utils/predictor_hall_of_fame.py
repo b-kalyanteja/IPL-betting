@@ -19,7 +19,9 @@ def predictor_stats():
 
     ttl_w = prediction_results.count('w')
     ttl_a: int = len(prediction_results)
-    percent_2026 = ((ttl_w /ttl_a) * 100) if ttl_a > 0 else 0
+    percent_ = ((ttl_w /ttl_a) * 100) if ttl_a > 0 else 0
+    percent_2026 = f"{percent_:.1f}%"
+
     return values_2026, percent_2026
 
 
