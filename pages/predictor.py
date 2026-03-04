@@ -22,7 +22,7 @@ def hall_of_fame():
     col1, col2 = st.columns([1, 2])
     with col1:
         # Add your photo or a cool avatar
-        st.image("img_path", width=200)
+        st.image(img_path, width=200)
 
     with col2:
         st.markdown("### 📅 2024 Season")
