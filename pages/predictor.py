@@ -1,6 +1,5 @@
 import streamlit as st
 from utils.prediction import values_2026, percent_2026
-import os
 from pathlib import Path
 
 
@@ -17,9 +16,6 @@ st.title("🧞‍♂️ Predictor's Dashboard")
 def hall_of_fame():
     st.divider()
 
-    #current_dir = os.path.dirname(__file__)
-    #img_path = os.path.join(current_dir, "img", "predictor.png")
-
     root_path = Path(__file__).parent.parent
     img_path = root_path / "img" / "predictor.png"
 
@@ -29,17 +25,14 @@ def hall_of_fame():
         st.image(img_path, width=200)
 
     with col2:
-        st.markdown("### 📅 2024 Season")
+        st.markdown("### 📅 2024 Season : 84.6%")
         st.write("🟢🟢🟢🟢🦜🟢🦜🟢🟢🟢🟢🟢🟢")
-        st.metric(label="Win Percentage", value="84.6%")
 
-        st.markdown("### 📅 2025 Season")
+        st.markdown("### 📅 2025 Season 38.1%")
         st.write("🦜🦜🦜🦜🟢🦜🦜🦜🦜🦜🟢🦜🦜🟢🟢🦜🦜🟢🟢🟢🟢")
-        st.metric(label="Win Percentage", value="38.1%")
 
-        st.markdown("### 📅 2026 Season")
+        st.markdown(f"### 📅 2026 Season : {percent_2026}")
         st.write(values_2026)
-        st.metric(label="Win Percentage", value= percent_2026)
 
     st.divider()
 
