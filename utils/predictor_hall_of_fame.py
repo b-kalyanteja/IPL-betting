@@ -1,11 +1,37 @@
+from itertools import count
+
 import streamlit as st
 from pathlib import Path
 from streamlit_gsheets import GSheetsConnection
 
 
+def predictor_stats():
+
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    df_04 = conn.read(worksheet="2026_bets_raw", ttl=0)
+
+    prediction_results = [
+        str(x).strip().lower()
+        for x in df_04.iloc[0:77, 7].tolist()
+        if str(x).strip().lower() in ['w', 'l', 'd']
+    ]
+
+    values_2026 = "".join(
+        ["🟢" if x == 'w' else "🦜" if x == 'l' else "⚠️" for x in prediction_results if x in ['w', 'l', 'd']])
+
+    ttl_w = prediction_results.count('w')
+
+    ttl_a: int = len(prediction_results)
+
+    percent_2026 = ((ttl_w /ttl_a) * 100) if ttl_a > 0 else 0
+
+    return values_2026, percent_2026
+
 
 def hall_of_fame(img_file_name, percent_2026, values_2026):
     st.divider()
+
+    values_2026, percent_2026 = predictor_stats()
 
     root_path = Path(__file__).parent.parent
     img_path = root_path / "img" / img_file_name
@@ -29,9 +55,3 @@ def hall_of_fame(img_file_name, percent_2026, values_2026):
 
 
 
-def predictor_stats():
-    # Establish connection
-    conn = st.connection("gsheets", type=GSheetsConnection)
-    df_04 = conn.read(worksheet="2026_bets_raw", ttl=0)
-    prediction_list = df_04.iloc[0:77, 7].astype(str).tolist()
-    st.write(prediction_list)

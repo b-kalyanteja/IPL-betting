@@ -16,19 +16,6 @@ st.title("🧞‍♂️ Predictor's Dashboard")
 
 hall_of_fame(img_file_name="predictor.png", percent_2026=percent_2026, values_2026=values_2026)
 
-st.divider()
-
-predictor_stats()
-
-# def predictor_statsss():
-#
-#     prediction_results= df_04.iloc[0:77, 7]
-#     r_list: list = prediction_results.tolist()
-#     st.write(r_list)
-#
-# predictor_statsss()
-
-st.divider()
 
 if not st.user.get("is_logged_in"):
     # STATE 1: Not Logged In
