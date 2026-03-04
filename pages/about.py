@@ -8,15 +8,14 @@ st.set_page_config(
 
 st.title("🎰 Behind Scenes")
 
-st.divider()
-
 def about_page():
 
-    col1, col2 = st.columns([1, 2])
+    st.divider()
 
+    col1, col2 = st.columns([1, 2])
     with col1:
         # Add your photo or a cool avatar
-        st.image("https://api.dicebear.com/7.x/bottts/svg?seed=Kalyan", width=100)
+        st.image("https://api.dicebear.com/7.x/bottts/svg?seed=Kalyan", width=200)
 
     with col2:
         st.markdown("""
@@ -32,6 +31,7 @@ def about_page():
 
         **Tech Stack:** Python, Streamlit, G-sheets, GCP-API
         """)
+    st.divider()
 
     st.info("Found a bug 🐞 ? Too late to inform.")
 
