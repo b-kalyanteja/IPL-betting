@@ -18,15 +18,12 @@ def predictor_stats():
         ["🟢" if x == 'w' else "🦜" if x == 'l' else "⚠️" for x in prediction_results if x in ['w', 'l', 'd']])
 
     ttl_w = prediction_results.count('w')
-
     ttl_a: int = len(prediction_results)
-
     percent_2026 = ((ttl_w /ttl_a) * 100) if ttl_a > 0 else 0
-
     return values_2026, percent_2026
 
 
-def hall_of_fame(img_file_name, percent_2026, values_2026):
+def hall_of_fame(img_file_name):
     st.divider()
 
     values_2026, percent_2026 = predictor_stats()

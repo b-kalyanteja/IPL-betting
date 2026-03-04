@@ -13,7 +13,7 @@ st.set_page_config(
 st.title("🧞‍♂️ Predictor's Dashboard")
 
 
-hall_of_fame(img_file_name="predictor.png", percent_2026=percent_2026, values_2026=values_2026)
+hall_of_fame(img_file_name="predictor.png")
 
 
 if not st.user.get("is_logged_in"):
