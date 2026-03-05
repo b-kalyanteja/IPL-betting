@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import time
-from utils.match_display import match_widget
+from utils.match_display import display_matches
 
 # PREDICTION columns ()
 
