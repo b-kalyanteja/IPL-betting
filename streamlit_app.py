@@ -37,16 +37,34 @@ st.write("Player's Performance")
 
 sheet_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT-m3xGBp4kDPQgG4-ZzockJy3E--gqPEFJGTtonfdfDX9Juuga0O0UPxTCUUPLmiNX_Op8kkEH0G_j/pubhtml?gid=642106326&single=true&widget=true&headers=false"
 
-st.write("### 📊 Live Schedule / Data Preview")
+# Using Streamlit columns to center the content
+col1, col2, col3 = st.columns([1, 8, 1])
 
-# Display the iframe
-components.iframe(sheet_url, height=600, scrolling=True)
-
-
+with col2:
+    st.markdown("##### 📅 Schedule & Points Table")
+    components.html(f"""
+        <div style="
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            width: 100%;
+            border: 1px solid #333; 
+            border-radius: 15px; 
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        ">
+            <iframe src="{sheet_url}" 
+                    width="100%" 
+                    height="400" 
+                    style="border: none;" 
+                    scrolling="yes">
+            </iframe>
+        </div>
+    """, height=420)
 
 
 components.html(f"""
-    <div style="width: 100%; overflow: hidden; border-radius: 15px; border: 1px solid #333;">
+    <div style="width: 80%; overflow: hidden; border-radius: 15px; border: 1px solid #333;">
         <iframe src="{sheet_url}" 
                 width="100%" 
                 height="600" 
