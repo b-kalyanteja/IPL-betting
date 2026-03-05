@@ -13,6 +13,7 @@ df_05 = conn.read(worksheet="2026_bets_log", ttl=1)
 df_06 = conn.read(worksheet="2026_prediction", ttl=1)
 df_07 = conn.read(worksheet="2026_schedule", ttl=1)
 df_08 = conn.read(worksheet="2026_status", ttl=1)
+df_09 = conn.read(worksheet="2026_today", ttl=1)
 
 
 #TODO

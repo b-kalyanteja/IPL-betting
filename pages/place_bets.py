@@ -7,14 +7,13 @@ from utils.players import player_map
 from utils.sheets_data import df_02, df_07, df_05
 from utils.betting_form import betting_manager
 
+st.set_page_config(
+    page_title="🎰 Place Bets",
+    page_icon=" 🎰",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 
-if not st.user.get("is_logged_in"):
-    # STATE 1: Not Logged In
-    st.info("Login to place bets")
-    if st.button("Log in with Google 🌐"):
-        st.login("google")
-else:
-    current_email = st.user.get("email")
 
 
 st.divider()

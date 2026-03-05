@@ -3,15 +3,21 @@ from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import time
 
-from utils.players import player_map
-from utils.sheets_data import df_02, df_07, df_05
-from utils.betting_form import betting_manager
 
-import random
+# PREDICTION columns ()
 
+
+# Funtion to show next match bet's status .. How many players on each team . .
+'''
+count how many on each side and then update the Diagram for the latest match
+'''
+
+
+# Daily Cumilative graph
 
 # CREATE connection to Google sheets
 conn = st.connection("gsheets", type=GSheetsConnection)
+
 
 
 st.set_page_config(

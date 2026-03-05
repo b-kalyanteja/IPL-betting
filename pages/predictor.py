@@ -17,9 +17,9 @@ hall_of_fame(img_file_name="predictor.png")
 
 
 if not st.user.get("is_logged_in"):
-    # STATE 1: Not Logged In
-    st.info("Login to place bets")
-    if st.button("Log in with Google 🌐"):
+
+    st.info("Login to Predict")
+    if st.button("Google 🌐"):
         st.login("google")
 else:
     current_email = st.user.get("email")
