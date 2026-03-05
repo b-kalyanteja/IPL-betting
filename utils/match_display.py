@@ -44,6 +44,7 @@ def display_matches():
     df_today = conn.read(worksheet="2026_today", ttl=0)
     df_schedule = conn.read(worksheet="2026_bets_raw", ttl=0)
 
+
     match_cols = ["today_01", "today_02"]
 
     for col in match_cols:
@@ -52,19 +53,21 @@ def display_matches():
         if pd.notna(val) and str(val).strip().lower() != 'nil' :
 
             match_id = val
-
             schedule_row = df_schedule[df_schedule.iloc[:, 0] == match_id]
-            st.write(schedule_row)
-            row_data = schedule_row.iloc[0]
-            st.write(row_data)
-            team_1:str = str(row_data.iloc[1]).strip().lower()
-            team_2:str = str(row_data.iloc[4]).strip().lower()
 
-            all_values = [str(val).strip() for val in row_data.tolist()]
-            st.write(all_values)
-            t1_bets: int = (all_values.count(team_1) - 1)
+            row_data = schedule_row.squeeze()
+            team_1:str = str(row_data['t1']).strip().lower()
+            team_2:str = str(row_data['t2']).strip().lower()
+
+            bet_cols = ['kalyan_team', 'subba_team', 'sravan_team', 'balu_team', 'darsi_team', 'jaggu_team']
+            bet_rows = row_data.iloc[bet_cols]
+            all_bets = [str(val).strip().lower() for val in bet_rows.tolist()]
+
+            st.write(all_bets)
+            t1_bets: int = (all_bets.count(team_1) - 1)
             st.write(t1_bets)
-            t2_bets: int = (all_values.count(team_2) - 1)
+            t2_bets: int = (all_bets.count(team_2) - 1)
+            st.write(t2_bets)
 
             match_widget(team_1=team_1, team_2=team_2, t1_bets=t1_bets, t2_bets=t2_bets)
         else:
