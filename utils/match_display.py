@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+from streamlit import cache_data
+
 from utils.logos import logos_map
 from streamlit_gsheets import GSheetsConnection
 
@@ -36,13 +38,18 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
     st.divider()
 
 
-def display_matches():
-
+@st.cache_data(ttl=5)
+def cached_bet_data():
     conn = st.connection("gsheets", type=GSheetsConnection)
-
     df_today = conn.read(worksheet="2026_today", ttl=0)
     df_schedule = conn.read(worksheet="2026_bets_raw", ttl=0)
+    return df_today, df_schedule
 
+
+
+def display_matches():
+
+    df_today, df_schedule = cached_bet_data()
 
     match_cols = ["today_01", "today_02"]
 
