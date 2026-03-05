@@ -60,7 +60,7 @@ def display_matches():
             team_1:str = str(row_data.iloc[1]).strip()
             team_2:str = str(row_data.iloc[4]).strip()
 
-            all_values = row_data.astype(str).str.strip().tolist()
+            all_values = [str(val).strip() for val in row_data.tolist()]
 
             t1_bets: int = (all_values.count(team_1) - 1)
             t2_bets: int = (all_values.count(team_2) - 1)
