@@ -64,9 +64,9 @@ def display_matches():
             all_bets = [str(val).strip().lower() for val in bet_rows.tolist()]
 
             st.write(all_bets)
-            t1_bets: int = (all_bets.count(team_1) - 1)
+            t1_bets: int = all_bets.count(team_1)
             st.write(t1_bets)
-            t2_bets: int = (all_bets.count(team_2) - 1)
+            t2_bets: int = all_bets.count(team_2)
             st.write(t2_bets)
 
             match_widget(team_1=team_1, team_2=team_2, t1_bets=t1_bets, t2_bets=t2_bets)
