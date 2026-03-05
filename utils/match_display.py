@@ -55,6 +55,12 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
             <br><strong>{team_1_name}</strong>
             <div class="bet-icons">{t1_icons}</div>
         </div>
+               
+        <div class="team-box">
+            <img src="{logo_2}" class="team-logo">
+            <br><strong>{team_2_name}</strong>
+            <div class="bet-icons">{t2_icons}</div>
+        </div>              
     </div>
     """, unsafe_allow_html=True)
 
