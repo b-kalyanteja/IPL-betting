@@ -14,21 +14,23 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
     t2_icons = ("👤" * t2_bets)
 
     st.markdown(f"""
-    <div style="background-color:#000; border:1px solid #333; border-radius:15px; padding:15px; width:100%;">
+    <div style="background-color:#000; border:1px solid #333; border-radius:15px; padding:10px; width:100%;">
     <table style="width:100%; border-collapse:collapse; text-align:center; table-layout:fixed;">
       <tr>
-        <td style="width:40%; vertical-align:middle;">
-          <img src="{logo_1}" style="width:50px; height:50px; border-radius:50%; background:#fff; padding:3px;">
-          <div style="color:#fff; font-weight:bold; font-size:14px; margin-top:5px;">{team_1.upper()}</div>
-          <div style="font-size:14px;">{t1_icons}</div>
+        <td style="width:42%; vertical-align:middle; padding:5px;">
+          <img src="{logo_1}" style="width:70%; max-width:80px; aspect-ratio:1/1; border-radius:50%; background:#fff; padding:2px; object-fit:contain;">
+          <div style="color:#fff; font-weight:bold; font-size:clamp(12px, 3vw, 16px); margin-top:5px;">{team_1.upper()}</div>
+          <div style="font-size:12px;">{t1_icons}</div>
         </td>
-        <td style="width:20%; vertical-align:middle; color:#888; font-weight:bold; font-size:18px;">
+
+        <td style="width:16%; vertical-align:middle; color:#888; font-weight:bold; font-size:clamp(14px, 4vw, 20px);">
           VS
         </td>
-        <td style="width:40%; vertical-align:middle;">
-          <img src="{logo_2}" style="width:50px; height:50px; border-radius:50%; background:#fff; padding:3px;">
-          <div style="color:#fff; font-weight:bold; font-size:14px; margin-top:5px;">{team_2.upper()}</div>
-          <div style="font-size:14px;">{t2_icons}</div>
+
+        <td style="width:42%; vertical-align:middle; padding:5px;">
+          <img src="{logo_2}" style="width:70%; max-width:80px; aspect-ratio:1/1; border-radius:50%; background:#fff; padding:2px; object-fit:contain;">
+          <div style="color:#fff; font-weight:bold; font-size:clamp(12px, 3vw, 16px); margin-top:5px;">{team_2.upper()}</div>
+          <div style="font-size:12px;">{t2_icons}</div>
         </td>
       </tr>
     </table>
