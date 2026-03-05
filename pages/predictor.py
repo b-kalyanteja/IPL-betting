@@ -16,6 +16,8 @@ st.title("🧞‍♂️ Predictor's Dashboard")
 hall_of_fame(img_file_name="predictor.png")
 
 
+st.markdown("# Official match predictor + Committe member . **Trusting this is subjected to financial risks")
+
 if not st.user.get("is_logged_in"):
 
     st.info("Login to Predict")
