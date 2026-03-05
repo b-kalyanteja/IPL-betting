@@ -51,7 +51,7 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
     st.markdown(f"""
     <div class="match-container">
         <div class="team-box">
-            <img src= "{logo_1}" class="team-logo">
+            <img src="{logo_1}" class="team-logo">
             <br><strong>{team_1_name}</strong>
             <div class="bet-icons">{t1_icons}</div>
         </div>
