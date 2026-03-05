@@ -39,14 +39,15 @@ def hall_of_fame(img_file_name):
         st.image(img_path, width=200)
 
     with col2:
-        st.markdown("### 📅 2024 Season : 84.6%")
-        st.write("🟢🟢🟢🟢🦜🟢🦜🟢🟢🟢🟢🟢🟢")
+
+        st.markdown(f"### 📅 2026 Season : {percent_2026}")
+        st.write(values_2026)
 
         st.markdown("### 📅 2025 Season : 56.4%")
         st.write("🦜🦜🦜🦜🟢🦜🦜🦜🦜🦜🟢🦜🦜🟢🟢🦜🦜🟢🟢🟢🟢🟢🟢🟢🟢🟢🦜🟢🟢🟢🟢🟢🦜🟢🦜🟢🟢🟢🦜")
 
-        st.markdown(f"### 📅 2026 Season : {percent_2026}")
-        st.write(values_2026)
+        st.markdown("### 📅 2024 Season : 84.6%")
+        st.write("🟢🟢🟢🟢🦜🟢🦜🟢🟢🟢🟢🟢🟢")
 
     st.divider()
 
