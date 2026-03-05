@@ -16,47 +16,72 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
     st.markdown(f"""
     <style>
         .match-card {{
-            background-color: var(--secondary-background-color);
-            border: 1px solid var(--divider-color);
-            border-radius: 15px;
-            padding: 15px;
+            /* This creates the contrast: light tint in dark mode, dark tint in light mode */
+            background-color: rgba(128, 128, 128, 0.1); 
+            border: 1px solid rgba(128, 128, 128, 0.2);
+            border-radius: 20px;
+            padding: 20px;
             width: 100%;
-            color: var(--text-color);
+            /* Add a subtle glow/shadow to lift it off the page */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
         }}
+
+        .team-container {{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }}
+
         .team-name {{
             color: var(--text-color);
-            font-weight: bold;
-            font-size: clamp(12px, 3vw, 16px);
-            margin-top: 5px;
+            font-weight: 800;
+            font-size: clamp(13px, 4vw, 18px);
+            margin-top: 10px;
+            letter-spacing: 0.5px;
         }}
-        .vs-text {{
+
+        .vs-circle {{
+            background: var(--background-color);
+            border: 1px solid var(--divider-color);
             color: var(--secondary-text-color);
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50%;
             font-weight: bold;
-            font-size: clamp(14px, 4vw, 20px);
+            font-size: 14px;
+            display: inline-block;
         }}
     </style>
 
     <div class="match-card">
     <table style="width:100%; border-collapse:collapse; text-align:center; table-layout:fixed;">
       <tr>
-        <td style="width:42%; vertical-align:middle;">
-          <img src="{logo_1}" style="width:70%; max-width:80px; aspect-ratio:1/1; border-radius:50%; background: white; padding:2px; object-fit:contain;">
-          <div class="team-name">{team_1.upper()}</div>
-          <div style="font-size:12px;">{t1_icons}</div>
+        <td style="width:40%; vertical-align:middle;">
+          <div class="team-container">
+            <img src="{logo_1}" style="width:75%; max-width:90px; aspect-ratio:1/1; border-radius:50%; background: white; padding:4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+            <div class="team-name">{team_1.upper()}</div>
+            <div style="font-size:12px; opacity: 0.8;">{t1_icons}</div>
+          </div>
         </td>
-        <td class="vs-text" style="width:16%; vertical-align:middle;">
-          VS
+
+        <td style="width:20%; vertical-align:middle;">
+          <div class="vs-circle">VS</div>
         </td>
-        <td style="width:42%; vertical-align:middle;">
-          <img src="{logo_2}" style="width:70%; max-width:80px; aspect-ratio:1/1; border-radius:50%; background: white; padding:2px; object-fit:contain;">
-          <div class="team-name">{team_2.upper()}</div>
-          <div style="font-size:12px;">{t2_icons}</div>
+
+        <td style="width:40%; vertical-align:middle;">
+          <div class="team-container">
+            <img src="{logo_2}" style="width:75%; max-width:90px; aspect-ratio:1/1; border-radius:50%; background: white; padding:4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+            <div class="team-name">{team_2.upper()}</div>
+            <div style="font-size:12px; opacity: 0.8;">{t2_icons}</div>
+          </div>
         </td>
       </tr>
     </table>
     </div>
     """, unsafe_allow_html=True)
-
     st.divider()
 
 
