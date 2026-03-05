@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import time
-from utils.match_display import match_widget
+from utils.match_display import match_widget_01, match_widget_02
 
 # PREDICTION columns ()
 
@@ -32,4 +32,5 @@ st.title("🏆 IPL'26 Bets")
 st.divider()
 
 
-match_widget(team_1 = "kkr", team_2 = "rcb", t1_bets =3,t2_bets=2)
+match_widget_01(team_1 = "kkr", team_2 = "rcb", t1_bets =3,t2_bets=2)
+match_widget_02(team_1 = "kkr", team_2 = "rcb", t1_bets =3,t2_bets=2)
