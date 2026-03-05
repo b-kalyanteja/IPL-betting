@@ -1,13 +1,12 @@
 import streamlit as st
+import pandas as pd
 from utils.logos import logos_map
+from streamlit_gsheets import GSheetsConnection
 
 def match_widget(team_1, team_2, t1_bets,t2_bets):
 
     logo_1 = logos_map.get(team_1)
     logo_2 = logos_map.get(team_2)
-
-    team_1_name = team_1.upper()
-    team_2_name = team_2.upper()
 
     t1_icons = ("👤" * t1_bets)
     t2_icons = ("👤" * t2_bets)
@@ -35,3 +34,37 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
     """, unsafe_allow_html=True)
 
     st.divider()
+
+
+
+def display_matches():
+
+    conn = st.connection("gsheets", type=GSheetsConnection)
+
+    df_today = conn.read(worksheet="2026_today", ttl=0)
+    df_schedule = conn.read(worksheet="2026_bets_raw", ttl=0)
+
+    match_cols = ["today_01", "today_02"]
+
+    for col in match_cols:
+        val = df_today.iloc[0][col]
+
+        if pd.notna(val) and str(val).strip().lower() != 'nil' :
+
+            match_id = val
+
+            schedule_row = df_schedule[df_schedule.iloc[:, 0] == match_id]
+
+            row_data = schedule_row.iloc[0]
+
+            team_1:str = str(row_data.iloc[1]).strip()
+            team_2:str = str(row_data.iloc[4]).strip()
+
+            all_values = row_data.astype(str).str.strip().tolist()
+
+            t1_bets: int = (all_values.count(team_1) - 1)
+            t2_bets: int = (all_values.count(team_2) - 1)
+
+            match_widget(team_1=team_1, team_2=team_2, t1_bets=t1_bets, t2_bets=t2_bets)
+        else:
+            continue
