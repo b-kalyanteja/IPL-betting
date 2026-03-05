@@ -57,7 +57,7 @@ def match_widget(team1, team2, t1_bets,t2_bets):
         <div class="vs-divider">
             <div class="vs-text">VS</div>
             <div class="line"></div>
-            <div style="color: #4CAF50; font-size: 0.8rem;">{bets_t1 + bets_t2} total bets</div>
+            <div style="color: #4CAF50; font-size: 0.8rem;">{t1_bets + t2_bets} total bets</div>
         </div>
 
         <div class="team-box">
