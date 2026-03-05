@@ -32,4 +32,4 @@ st.title("🏆 IPL'26 Bets")
 st.divider()
 
 
-match_widget(team1 = "kkr", team2 = "rcb", t1_bets =3,t2_bets=2)
+match_widget(team_1 = "kkr", team_2 = "rcb", t1_bets =3,t2_bets=2)
