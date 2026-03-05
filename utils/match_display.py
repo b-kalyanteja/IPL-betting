@@ -54,15 +54,16 @@ def display_matches():
             match_id = val
 
             schedule_row = df_schedule[df_schedule.iloc[:, 0] == match_id]
-
+            st.write(schedule_row)
             row_data = schedule_row.iloc[0]
-
-            team_1:str = str(row_data.iloc[1]).strip()
-            team_2:str = str(row_data.iloc[4]).strip()
+            st.write(row_data)
+            team_1:str = str(row_data.iloc[1]).strip().lower()
+            team_2:str = str(row_data.iloc[4]).strip().lower()
 
             all_values = [str(val).strip() for val in row_data.tolist()]
-
+            st.write(all_values)
             t1_bets: int = (all_values.count(team_1) - 1)
+            st.write(t1_bets)
             t2_bets: int = (all_values.count(team_2) - 1)
 
             match_widget(team_1=team_1, team_2=team_2, t1_bets=t1_bets, t2_bets=t2_bets)
