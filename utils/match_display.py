@@ -83,4 +83,3 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
     #         """, unsafe_allow_html=True)
 
     st.divider()
-
