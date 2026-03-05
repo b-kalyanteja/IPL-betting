@@ -1,8 +1,13 @@
 import streamlit as st
+from utils.logos import logos_map
+
+def match_widget(team1, team2, t1_bets,t2_bets):
+
+    logo_1 = logos_map.get(team1)
+    logo_2 = logos_map.get(team2)
 
 
-def match_widget(team1_name, team1_logo, team2_name, team2_logo, bets_t1, bets_t2):
-    # Custom CSS for the connecting lines and icons
+    # CSS Styling
     st.markdown("""
         <style>
         .match-container {
@@ -37,15 +42,15 @@ def match_widget(team1_name, team1_logo, team2_name, team2_logo, bets_t1, bets_t
     """, unsafe_allow_html=True)
 
 
-    t1_icons = ("👤" * bets_t1)
-    t2_icons = ("👤" * bets_t2 )
+    t1_icons = ("👤" * t1_bets)
+    t2_icons = ("👤" * t2_bets)
 
     # Build the Widget
     st.markdown(f"""
     <div class="match-container">
         <div class="team-box">
-            <img src="{team1_logo}" class="team-logo">
-            <br><strong>{team1_name}</strong>
+            <img src= "logo_1" class="team-logo">
+            <br><strong>{team1}</strong>
             <div class="bet-icons">{t1_icons}</div>
         </div>
 
@@ -56,8 +61,8 @@ def match_widget(team1_name, team1_logo, team2_name, team2_logo, bets_t1, bets_t
         </div>
 
         <div class="team-box">
-            <img src="{team2_logo}" class="team-logo">
-            <br><strong>{team2_name}</strong>
+            <img src="logo_2" class="team-logo">
+            <br><strong>{team2}</strong>
             <div class="bet-icons">{t2_icons}</div>
         </div>
     </div>
@@ -67,12 +72,3 @@ def match_widget(team1_name, team1_logo, team2_name, team2_logo, bets_t1, bets_t
 # --- EXAMPLE USAGE ---
 st.title("Today's Featured Match")
 
-# You would pull these values from your Excel sheet
-match_widget(
-    team1_name="Real Madrid",
-    team1_logo="https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg",
-    team2_name="Barcelona",
-    team2_logo="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_logo.svg",
-    bets_t1=12,
-    bets_t2=8
-)
