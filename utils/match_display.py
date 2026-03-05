@@ -59,7 +59,7 @@ def display_matches():
             team_1:str = str(row_data['t1']).strip().lower()
             team_2:str = str(row_data['t2']).strip().lower()
 
-            bet_cols = ['kalyan_team', 'subba_team', 'sravan_team', 'balu_team', 'darsi_team', 'jaggu_team']
+            bet_cols = ['kalyan_team','jaggu_team','subba_team','balu_team','sravan_team','darsi_team']
             bet_rows = row_data.loc[bet_cols]
             all_bets = [str(val).strip().lower() for val in bet_rows.tolist()]
 
