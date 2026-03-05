@@ -49,41 +49,17 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
 
     # Build the Widget
     st.markdown(f"""
-    
-    <style>
-    .match-container {{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-    }}
-    
-    .team-box {{
-        text-align: center;
-        width: 40%;
-    }}
-    
-    .team-logo {{
-        width: 100px;
-    }}
-    
-    .bet-icons {{
-        margin-top: 5px;
-    }}
-    </style>
-    
     <div class="match-container">
         <div class="team-box">
             <img src="{logo_1}" class="team-logo">
             <br><strong>{team_1_name}</strong>
             <div class="bet-icons">{t1_icons}</div>
         </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-        <div style="text-align: center; width: 20%;">
-            <div style="color: #888; font-weight: bold; font-size: 20px;">VS</div>
-            <div style="height: 2px; background: #4CAF50; margin-top: 5px;"></div>
-        </div>
-
+    st.markdown(f"""
+    <div class="match-container">
         <div class="team-box">
             <img src="{logo_2}" class="team-logo">
             <br><strong>{team_2_name}</strong>
