@@ -3,7 +3,7 @@ from utils.logos import logos_map
 
 def match_widget(team1, team2, t1_bets,t2_bets):
 
-    logo_1 = logos_map.get(team1)
+    logo_1 = "https://upload.wikimedia.org/wikipedia/en/4/4c/Kolkata_Knight_Riders_Logo.svg"
     logo_2 = logos_map.get(team2)
 
 
