@@ -56,11 +56,6 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
             <div class="bet-icons">{t1_icons}</div>
         </div>
 
-        <div style="text-align: center; width: 20%;">
-            <div style="color: #888; font-weight: bold; font-size: 20px;">VS</div>
-            <div style="height: 2px; background: #4CAF50; margin-top: 5px;"></div>
-        </div>
-
         <div class="team-box">
             <img src="{logo_2}" class="team-logo">
             <br><strong>{team_2_name}</strong>
