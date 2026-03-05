@@ -67,7 +67,7 @@ components.html(f"""
     <div style="width: 80%; overflow: hidden; border-radius: 15px; border: 1px solid #333;">
         <iframe src="{sheet_url}" 
                 width="100%" 
-                height="600" 
+                height="300" 
                 style="border: none;" 
                 scrolling="yes">
         </iframe>
