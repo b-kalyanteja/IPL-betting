@@ -36,7 +36,7 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
     st.divider()
 
 
-
+@st.fragment(run_every=1.0)
 def display_matches():
 
     conn = st.connection("gsheets", type=GSheetsConnection)
