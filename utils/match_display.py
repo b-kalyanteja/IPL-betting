@@ -1,11 +1,13 @@
 import streamlit as st
 from utils.logos import logos_map
 
-def match_widget(team1, team2, t1_bets,t2_bets):
+def match_widget(team_1, team_2, t1_bets,t2_bets):
 
-    logo_1 = "https://upload.wikimedia.org/wikipedia/en/4/4c/Kolkata_Knight_Riders_Logo.svg"
-    logo_2 = logos_map.get(team2)
+    logo_1 = logos_map.get(team_1)
+    logo_2 = logos_map.get(team_2)
 
+    team_1_name = team_1.upper()
+    team_2_name = team_2.upper()
 
     # CSS Styling
     st.markdown("""
@@ -49,8 +51,8 @@ def match_widget(team1, team2, t1_bets,t2_bets):
     st.markdown(f"""
     <div class="match-container">
         <div class="team-box">
-            <img src= "logo_1" class="team-logo">
-            <br><strong>{team1}</strong>
+            <img src= "{logo_1}" class="team-logo">
+            <br><strong>{team_1_name}</strong>
             <div class="bet-icons">{t1_icons}</div>
         </div>
 
@@ -61,8 +63,8 @@ def match_widget(team1, team2, t1_bets,t2_bets):
         </div>
 
         <div class="team-box">
-            <img src="logo_2" class="team-logo">
-            <br><strong>{team2}</strong>
+            <img src="{logo_2}" class="team-logo">
+            <br><strong>{team_2_name}</strong>
             <div class="bet-icons">{t2_icons}</div>
         </div>
     </div>
