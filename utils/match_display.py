@@ -39,7 +39,6 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
 
     st.divider()
 
-
 @st.cache_data(ttl=10)
 def cached_bet_data():
     conn = st.connection("gsheets", type=GSheetsConnection)
