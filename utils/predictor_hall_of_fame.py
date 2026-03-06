@@ -2,7 +2,7 @@ import streamlit as st
 from pathlib import Path
 from streamlit_gsheets import GSheetsConnection
 
-
+@st.cache_data(ttl=30)
 def predictor_stats():
 
     conn = st.connection("gsheets", type=GSheetsConnection)
@@ -24,7 +24,7 @@ def predictor_stats():
 
     return values_2026, percent_2026
 
-
+@st.cache_data(ttl=30)
 def hall_of_fame(img_file_name):
     st.divider()
 
