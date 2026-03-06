@@ -33,3 +33,13 @@ players: list = [
 
 predictor: list = ["jagadeeswarabojja@gmail.com"]
 #predictor: str = "prnesh.ak47@gmail.com"
+
+
+player_images_map: dict = {
+    "kalyan": "https://i.postimg.cc/VLXBm5c8/Screenshot-2026-03-06-at-17-51-11.png",
+    "subba": "https://i.postimg.cc/xCLh2tsv/Screenshot-2026-03-06-at-17-43-25.png",
+    "sravan": "https://i.postimg.cc/4Npd0gbB/Screenshot-2026-03-06-at-17-40-12.png",
+    "darsi": "https://i.postimg.cc/Kz7qV4zp/Screenshot-2026-03-06-at-17-44-23.png",
+    "jaggu": "https://i.postimg.cc/tCzbPCNt/Screenshot-2026-03-06-at-17-42-24.png",
+    "balu": "https://i.postimg.cc/FsCPwMrS/Screenshot-2026-03-06-at-17-45-16.png"
+}
