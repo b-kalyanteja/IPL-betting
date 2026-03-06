@@ -4,7 +4,7 @@ from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import time
 from utils.match_display import display_matches
-from utils.cumilative_graph import performance_graph, current_status
+from utils.cumilative_graph import performance_graph, current_status, current_status_02
 from utils.prediction_daily import today_prediction
 import plotly.express as px
 
@@ -37,13 +37,13 @@ st.divider()
 
 st.write("Player's Performance")
 performance_graph()
-
 st.divider()
+
 current_status()
+st.divider()
 
-
-
-
+current_status_02()
+st.divider()
 
 
 

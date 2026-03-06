@@ -97,3 +97,44 @@ def current_status():
 
     # 3. Render with all newlines removed to prevent markdown errors
     st.markdown(html.replace("\n", ""), unsafe_allow_html=True)
+
+
+
+def current_status_02():
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    df_status = conn.read(worksheet="2026_status", ttl=0)
+
+    # 1. Collect and Sort Data
+    players_data = []
+    for player in df_status.columns:
+        try:
+            amt = float(df_status[player].iloc[0])
+            img = df_status[player].iloc[1]
+        except:
+            amt, img = 0.0, ""
+        players_data.append({"amt": amt, "img": img})
+
+    # Sort: Highest profit first
+    players_data = sorted(players_data, key=lambda x: x['amt'], reverse=True)
+
+    # 2. Build Flat HTML (Flexbox for horizontal scrolling)
+    # This prevents stacking on mobile
+    html = '<div style="display: flex; overflow-x: auto; gap: 10px; padding: 10px; white-space: nowrap; scrollbar-width: none;">'
+
+    for i, p in enumerate(players_data):
+        color = "#00FFCC" if p['amt'] >= 0 else "#FF4B4B"
+        # Assign medals for top 3
+        medal = "🥇" if i == 0 else "🥈" if i == 1 else "🥉" if i == 2 else f"#{i + 1}"
+
+        # Build individual card
+        card = f'<div style="flex: 0 0 auto; text-align: center; background: #1E1E1E; padding: 10px; border-radius: 15px; border: 1px solid #333; min-width: 80px;">'
+        card += f'<div style="font-size: 12px; margin-bottom: 5px;">{medal}</div>'
+        card += f'<img src="{p["img"]}" style="width: 55px; height: 55px; border-radius: 50%; border: 2px solid {color}; object-fit: cover;">'
+        card += f'<div style="font-size: 14px; font-weight: bold; color: {color}; margin-top: 5px;">₹{int(p["amt"])}</div>'
+        card += '</div>'
+        html += card
+
+    html += '</div>'
+
+    # 3. Render flat string
+    st.markdown(html.replace("\n", ""), unsafe_allow_html=True)
