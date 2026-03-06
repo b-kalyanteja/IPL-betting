@@ -58,30 +58,33 @@ def performance_graph():
 
 
 
+@st.cache_data(ttl=300)
 def current_status():
+    # 1. Read the latest cumulative data
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    df_status = conn.read(worksheet="2026_status", ttl=0)
 
-    sheet_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT-m3xGBp4kDPQgG4-ZzockJy3E--gqPEFJGTtonfdfDX9Juuga0O0UPxTCUUPLmiNX_Op8kkEH0G_j/pubhtml?gid=642106326&single=true&widget=true&headers=false"
+    st.markdown("##### 🏆 LiveLeaderboard")
 
-    col1, col2, col3 = st.columns([1, 8, 1])
+    cols = st.columns(3)
+    players = df_status.columns.tolist()
+    for i, player in enumerate(players):
+        # Determine which column in the grid to use
+        col_index = i % 3
+        with cols[col_index]:
+            player_photo = df_status.iloc[0, i]
+            player_amount = df_status.iloc[1, i]
 
-    with col2:
-        st.markdown("##### 📅 Schedule & Points Table")
-        components.html(f"""
-            <div style="
-                display: flex; 
-                justify-content: center; 
-                align-items: center; 
-                width: 100%;
-                border: 1px solid #333; 
-                border-radius: 15px; 
-                overflow: hidden;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            ">
-                <iframe src="{sheet_url}" 
-                        width="100%" 
-                        height="400" 
-                        style="border: none;" 
-                        scrolling="yes">
-                </iframe>
-            </div>
-        """, height=400)
+            color = "#00FFCC" if float(player_amount) >= 0 else "#FF4B4B"
+
+
+            st.image(player_photo, use_container_width=True)
+
+            st.markdown(f"""
+                    <div style="text-align: center; background-color: #1E1E1E; padding: 10px; border-radius: 0 0 10px 10px; border-top: 2px solid {color};">
+                        <div style="font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px;">{player}</div>
+                        <div style="font-size: 20px; font-weight: bold; color: {color};">₹{int(player_amount)}</div>
+                    </div>
+                """, unsafe_allow_html=True)
+
+            st.write("")

@@ -31,10 +31,11 @@ st.title("🏆 IPL'26 Bets")
 st.write("Today's matches")
 display_matches()
 st.divider()
+
 today_prediction()
+st.divider()
 
 st.write("Player's Performance")
-
 performance_graph()
 
 st.divider()
