@@ -8,11 +8,6 @@ from utils.cumilative_graph import performance_graph, current_status, current_st
 from utils.prediction_daily import today_prediction
 import plotly.express as px
 
-# PREDICTION columns ()
-
-
-
-
 
 # CREATE connection to Google sheets
 conn = st.connection("gsheets", type=GSheetsConnection)
@@ -39,8 +34,8 @@ st.write("Player's Performance")
 performance_graph()
 st.divider()
 
-current_status()
-st.divider()
+#current_status() - it looks like table ... routine
+#st.divider()
 
 current_status_02()
 st.divider()
