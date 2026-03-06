@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 from pathlib import Path
 from streamlit_gsheets import GSheetsConnection
 
@@ -25,7 +26,10 @@ def today_prediction():
 
     cols = ["today_01", "today_02"]
 
-    teams: list = df_09[cols].iloc[0].tolist()
+    raw_vals = df_09[cols].iloc[0].tolist()
+
+    # 2. Keep only values that are NOT empty (removes NaN and None)
+    teams = [str(t) for t in raw_vals if pd.notna(t)]
 
     if len(teams) == 2:
         title = "Genie's Double Pick"
