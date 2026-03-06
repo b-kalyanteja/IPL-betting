@@ -6,7 +6,15 @@ player_map :dict = {
     "jagadeeswarabojja@gmail.com": "jaggu",
     "gbmkrishnayadav@gmail.com": "balu",
     "subbareddy9599@gmail.com": "subba"
+}
 
+player_images : dict = {
+    "kalyan": "image link",
+    "jaggu" :"image link",
+    "subba" : "image link",
+    "balu": "image link",
+    "sravan" : "image link",
+    "darsi" : "image link"
 }
 
 
