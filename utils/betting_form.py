@@ -74,4 +74,4 @@ def betting_manager(current_email):
 
     for i, (_, match) in enumerate(upcoming.iterrows()):
         with cols[i]:
-            match_bet(match_id=match['match_id'],team_1= match['team_1'],team_2= match['team_2'],current_email= current_email, dead_line = match['bet_dead_line'] , connection= conn)
+            match_bet(match_id=match['match_id'],team_1= match['team_1'],team_2= match['team_2'],current_email= current_email, dead_line = match['bet_deadline'] , connection= conn)
