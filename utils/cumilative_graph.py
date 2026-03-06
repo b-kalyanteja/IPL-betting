@@ -58,7 +58,7 @@ def performance_graph():
 
 
 
-@st.cache_data(ttl=300)
+@st.cache_data(ttl=10)
 def current_status():
     # 1. Read the latest cumulative data
     conn = st.connection("gsheets", type=GSheetsConnection)
