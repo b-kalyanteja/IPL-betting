@@ -32,14 +32,14 @@ def today_prediction():
     teams = [str(t) for t in raw_vals if pd.notna(t)]
 
     if len(teams) == 2:
-        title = "Genie's Double Pick"
-        content = f"<b>{teams[0].upper()}</b> <span style='color:#555;'>|</span> <b>{teams[1]}</b>"
+        title = "Predictor's Double Dhamaaka"
+        content = f"<b>{teams[0].upper()}</b> <span style='color:#555;'>➕</span> <b>{teams[1]}</b>"
     elif len(teams) == 1:
-        title = "Genie's Top Pick"
+        title = "Predictor's Pick "
         content = f"<b>{teams[0].upper()}</b>"
     else:
-        title = "Genie is Resting"
-        content = "Predictions coming soon... 😴"
+        title = "Predictor is Sleeping 😴"
+        content = "Predictions coming soon... "
 
     st.markdown(f"""
             <div style="
