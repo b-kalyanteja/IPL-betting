@@ -58,7 +58,7 @@ def betting_manager(current_email):
     st.write(df_07['date'])
     df_07['month'] = pd.to_numeric(df_07['month'], errors='coerce')
 
-    upcoming = df_07[(df_07['day'] == current_day) & (df_07['month'] == current_month) &(df_07['result'].isna())].sort_values('match_time')
+    upcoming = df_07[(df_07['date'] == current_day) & (df_07['month'] == current_month) &(df_07['result'].isna())].sort_values('match_time')
     st.write(f'{upcoming=}')
 
     dead_line = 1745
