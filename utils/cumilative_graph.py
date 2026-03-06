@@ -68,12 +68,15 @@ def current_status():
 
     cols = st.columns(3)
     players = df_status.columns.tolist()
+
     for i, player in enumerate(players):
-        # Determine which column in the grid to use
         col_index = i % 3
         with cols[col_index]:
             player_photo = df_status.iloc[0, i]
-            player_amount = df_status.iloc[1, i]
+            try:
+                player_amount = df_status.iloc[1, i]
+            except IndexError:
+                player_amount = 0
 
             color = "#00FFCC" if float(player_amount) >= 0 else "#FF4B4B"
 
