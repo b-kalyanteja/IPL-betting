@@ -66,30 +66,34 @@ def current_status():
 
     st.markdown("##### 🏆 Live Leaderboard")
 
-    cols = st.columns(3)
-    players = df_status.columns.tolist()
+    players_data = []
+    for player in df_status.columns:
+        try:
+            amt = float(df_status[player].iloc[0])
+            img = df_status[player].iloc[1]
+        except:
+            amt, img = 0.0, ""
+        players_data.append({"name": player, "amt": amt, "img": img})
 
-    cols = st.columns(3)
+    players_data = sorted(players_data, key=lambda x: x['amt'], reverse=True)
 
-    for i, player in enumerate(players):
-        # This keeps the players in a 3-column grid that won't break
-        with cols[i % 3]:
-            # Adjust indices based on your sheet: Row 2=Amt (0), Row 3=Link (1)
-            raw_amt = df_status[player].iloc[0]
-            img_url = df_status[player].iloc[1]
+    # 2. Build the HTML without any internal indentation
+    html = '<div style="background-color: #111; padding: 10px; border-radius: 15px;"><table style="width: 100%; border-collapse: collapse;">'
 
-            try:
-                amt_val = float(raw_amt)
-            except:
-                amt_val = 0.0
+    for i, p in enumerate(players_data):
+        color = "#00FFCC" if p['amt'] >= 0 else "#FF4B4B"
+        rank = f"#{i + 1}"
 
-            color = "#00FFCC" if amt_val >= 0 else "#FF4B4B"
+        # We add each row as a single flat string
+        row = f'<tr style="border-bottom: 1px solid #222;">'
+        row += f'<td style="padding: 10px; width: 30px; font-weight: bold; color: #888; font-size: 12px;">{rank}</td>'
+        row += f'<td style="padding: 5px; width: 55px;"><img src="{p["img"]}" style="width: 45px; height: 45px; border-radius: 50%; border: 2px solid {color}; object-fit: cover;"></td>'
+        row += f'<td style="padding: 10px; text-align: left;"><div style="font-size: 14px; font-weight: bold; color: white;">{p["name"]}</div></td>'
+        row += f'<td style="padding: 10px; text-align: right;"><div style="font-size: 16px; font-weight: bold; color: {color};">₹{int(p["amt"])}</div></td>'
+        row += '</tr>'
+        html += row
 
-            # Use a container-style display for each player
-            st.image(img_url, use_container_width=True)
-            st.markdown(f"""
-                    <div style="text-align: center; background-color: #1E1E1E; padding: 5px; border-radius: 5px; border-bottom: 3px solid {color}; margin-bottom: 15px;">
-                        <div style="font-size: 9px; color: #888;">{player.upper()}</div>
-                        <div style="font-size: 14px; font-weight: bold; color: {color};">₹{int(amt_val)}</div>
-                    </div>
-                """, unsafe_allow_html=True)
+    html += '</table></div>'
+
+    # 3. Render with all newlines removed to prevent markdown errors
+    st.markdown(html.replace("\n", ""), unsafe_allow_html=True)
