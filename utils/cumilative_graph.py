@@ -59,9 +59,9 @@ def performance_graph():
 
 
 def current_status():
+
     sheet_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT-m3xGBp4kDPQgG4-ZzockJy3E--gqPEFJGTtonfdfDX9Juuga0O0UPxTCUUPLmiNX_Op8kkEH0G_j/pubhtml?gid=642106326&single=true&widget=true&headers=false"
 
-    # Using Streamlit columns to center the content
     col1, col2, col3 = st.columns([1, 8, 1])
 
     with col2:
