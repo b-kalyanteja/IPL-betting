@@ -49,7 +49,8 @@ else:
             st.logout()
             st.rerun()
 
-        prediction_next_match()
+        st.write("humbak")
+        #prediction_next_match()
 
 st.divider()
 st.divider()
