@@ -39,9 +39,12 @@ about_page()
 
 
 
-import requests
+from streamlit_javascript import st_javascript
 
-# This gets the real Internet IP (e.g., 122.161.x.x)
-real_ip = requests.get('https://api.ipify.org').text
+# This runs on the USER'S device, so it sees THEIR real IP
+client_ip = st_javascript("await fetch('https://api.ipify.org').then(r => r.text())")
 
-st.write(f"🌍 Real Public IP: {real_ip}")
+if client_ip:
+    st.write(f"✅ User's Real IP: {client_ip}")
+else:
+    st.write("Fetching IP...")
