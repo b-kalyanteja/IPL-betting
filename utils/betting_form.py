@@ -7,16 +7,19 @@ from streamlit_gsheets import GSheetsConnection
 import pytz
 
 
+
+# def time_left()
+
 def match_bet(match_id, team_1, team_2, current_email, dead_line, connection, ):
     # Passing the team & match id
     with st.form(key=f"form_{match_id}", clear_on_submit=True):
         st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
         choice = st.radio("choose your side", [team_1, team_2], horizontal=True)
         amount = st.number_input(f"Bet Amount (Zl)", min_value=5, max_value=10, step=1)
-
+        st.write(f"🕒 Today at **{dead_line}** IST")
         agent = st.context.headers.get("User-Agent")
 
-        submit = st.form_submit_button("Lock Bet 🔒")
+        submit = st.form_submit_button("Confirm Bet 🔒")
 
         if submit:
             new_row = pd.DataFrame([{
@@ -34,14 +37,13 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, connection, ):
             fresh_df_05 = connection.read(worksheet="2026_bets_log")
             updated_log = pd.concat([fresh_df_05, new_row], ignore_index=True)
 
-
             # 3. Push back to Google Sheets
             connection.update(worksheet="2026_bets_log", data=updated_log)
+            st.toast("Bet Sumbitted . Good Luck! ", icon="🤞")
             st.balloons()
             time.sleep(1)
             st.cache_data.clear()
             st.rerun()
-
 
 
 
@@ -56,12 +58,11 @@ def betting_manager(current_email):
     df_07 = conn.read(worksheet="2026_schedule", ttl=1)
 
     df_07['date'] = pd.to_numeric(df_07['date'], errors='coerce')
-    st.write(df_07['date'])
     df_07['month'] = pd.to_numeric(df_07['month'], errors='coerce')
 
     #prod formula for upcoming
     upcoming = df_07[(df_07['date'] == current_day) & (df_07['month'] == current_month) &(df_07['result'].isna())].sort_values('match_time')
-    st.write(f'{upcoming=}')
+    st.dataframe(f'{upcoming}')
 
 
     if upcoming.empty:
