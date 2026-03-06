@@ -42,8 +42,8 @@ def performance_graph():
             xanchor="right",
             x=1
         ),
-        xaxis=dict(showgrid=False, title="Earnings"),
-        yaxis=dict(showgrid=True, gridcolor='#333', title="Balance (zl)"),
+        xaxis=dict(showgrid=False, dtick=1,tickformat="d",title="Matches"),
+        yaxis=dict(showgrid=True, gridcolor='#333', title="Earnings (zl)"),
         hovermode="x unified"
     )
 
