@@ -25,14 +25,14 @@ def today_prediction():
 
     cols = ["today_01", "today_02"]
 
-    teams: list = df_09.loc[cols].tolist()
+    teams: list = df_09[cols].iloc[0].tolist()
 
     if len(teams) == 2:
         title = "Genie's Double Pick"
-        content = f"<b>{teams[0]}</b> <span style='color:#555;'>|</span> <b>{teams[1]}</b>"
+        content = f"<b>{teams[0].upper()}</b> <span style='color:#555;'>|</span> <b>{teams[1]}</b>"
     elif len(teams) == 1:
         title = "Genie's Top Pick"
-        content = f"<b>{teams[0]}</b>"
+        content = f"<b>{teams[0].upper()}</b>"
     else:
         title = "Genie is Resting"
         content = "Predictions coming soon... 😴"
