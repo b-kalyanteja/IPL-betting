@@ -9,8 +9,8 @@ def prediction_next_match():
     conn = st.connection("gsheets", type=GSheetsConnection)
     df_bets = conn.read(worksheet="2026_bets_raw", ttl=0)
     df_nxt = conn.read(worksheet="2026_next_match", ttl=0)
-    next_match = [df_nxt['next_match'].iloc[0]]
-    st.write(next_match[0])
+    next_match = df_nxt['next_match'].iloc[0]
+    st.write(next_match)
 
     #TO-DO
     '''
