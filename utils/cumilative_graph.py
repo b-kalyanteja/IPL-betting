@@ -68,6 +68,7 @@ def current_status():
 
     cols = st.columns(3)
     players = df_status.columns.tolist()
+    st.write(f"{players}")
 
     for i, player in enumerate(players):
         col_index = i % 3
