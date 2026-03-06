@@ -6,6 +6,7 @@ import time
 from utils.match_display import display_matches
 from utils.cumilative_graph import performance_graph, current_status
 from utils.prediction_daily import today_prediction
+import plotly.express as px
 
 # PREDICTION columns ()
 
