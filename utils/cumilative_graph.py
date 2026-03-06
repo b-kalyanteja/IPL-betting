@@ -74,7 +74,7 @@ def current_status():
         with cols[col_index]:
             player_photo = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Lucknow_Super_Giants.webp/300px-Lucknow_Super_Giants.webp.png"
             player_amount = df_status.iloc[1, i]
-            st.write("player_amount")
+            st.write(f"{player_amount}")
 
             if float(player_amount) >= 0:
                 color = "#00FFCC"
