@@ -5,7 +5,6 @@ from datetime import datetime
 from utils.players import player_map
 from streamlit_gsheets import GSheetsConnection
 from streamlit_browser_stats import streamlit_browser_stats
-import requests
 import pytz
 
 
@@ -19,8 +18,6 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, connection, ):
         amount = st.number_input(f"Bet Amount (Zl)", min_value=5, max_value=10, step=1)
 
         agent = st.context.headers.get("User-Agent")
-        ip  = requests.get('https://api.ipify.org').text
-
 
         submit = st.form_submit_button("Lock Bet 🔒")
 
@@ -33,8 +30,7 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, connection, ):
                 "choice": choice,
                 "bet": amount,
                 "player": player_map.get(current_email),
-                "agent": agent,
-                "ip": ip
+                "agent": agent
             }])
 
             # 3. CONCAT: Add the new row to the FRESHLY fetched data
@@ -70,9 +66,6 @@ def betting_manager(current_email):
     upcoming = df_07[(df_07['date'] == current_day) & (df_07['month'] == current_month) &(df_07['result'].isna())].sort_values('match_time')
     st.write(f'{upcoming=}')
 
-    dead_line = 1745
-
-    st.write(f'deadline is {dead_line}')
 
     if upcoming.empty:
         st.info("📅 No matches scheduled for today!")
@@ -83,4 +76,4 @@ def betting_manager(current_email):
 
     for i, (_, match) in enumerate(upcoming.iterrows()):
         with cols[i]:
-            match_bet(match_id=match['match_id'],team_1= match['team_1'],team_2= match['team_2'],current_email= current_email, dead_line = dead_line , connection= conn)
+            match_bet(match_id=match['match_id'],team_1= match['team_1'],team_2= match['team_2'],current_email= current_email, dead_line = match['betdead_line'] , connection= conn)

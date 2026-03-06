@@ -36,15 +36,3 @@ def about_page():
     st.info("Found a bug 🐞 ? Too late to inform.")
 
 about_page()
-
-
-
-from streamlit_javascript import st_javascript
-
-# This runs on the USER'S device, so it sees THEIR real IP
-client_ip = st_javascript("await fetch('https://api.ipify.org').then(r => r.text())")
-
-if client_ip:
-    st.write(f"✅ User's Real IP: {client_ip}")
-else:
-    st.write("Fetching IP...")
