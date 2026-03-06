@@ -9,7 +9,7 @@ player_map :dict = {
 }
 
 player_images : dict = {
-    "kalyan": "https://www.w3schools.com/howto/img_avatar.pngk",
+    "kalyan": "https://www.w3schools.com/howto/img_avatar.png",
     "jaggu" :"https://www.w3schools.com/howto/img_avatar.png",
     "subba" : "https://www.w3schools.com/howto/img_avatar.png",
     "balu": "https://www.w3schools.com/howto/img_avatar.png",
