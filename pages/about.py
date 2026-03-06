@@ -37,4 +37,10 @@ def about_page():
 
 about_page()
 
-st.write(st.context.headers.get("User-Agent"))
+user_ip = st.context.headers.get("X-Forwarded-For", "Unknown").split(',')[0]
+
+# 2. Get the Platform (Easier to read than User-Agent)
+platform = st.context.headers.get("Sec-Ch-Ua-Platform", "Unknown")
+
+# 3. Print a clean log line
+st.write(f"📡 LOG: {user_ip} | {platform} | {st.context.headers.get('Accept-Language')}")
