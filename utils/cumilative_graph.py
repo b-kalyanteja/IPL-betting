@@ -77,7 +77,7 @@ def current_status():
 
             player_photo = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Lucknow_Super_Giants.webp/300px-Lucknow_Super_Giants.webp.png"
             player_amount = df_status[player].iloc[0]
-            plyer_image = df_status.iloc[1]
+            player_image = df_status[player].iloc[1]
 
             st.write(f"amount {player_amount}")
 
@@ -87,7 +87,7 @@ def current_status():
                 color = "#FF4B4B"
 
 
-            st.image(player_photo, use_container_width=True)
+            st.image(player_image, use_container_width=True)
 
             st.markdown(f"""
                     <div style="text-align: center; background-color: #1E1E1E; padding: 10px; border-radius: 0 0 10px 10px; border-top: 2px solid {color};">
