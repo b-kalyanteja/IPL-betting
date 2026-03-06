@@ -64,8 +64,9 @@ def current_status():
     conn = st.connection("gsheets", type=GSheetsConnection)
     df_status = conn.read(worksheet="2026_status", ttl=0)
 
-    st.markdown("##### 🏆 LiveLeaderboard")
     st.write(df_status)
+    st.markdown("##### 🏆 Live Leaderboard")
+
     cols = st.columns(3)
     players = df_status.columns.tolist()
     st.write(f"{players}")
