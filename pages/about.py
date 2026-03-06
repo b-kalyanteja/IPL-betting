@@ -36,3 +36,5 @@ def about_page():
     st.info("Found a bug 🐞 ? Too late to inform.")
 
 about_page()
+
+st.write(st.context.headers.get("User-Agent"))

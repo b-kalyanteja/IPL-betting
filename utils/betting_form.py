@@ -4,6 +4,7 @@ import time
 from datetime import datetime
 from utils.players import player_map
 from streamlit_gsheets import GSheetsConnection
+from streamlit_browser_stats import streamlit_browser_stats
 import pytz
 
 
@@ -16,6 +17,8 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, connection, ):
         choice = st.radio("choose your side", [team_1, team_2], horizontal=True)
         amount = st.number_input(f"Bet Amount (Zl)", min_value=5, max_value=10, step=1)
 
+        stats = st.context.headers.get("User-Agent")
+
         submit = st.form_submit_button("Lock Bet 🔒")
 
         if submit:
@@ -27,6 +30,7 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, connection, ):
                 "choice": choice,
                 "bet": amount,
                 "player": player_map.get(current_email)
+                "details": stats
             }])
 
             # 3. CONCAT: Add the new row to the FRESHLY fetched data
@@ -58,6 +62,7 @@ def betting_manager(current_email):
     st.write(df_07['date'])
     df_07['month'] = pd.to_numeric(df_07['month'], errors='coerce')
 
+    #prod formula for upcoming
     upcoming = df_07[(df_07['date'] == current_day) & (df_07['month'] == current_month) &(df_07['result'].isna())].sort_values('match_time')
     st.write(f'{upcoming=}')
 
