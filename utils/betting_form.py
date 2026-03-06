@@ -4,11 +4,12 @@ import time
 from datetime import datetime
 from utils.players import player_map
 from streamlit_gsheets import GSheetsConnection
+import pytz
 
 
 
 
-def match_bet(match_id, team_1, team_2, current_email, connection):
+def match_bet(match_id, team_1, team_2, current_email, dead_line, connection, ):
     # Passing the team & match id
     with st.form(key=f"form_{match_id}", clear_on_submit=True):
         st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
@@ -44,14 +45,25 @@ def match_bet(match_id, team_1, team_2, current_email, connection):
 
 
 def betting_manager(current_email):
+    ist = pytz.timezone('Asia/Kolkata')
+    now_ist = pd.Timestamp.now(tz=ist)
+
+    current_day = now_ist.day  # e.g., 6
+    current_month = now_ist.month
 
     conn = st.connection("gsheets", type=GSheetsConnection)
     df_07 = conn.read(worksheet="2026_schedule", ttl=1)
 
-    today = pd.Timestamp.now().strftime("%d-%m-%Y")
-    st.write(f'{today=}')
-    upcoming = df_07[(df_07['match_date'] == today) &(df_07['result'].isna())].sort_values('match_time')
+    df_07['date'] = pd.to_numeric(df_07['date'], errors='coerce')
+    st.write(df_07['date'])
+    df_07['month'] = pd.to_numeric(df_07['month'], errors='coerce')
+
+    upcoming = df_07[(df_07['day'] == current_day) & (df_07['month'] == current_month) &(df_07['result'].isna())].sort_values('match_time')
     st.write(f'{upcoming=}')
+
+    dead_line = 1745
+
+    st.write(f'deadline is {dead_line}')
 
     if upcoming.empty:
         st.info("📅 No matches scheduled for today!")
@@ -62,4 +74,4 @@ def betting_manager(current_email):
 
     for i, (_, match) in enumerate(upcoming.iterrows()):
         with cols[i]:
-            match_bet(match_id=match['match_id'],team_1= match['team_1'],team_2= match['team_2'],current_email= current_email,  connection= connection)
+            match_bet(match_id=match['match_id'],team_1= match['team_1'],team_2= match['team_2'],current_email= current_email, dead_line = dead_line connection= connection)
