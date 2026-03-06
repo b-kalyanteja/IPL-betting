@@ -51,8 +51,12 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
             connection.update(worksheet="2026_bets_log", data=updated_log)
             st.toast("Bet Sumbitted . Good Luck! ", icon="🤞")
             st.balloons()
-            time.sleep(1)
+            time.sleep(2)  # Give them 2 seconds to see the balloons
             st.cache_data.clear()
+            st.session_state.clear()
+            st.logout()
+
+
             st.rerun()
 
 
