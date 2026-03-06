@@ -69,48 +69,27 @@ def current_status():
     cols = st.columns(3)
     players = df_status.columns.tolist()
 
-    table_html = """
-        <table style="width: 100%; border-collapse: separate; border-spacing: 8px; table-layout: fixed;">
-        """
+    cols = st.columns(3)
 
-    # 3. Create the grid (3 players per row)
-    for i in range(0, len(players), 3):
-        table_html += "<tr>"
-
-        # Get the next 3 players
-        row_slice = players[i: i + 3]
-
-        for player in row_slice:
-            # Pull dynamic values
-            # Row 2 (Index 0) = Amount | Row 3 (Index 1) = URL
-            raw_amount = df_status[player].iloc[0]
+    for i, player in enumerate(players):
+        # This keeps the players in a 3-column grid that won't break
+        with cols[i % 3]:
+            # Adjust indices based on your sheet: Row 2=Amt (0), Row 3=Link (1)
+            raw_amt = df_status[player].iloc[0]
             img_url = df_status[player].iloc[1]
 
             try:
-                amt_val = float(raw_amount)
+                amt_val = float(raw_amt)
             except:
                 amt_val = 0.0
 
             color = "#00FFCC" if amt_val >= 0 else "#FF4B4B"
 
-            # Add player cell
-            table_html += f"""
-                <td style="background-color: #1E1E1E; border-radius: 12px; padding: 12px 5px; text-align: center; border: 1px solid #333;">
-                    <img src="{img_url}" style="width: 65px; height: 65px; border-radius: 50%; border: 2px solid {color}; object-fit: cover;">
-                    <div style="font-size: 10px; color: #888; margin-top: 8px; font-weight: bold;">{player.upper()}</div>
-                    <div style="font-size: 16px; font-weight: bold; color: {color};">₹{int(amt_val)}</div>
-                </td>
-                """
-
-        # If a row has fewer than 3 players (e.g., you have 5 total),
-        # we add empty cells to keep the layout aligned
-        while len(row_slice) < 3:
-            table_html += "<td></td>"
-            row_slice.append(None)
-
-        table_html += "</tr>"
-
-    table_html += "</table>"
-
-    # 4. Render the final table
-    st.markdown(table_html, unsafe_allow_html=True)
+            # Use a container-style display for each player
+            st.image(img_url, use_container_width=True)
+            st.markdown(f"""
+                    <div style="text-align: center; background-color: #1E1E1E; padding: 5px; border-radius: 5px; border-bottom: 3px solid {color}; margin-bottom: 15px;">
+                        <div style="font-size: 9px; color: #888;">{player.upper()}</div>
+                        <div style="font-size: 14px; font-weight: bold; color: {color};">₹{int(amt_val)}</div>
+                    </div>
+                """, unsafe_allow_html=True)
