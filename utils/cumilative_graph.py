@@ -67,7 +67,7 @@ def current_status():
     # 1. Collect and Sort Data
     players_data = []
     for player in df_status.columns:
-        st.write(player)
+        #st.write(player)
         try:
             amt = float(df_status[player].iloc[0])
             img = player_images.get(player.lower())
