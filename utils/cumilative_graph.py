@@ -73,12 +73,13 @@ def current_status():
         col_index = i % 3
         with cols[col_index]:
             player_photo = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Lucknow_Super_Giants.webp/300px-Lucknow_Super_Giants.webp.png"
-            try:
-                player_amount = df_status.iloc[1, i]
-            except IndexError:
-                player_amount = 0
+            player_amount = df_status.iloc[1, i]
+            st.write("player_amount")
 
-            color = "#00FFCC" if float(player_amount) >= 0 else "#FF4B4B"
+            if float(player_amount) >= 0:
+                color = "#00FFCC"
+            else :
+                color = "#FF4B4B"
 
 
             st.image(player_photo, use_container_width=True)
