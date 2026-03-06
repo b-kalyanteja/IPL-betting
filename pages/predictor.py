@@ -53,5 +53,6 @@ else:
         #prediction_next_match()
 
 st.divider()
+prediction_next_match()
 st.divider()
 
