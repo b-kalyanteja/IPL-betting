@@ -85,7 +85,7 @@ def current_status():
     for i, p in enumerate(players_data):
         color = "#00FFCC" if p['amt'] >= 0 else "#FF4B4B"
         # Assign medals for top 3
-        medal = "🥇" if i == 0 else "🥈" if i == 1 else "🥉" if i == 2 else f"#{i + 1}"
+        medal = "🥇" if i == 0 else "🥈" if i == 1 else "🥉" if i == 2 else "🦜" if i == 5 else f"#{i + 1}"
 
         # Build individual card
         card = f'<div style="flex: 0 0 auto; text-align: center; background: #1E1E1E; padding: 10px; border-radius: 15px; border: 1px solid #333; min-width: 80px;">'
