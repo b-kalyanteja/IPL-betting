@@ -44,7 +44,6 @@ else:
             st.logout()
             st.rerun()
 
-        # --- PROCEED WITH THE APP ---
         betting_manager(current_email)
 
 st.divider()

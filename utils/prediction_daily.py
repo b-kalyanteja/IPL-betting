@@ -5,16 +5,16 @@ from streamlit_gsheets import GSheetsConnection
 
 from utils.match_display import cached_bet_data
 
-# TODO
-'''
-JAgadeesh to write code for the predictor :
+def prediction_next_match():
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    df_07 = conn.read(worksheet="2026_bets_raw", ttl=0)
 
-if predictor logs in and select a match the nit's finalized ... He cannot change it 
-He has to give prediction on or before predictor's deadline, his prediction will b upodated against match_id in the 2026_bets_raw sheets
 
-write predictor's log in code also 
-'''
-
+    #TODO
+    '''
+    Jagadeesh use only patch/update method to bring next match and once places he cannot change..
+    he can only poll anytime after current match starts
+    '''
 
 
 # ON MAIN PAGE  : Prediction Status
