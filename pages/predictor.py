@@ -1,7 +1,6 @@
 import streamlit as st
-from utils.predictor_hall_of_fame import hall_of_fame , predictor_stats
+from utils.predictor_hall_of_fame import hall_of_fame
 
-from utils.sheets_data import df_04
 
 
 st.set_page_config(
