@@ -33,7 +33,7 @@ def today_prediction():
 
     if len(teams) == 2:
         title = "Predictor's Double Dhamaaka"
-        content = f"<b>{teams[0].upper()}</b> <span style='color:#555;'>➕</span> <b>{teams[1]}</b>"
+        content = f"<b>{teams[0].upper()}</b> <span style='color:#555;'>➕</span> <b>{teams[1].upper()}</b>"
     elif len(teams) == 1:
         title = "Predictor's Pick "
         content = f"<b>{teams[0].upper()}</b>"
