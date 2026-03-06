@@ -10,12 +10,22 @@ import pytz
 
 # def time_left()
 
-def match_bet(match_id, team_1, team_2, current_email, dead_line, connection, ):
+def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, connection):
     # Passing the team & match id
-    with st.form(key=f"form_{match_id}", clear_on_submit=True):
+    with (st.form(key=f"form_{match_id}", clear_on_submit=True)):
         st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
         choice = st.radio("choose your side", [team_1, team_2], horizontal=True)
-        amount = st.number_input(f"Bet Amount (Zl)", min_value=5, max_value=10, step=1)
+        bet_min, bet_max = 5,10
+        if match_type.lower() == "league":
+            bet_min, bet_max = 5,10
+        elif match_type.lower() == "semis":
+            bet_min, bet_max = 8,12
+        elif match_type.lower() == "final":
+            bet_min, bet_max = 15,20
+
+        amount = st.number_input("Bet Amount (zł)", bet_min, bet_max, step=1)
+
+
         st.write(f"🕒 Today at **{dead_line}** IST")
         agent = st.context.headers.get("User-Agent")
 
@@ -74,4 +84,4 @@ def betting_manager(current_email):
 
     for i, (_, match) in enumerate(upcoming.iterrows()):
         with cols[i]:
-            match_bet(match_id=match['match_id'],team_1= match['team_1'],team_2= match['team_2'],current_email= current_email, dead_line = match['bet_deadline'] , connection= conn)
+            match_bet(match_id=match['match_id'],team_1= match['team_1'],team_2= match['team_2'],current_email= current_email, dead_line = match['bet_deadline'], match_type= match['match_type'], connection= conn)
