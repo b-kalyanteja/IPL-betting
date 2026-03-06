@@ -23,5 +23,5 @@ players: list = [
 ]
 
 
-predictor: str = "jagadeeswarabojja@gmail.com"
+predictor: list = ["jagadeeswarabojja@gmail.com"]
 #predictor: str = "prnesh.ak47@gmail.com"

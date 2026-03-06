@@ -4,7 +4,6 @@ import time
 from datetime import datetime
 from utils.players import player_map
 from streamlit_gsheets import GSheetsConnection
-from streamlit_browser_stats import streamlit_browser_stats
 import pytz
 
 
