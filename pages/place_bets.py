@@ -50,19 +50,19 @@ st.divider()
 
 
 
-if not df_01.empty:
-    # 1. Clean column names
-    df_01.columns = [str(c).strip().lower() for c in df_01.columns]
-
-    # 2. Convert Wager to numbers (so the chart handles it correctly)
-    if "amount" in df_01.columns:
-        df_01["amount"] = pd.to_numeric(df_01["amount"], errors='coerce').fillna(0)
-
-        st.subheader("💰 Rolling amount ")
-        # Identify the user column (usually the first column)
-        user_col = df_01.columns[0]
-        st.bar_chart(data=df_01, x=user_col, y="amount")
-    else:
-        st.error(f"Could not find 'amount' column. Found these instead: {list(df_01.columns)}")
-else:
-    st.info("No data found to graph yet.")
+# if not df_01.empty:
+#     # 1. Clean column names
+#     df_01.columns = [str(c).strip().lower() for c in df_01.columns]
+#
+#     # 2. Convert Wager to numbers (so the chart handles it correctly)
+#     if "amount" in df_01.columns:
+#         df_01["amount"] = pd.to_numeric(df_01["amount"], errors='coerce').fillna(0)
+#
+#         st.subheader("💰 Rolling amount ")
+#         # Identify the user column (usually the first column)
+#         user_col = df_01.columns[0]
+#         st.bar_chart(data=df_01, x=user_col, y="amount")
+#     else:
+#         st.error(f"Could not find 'amount' column. Found these instead: {list(df_01.columns)}")
+# else:
+#     st.info("No data found to graph yet.")

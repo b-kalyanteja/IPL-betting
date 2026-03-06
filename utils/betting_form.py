@@ -7,8 +7,6 @@ from streamlit_gsheets import GSheetsConnection
 import pytz
 
 
-
-
 def match_bet(match_id, team_1, team_2, current_email, dead_line, connection, ):
     # Passing the team & match id
     with st.form(key=f"form_{match_id}", clear_on_submit=True):
