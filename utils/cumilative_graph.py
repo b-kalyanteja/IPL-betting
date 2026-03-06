@@ -6,51 +6,48 @@ from streamlit.components.v1 import components
 from utils.logos import logos_map
 from streamlit_gsheets import GSheetsConnection
 
-
+@st.cache_data(ttl=300)
 def performance_graph():
     conn = st.connection("gsheets", type=GSheetsConnection)
-    # Adjust worksheet name to wherever your daily profit/loss is stored
-    df_0 = conn.read(worksheet="2026_bets_raw", ttl=0)
+    df_03 = conn.read(worksheet="2026_cumilative", ttl=0)
 
-    # 2. Clean data: Get the 'Amount' column and remove NaNs
-    # Assuming 'Amount' is in column index 8 (adjust as needed)
-    df_clean = df.iloc[:, [4, 8]].dropna()  # Column 4=Date, Column 8=Amount
-    df_clean.columns = ['Date', 'Amount']
+    import plotly.graph_objects as go
+    fig = go.Figure()
 
-    # 3. Calculate Cumulative Sum (The "Running Total")
-    df_clean['Cumulative'] = df_clean['Amount'].cumsum()
+    for player in df_03.columns:
 
-    # 4. Create the Plotly Line Graph
-    fig = px.line(
-        df_clean,
-        x='Date',
-        y='Cumulative',
-        markers=True,  # Adds dots on each data point
-        template="plotly_dark"  # Matches your dark theme
-    )
+        y_data = df_03[player].dropna().tolist()
+        x_data = list(range(len(y_data)))
+        if y_data:
+            fig.add_trace(go.Scatter(
+                x=x_data,
+                y=y_data,
+                mode='lines+markers',
+                name=player.title(),  # Capitalizes names (e.g., 'kalyan' -> 'Kalyan')
+                line=dict(width=3),
+                marker=dict(size=6)
+            ))
 
-    # 5. Styling for "Beauty" and "Mobile Static"
-    fig.update_traces(
-        line_color='#00FFCC',  # Neon cyan/green
-        line_width=3,
-        marker=dict(size=8, color='white', line=dict(width=2, color='#00FFCC'))
-    )
-
+    # 4. Professional Styling
     fig.update_layout(
-        paper_bgcolor='rgba(0,0,0,0)',  # Transparent background
+        template="plotly_dark",
+        paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
-        margin=dict(l=10, r=10, t=10, b=10),
-        height=300,  # Good height for mobile
-        # THE MAGIC: Disable all touch/mouse interaction
-        dragmode=False,
-        hovermode=False,
-        xaxis=dict(showgrid=False, title="Timeline"),
-        yaxis=dict(showgrid=True, gridcolor='#333', title="Amount (₹)"),
+        margin=dict(l=0, r=0, t=30, b=10),
+        height=350,
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        ),
+        xaxis=dict(showgrid=False, title="Earnings"),
+        yaxis=dict(showgrid=True, gridcolor='#333', title="Balance (zl)"),
+        hovermode="x unified"
     )
 
-    # 6. Display in Streamlit
-    # use_container_width makes it responsive for mobile/laptop
-    st.plotly_chart(fig, use_container_width=True, config={'staticPlot': True})
+    st.plotly_chart(fig, use_container_width=True)
 
 
 

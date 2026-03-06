@@ -38,7 +38,7 @@ st.write("Player's Performance")
 performance_graph()
 
 st.divider()
-current_status
+current_status()
 
 
 
