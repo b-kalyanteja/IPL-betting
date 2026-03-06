@@ -37,10 +37,11 @@ def about_page():
 
 about_page()
 
-user_ip = st.context.headers.get("X-Forwarded-For", "Unknown").split(',')[0]
 
-# 2. Get the Platform (Easier to read than User-Agent)
-platform = st.context.headers.get("Sec-Ch-Ua-Platform", "Unknown")
 
-# 3. Print a clean log line
-st.write(f"📡 LOG: {user_ip} | {platform} | {st.context.headers.get('Accept-Language')}")
+import requests
+
+# This gets the real Internet IP (e.g., 122.161.x.x)
+real_ip = requests.get('https://api.ipify.org').text
+
+st.write(f"🌍 Real Public IP: {real_ip}")

@@ -5,6 +5,7 @@ from datetime import datetime
 from utils.players import player_map
 from streamlit_gsheets import GSheetsConnection
 from streamlit_browser_stats import streamlit_browser_stats
+import requests
 import pytz
 
 
@@ -17,7 +18,9 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, connection, ):
         choice = st.radio("choose your side", [team_1, team_2], horizontal=True)
         amount = st.number_input(f"Bet Amount (Zl)", min_value=5, max_value=10, step=1)
 
-        stats = st.context.headers.get("User-Agent")
+        agent = st.context.headers.get("User-Agent")
+        ip  = requests.get('https://api.ipify.org').text
+
 
         submit = st.form_submit_button("Lock Bet 🔒")
 
@@ -29,8 +32,9 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, connection, ):
                 "match_id": match_id,
                 "choice": choice,
                 "bet": amount,
-                "player": player_map.get(current_email)
-                "details": stats
+                "player": player_map.get(current_email),
+                "agent": agent,
+                "ip": ip
             }])
 
             # 3. CONCAT: Add the new row to the FRESHLY fetched data
