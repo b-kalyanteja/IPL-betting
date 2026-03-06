@@ -10,10 +10,10 @@ def prediction_next_match():
     df_bets = conn.read(worksheet="2026_bets_raw", ttl=0)
     df_nxt = conn.read(worksheet="2026_next_match", ttl=0)
     st.write(df_nxt)
-    next_match = df_nxt['next_match'].iloc[0].tolist()
-    st.write(next_match)
+    #next_match = df_nxt['next_match'].iloc[0].tolist()
+    #st.write(next_match)
 
-    #TODO
+    #TO-DO
     '''
     Jagadeesh use only patch/update method to bring next match and once places he cannot change..
     he can only poll anytime after current match starts
