@@ -62,7 +62,7 @@ def betting_manager(current_email):
 
     #prod formula for upcoming
     upcoming = df_07[(df_07['date'] == current_day) & (df_07['month'] == current_month) &(df_07['result'].isna())].sort_values('match_time')
-    st.dataframe(f'here is {upcoming=}')
+    st.dataframe(upcoming)
 
 
     if upcoming.empty:
