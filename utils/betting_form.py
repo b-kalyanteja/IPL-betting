@@ -3,13 +3,8 @@ import streamlit as st
 import time
 from datetime import datetime
 from utils.players import player_map
-from utils.sheets_data import df_04,df_05, df_07
+from streamlit_gsheets import GSheetsConnection
 
-
-
-#df_07 = schedule of matches
-#df_05 =  transactions log
-#df_06 =
 
 
 
@@ -46,8 +41,12 @@ def match_bet(match_id, team_1, team_2, current_email, connection):
             st.rerun()
 
 
-def betting_manager(current_email, df_07, connection):
-    # check latest match & how many matches per day
+
+
+def betting_manager(current_email):
+
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    df_07 = conn.read(worksheet="2026_schedule", ttl=1)
 
     # 1. Get Today's Date in same format as Excel (adjust format if needed)
     today = pd.Timestamp.now().strftime("%Y-%m-%d")

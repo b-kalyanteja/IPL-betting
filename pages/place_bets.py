@@ -15,7 +15,6 @@ st.set_page_config(
 )
 
 
-
 st.divider()
 
 # --- 2. LOGIN LOGIC  PRIVATE SESSION ---
@@ -46,9 +45,11 @@ else:
             st.rerun()
 
         # --- PROCEED WITH THE APP ---
-        betting_manager(current_email, df_07, conn)
+        betting_manager(current_email)
 
 st.divider()
+
+
 
 if not df_01.empty:
     # 1. Clean column names
