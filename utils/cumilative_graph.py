@@ -73,7 +73,7 @@ def current_status():
         col_index = i % 3
         with cols[col_index]:
             player_photo = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Lucknow_Super_Giants.webp/300px-Lucknow_Super_Giants.webp.png"
-            player_amount = df_status.iloc[1, i]
+            player_amount = df_status.iloc[2, i]
             st.write(f"{player_amount}")
 
             if float(player_amount) >= 0:
