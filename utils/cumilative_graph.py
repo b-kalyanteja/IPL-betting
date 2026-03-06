@@ -2,6 +2,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 from streamlit import cache_data
+from streamlit.components.v1 import components
 from utils.logos import logos_map
 from streamlit_gsheets import GSheetsConnection
 
@@ -52,5 +53,31 @@ def performance_graph():
     st.plotly_chart(fig, use_container_width=True, config={'staticPlot': True})
 
 
-# Call the function in your app
-cumulative_balance_graph()
+
+def current_status():
+    sheet_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT-m3xGBp4kDPQgG4-ZzockJy3E--gqPEFJGTtonfdfDX9Juuga0O0UPxTCUUPLmiNX_Op8kkEH0G_j/pubhtml?gid=642106326&single=true&widget=true&headers=false"
+
+    # Using Streamlit columns to center the content
+    col1, col2, col3 = st.columns([1, 8, 1])
+
+    with col2:
+        st.markdown("##### 📅 Schedule & Points Table")
+        components.html(f"""
+            <div style="
+                display: flex; 
+                justify-content: center; 
+                align-items: center; 
+                width: 100%;
+                border: 1px solid #333; 
+                border-radius: 15px; 
+                overflow: hidden;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            ">
+                <iframe src="{sheet_url}" 
+                        width="100%" 
+                        height="400" 
+                        style="border: none;" 
+                        scrolling="yes">
+                </iframe>
+            </div>
+        """, height=400)
