@@ -1,12 +1,12 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="about",
+    page_title="About",
     page_icon="📝",
     layout="wide" # This makes your graphs look better on desktop
 )
 
-st.title("🎰 Behind Scenes")
+st.title("👨🏻‍💻 Behind The Scenes")
 
 def about_page():
 
