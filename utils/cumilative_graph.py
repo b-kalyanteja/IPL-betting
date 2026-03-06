@@ -76,7 +76,7 @@ def current_status():
             player_data = df_status[player]
 
             player_photo = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Lucknow_Super_Giants.webp/300px-Lucknow_Super_Giants.webp.png"
-            player_amount = df_status.iloc[0]
+            player_amount = df_status[player].iloc[0]
             plyer_image = df_status.iloc[1]
 
             st.write(f"amount {player_amount}")
