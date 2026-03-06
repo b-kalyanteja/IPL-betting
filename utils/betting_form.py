@@ -48,13 +48,10 @@ def betting_manager(current_email):
     conn = st.connection("gsheets", type=GSheetsConnection)
     df_07 = conn.read(worksheet="2026_schedule", ttl=1)
 
-    # 1. Get Today's Date in same format as Excel (adjust format if needed)
-    today = pd.Timestamp.now().strftime("%Y-%m-%d")
-
-    # 2. Filter for matches TODAY that don't have a result yet
-    # We sort by match_time to get the early match first
-    to_day = pd.Timestamp.now().strftime("%d-%m-%Y")
-    upcoming = df_07[(df_07['match_date'] == to_day) &(df_07['result'].isna())].sort_values('match_time')
+    today = pd.Timestamp.now().strftime("%d-%m-%Y")
+    st.write(f'{today=}')
+    upcoming = df_07[(df_07['match_date'] == today) &(df_07['result'].isna())].sort_values('match_time')
+    st.write(f'{upcoming=}')
 
     if upcoming.empty:
         st.info("📅 No matches scheduled for today!")
