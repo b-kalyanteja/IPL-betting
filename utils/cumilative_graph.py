@@ -79,8 +79,6 @@ def current_status():
             player_amount = df_status[player].iloc[0]
             player_image = df_status[player].iloc[1]
 
-            st.write(f"amount {player_amount}")
-
             if float(player_amount) >= 0:
                 color = "#00FFCC"
             else :
@@ -92,7 +90,7 @@ def current_status():
             st.markdown(f"""
                     <div style="text-align: center; background-color: #1E1E1E; padding: 10px; border-radius: 0 0 10px 10px; border-top: 2px solid {color};">
                         <div style="font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px;">{player}</div>
-                        <div style="font-size: 20px; font-weight: bold; color: {color};">₹{int(player_amount)}</div>
+                        <div style="font-size: 20px; font-weight: bold; color: {color};">💰{int(player_amount)}</div>
                     </div>
                 """, unsafe_allow_html=True)
 
