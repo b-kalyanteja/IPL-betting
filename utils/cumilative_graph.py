@@ -65,7 +65,7 @@ def current_status():
     df_status = conn.read(worksheet="2026_status", ttl=0)
 
     st.markdown("##### 🏆 LiveLeaderboard")
-
+    st.write(df_status)
     cols = st.columns(3)
     players = df_status.columns.tolist()
     st.write(f"{players}")
