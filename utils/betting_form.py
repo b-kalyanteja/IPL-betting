@@ -5,60 +5,75 @@ from datetime import datetime
 from utils.players import player_map
 from streamlit_gsheets import GSheetsConnection
 import pytz
+import random
 
 
 
 # def time_left()
 
 def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, connection):
-    # Passing the team & match id
-    with (st.form(key=f"form_{match_id}", clear_on_submit=True)):
-        st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
-        choice = st.radio("choose your side", [team_1, team_2], horizontal=True)
-        bet_min, bet_max = 5,10
-        if match_type.lower() == "league":
-            bet_min, bet_max = 5,10
-        elif match_type.lower() == "semis":
-            bet_min, bet_max = 8,12
-        elif match_type.lower() == "final":
-            bet_min, bet_max = 15,20
+    # 1. Check if we are currently "in progress"
+    if f"submitting_{match_id}" not in st.session_state:
+        st.session_state[f"submitting_{match_id}"] = False
 
+    with st.form(key=f"form_{match_id}", clear_on_submit=True):
+        st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
+
+        # Determine limits based on match type
+        bet_min, bet_max = 5, 10
+        if match_type.lower() == "semis":
+            bet_min, bet_max = 8, 12
+        elif match_type.lower() == "final":
+            bet_min, bet_max = 15, 20
+
+        choice = st.radio("choose your side", [team_1, team_2], horizontal=True)
         amount = st.number_input("Bet Amount (zł)", bet_min, bet_max, step=1)
 
+        st.caption(f"🕒 today at {dead_line.lower()} ist")
 
-        st.write(f"🕒 Today at **{dead_line}** IST")
-        agent = st.context.headers.get("User-Agent")
-
-        submit = st.form_submit_button("Confirm Bet 🔒")
+        # 2. Disable button if already clicked
+        submit = st.form_submit_button("Confirm Bet 🔒", disabled=st.session_state[f"submitting_{match_id}"])
 
         if submit:
-            new_row = pd.DataFrame([{
-                "human_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "unix_time": int(time.time()),
-                "email": current_email,
-                "match_id": match_id,
-                "choice": choice,
-                "bet": amount,
-                "player": player_map.get(current_email),
-                "agent": agent
-            }])
+            st.session_state[f"submitting_{match_id}"] = True
 
-            # 3. CONCAT: Add the new row to the FRESHLY fetched data
-            fresh_df_05 = connection.read(worksheet="2026_bets_log")
-            updated_log = pd.concat([fresh_df_05, new_row], ignore_index=True)
+            india_tz = pytz.timezone('Asia/Kolkata')
+            now_india = datetime.now(india_tz)
+            current_time = now_india.strftime("%H:%M")
+            if current_time > dead_line:
+                st.error("🚫 TIME UP! Match has started.")
+                st.toast("Too late!", icon="⏰")
+                st.session_state[f"submitting_{match_id}"] = False
+                st.stop()
 
-            # 3. Push back to Google Sheets
-            connection.update(worksheet="2026_bets_log", data=updated_log)
-            st.toast("Bet Sumbitted . Good Luck! ", icon="🤞")
-            st.balloons()
-            time.sleep(2)  # Give them 2 seconds to see the balloons
-            st.cache_data.clear()
-            st.session_state.clear()
-            st.logout()
+            else:
+                with st.spinner("Locking your bet..."):
+                    new_row = pd.DataFrame([{
+                        "human_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                        "unix_time": int(time.time()),
+                        "email": current_email,
+                        "match_id": match_id,
+                        "choice": choice,
+                        "bet": amount,
+                        "player": player_map.get(current_email),
+                        "agent": st.context.headers.get("User-Agent")
+                    }])
 
+                    # Fetch and Update
+                    fresh_df_05 = connection.read(worksheet="2026_bets_log")
+                    updated_log = pd.concat([fresh_df_05, new_row], ignore_index=True)
+                    connection.update(worksheet="2026_bets_log", data=updated_log)
 
-            st.rerun()
+                # Success Feedback
+                st.toast("Bet Submitted. Good Luck!", icon="🤞")
+                random.choice([st.snow, st.balloons])()
+                time.sleep(2)
 
+                st.cache_data.clear()
+
+                # Reset submission flag and refresh
+                st.session_state[f"submitting_{match_id}"] = False
+                st.rerun()
 
 
 def betting_manager(current_email):
