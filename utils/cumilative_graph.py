@@ -72,7 +72,7 @@ def current_status():
     for i, player in enumerate(players):
         col_index = i % 3
         with cols[col_index]:
-            player_photo = df_status.iloc[2, i]
+            player_photo = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Lucknow_Super_Giants.webp/300px-Lucknow_Super_Giants.webp.png"
             try:
                 player_amount = df_status.iloc[1, i]
             except IndexError:
