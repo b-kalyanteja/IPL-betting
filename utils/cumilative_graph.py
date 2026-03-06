@@ -40,11 +40,12 @@ def performance_graph():
             yanchor="bottom",
             y=1.02,
             xanchor="right",
-            x=1
-        ),
-        xaxis=dict(showgrid=False, dtick=1,tickformat="d",title="Matches"),
-        yaxis=dict(showgrid=True, gridcolor='#333', title="Earnings (zl)"),
-        hovermode="x unified"
+            x=1),
+
+        xaxis=dict(showgrid=False, dtick=1,tickformat="d",title="Matches",fixedrange=True),
+        yaxis=dict(showgrid=True, gridcolor='#333', title="Earnings (zl)",fixedrange=True),
+        hovermode="x unified",
+        dragmode=False,
     )
 
     st.plotly_chart(fig,
