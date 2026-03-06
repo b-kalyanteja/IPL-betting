@@ -47,10 +47,10 @@ def today_prediction():
                 margin: 10px 0;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             ">
-                <div style="color: #00FFCC; font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; opacity: 0.8;">
+                <div style="color: #00FFCC; font-size: 15px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; opacity: 0.8;">
                     {title} 🧞‍♂️
                 </div>
-                <div style="color: white; font-size: 20px; font-weight: 700; letter-spacing: 0.5px;">
+                <div style="color: Black; font-size: 20px; font-weight: 700; letter-spacing: 0.5px;">
                     {content} <span style="font-style: normal; margin-left: 5px;">✌🏼</span>
                 </div>
             </div>
