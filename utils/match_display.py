@@ -162,8 +162,8 @@ def display_match_afterstart():
             t2_content = "".join(t2_list) if t2_list else "<div style='color:#444; font-size:10px;'>No Bets</div>"
         else:
             # HIDDEN MODE: Just show the icons count
-            t1_content = f"<div style='color:#ffcc00; font-size:18px;'>{'👤' * len(t1_list)}</div>"
-            t2_content = f"<div style='color:#ffcc00; font-size:18px;'>{'👤' * len(t2_list)}</div>"
+            t1_content = f"<div style='color:#ffcc00; font-size:22px;'>{'👤' * len(t1_list)}</div>"
+            t2_content = f"<div style='color:#ffcc00; font-size:22px;'>{'👤' * len(t2_list)}</div>"
 
             # Fallback for hidden mode if 0 bets
             if not t1_list: t1_content = "<div style='color:#444; font-size:10px;'>No Bets</div>"
