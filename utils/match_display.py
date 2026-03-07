@@ -129,9 +129,6 @@ def display_match_afterstart():
         logo_1 = logos_map.get(team_1)
         logo_2 = logos_map.get(team_2)
 
-        deadline = str(row_data['match_time']).strip()
-
-
         is_started = current_time_str >= deadline
 
         # 4. Filter Bet Logs for this Match
