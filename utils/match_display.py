@@ -49,14 +49,14 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
 def cached_bet_data():
     conn = st.connection("gsheets", type=GSheetsConnection)
     df_today = conn.read(worksheet="2026_today", ttl=0)
-    df_schedule = conn.read(worksheet="2026_bets_raw", ttl=0)
-    return df_today, df_schedule
+    df_bets = conn.read(worksheet="2026_bets_raw", ttl=0)
+    return df_today, df_bets
 
 
 @st.fragment(run_every=60)
 def display_matches():
 
-    df_today, df_schedule = cached_bet_data()
+    df_today, df_bets = cached_bet_data()
     india_tz = pytz.timezone('Asia/Kolkata')
     current_time_str = datetime.now(india_tz).strftime("%H:%M")
 
@@ -67,9 +67,9 @@ def display_matches():
 
         if pd.notna(val) and str(val).strip().lower() != 'nil' :
             match_id = val
-            schedule_row = df_schedule[df_schedule.iloc[:, 0] == match_id]
+            bets_row = df_bets[df_bets.iloc[:, 0] == match_id]
 
-            row_data = schedule_row.squeeze()
+            row_data = bets_row.squeeze()
             deadline = str(row_data['match_time']).strip()
             if current_time_str > deadline:
                 continue # skips it
@@ -94,10 +94,9 @@ def display_matches():
 
 def display_match_afterstart():
     # 1. Fetch all data
-    df_today, df_schedule = cached_bet_data()
+    df_today, df_bets = cached_bet_data()
     conn = st.connection("gsheets", type=GSheetsConnection)
-    df_raw = conn.read(worksheet="2026_bets_raw", ttl=0)
-
+    df_schedule = conn.read(worksheet="2026_schedule", ttl=0)
     india_tz = pytz.timezone('Asia/Kolkata')
     current_time_str = datetime.now(india_tz).strftime("%H:%M")
 
@@ -114,9 +113,7 @@ def display_match_afterstart():
             continue
 
         match_row = df_schedule[df_schedule['match_id'] == match_id]
-        st.dataframe(match_row)
         match_row_data = match_row.squeeze()
-        st.dataframe(match_row_data)
         deadline = str(match_row_data['match_time']).strip()
 
         row_data = match_row.squeeze()
@@ -129,7 +126,7 @@ def display_match_afterstart():
         is_started = current_time_str >= deadline
 
         # 4. Filter Bet Logs for this Match
-        match_bets = df_raw[df_raw['match_id'] == match_id]
+        match_bets = df_bets[df_bets['match_id'] == match_id]
         t1_voters = match_bets[match_bets['choice'].str.strip().lower() == team_1.lower()]
         t2_voters = match_bets[match_bets['choice'].str.strip().lower() == team_2.lower()]
 
