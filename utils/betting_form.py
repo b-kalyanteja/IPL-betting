@@ -12,9 +12,9 @@ def clock_bar():
     india_tz = pytz.timezone('Asia/Kolkata')
     ist_now = datetime.now(india_tz).strftime("%H:%M:%S")
     with st.container():
-        st.markdown(f"####🕒 Indian Time  `{ist_now}`")
-        st.markdown(f"###🕒 Indian Time  {ist_now}")
-        st.markdown(f"##🕒 Indian Time  {ist_now}")
+        st.markdown(f"#### 🕒 Indian Time  `{ist_now}`")
+        st.markdown(f"### 🕒 Indian Time  {ist_now}")
+        st.markdown(f"## 🕒 Indian Time  {ist_now}")
 
 
 
