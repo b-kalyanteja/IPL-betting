@@ -45,7 +45,7 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
 
 
 #have to cache as the API have limits
-@st.cache_data(ttl=10)
+#@st.cache_data(ttl=10)
 def cached_bet_data():
     conn = st.connection("gsheets", type=GSheetsConnection)
     df_today = conn.read(worksheet="2026_today", ttl=0)
@@ -71,7 +71,7 @@ def display_matches():
             bets_row = df_bets[df_bets.iloc[:, 0] == match_id]
             row_data = bets_row.squeeze()
 
-            #for dealline
+            #for dead line extraction
             deadline_row = df_schedule[df_schedule['match_id'] == match_id]
             deadline_row_data = deadline_row.squeeze()
             deadline = str(deadline_row_data['match_time']).strip()
