@@ -15,10 +15,10 @@ def predictor_stats():
     ]
 
     values_2026 = "".join(
-        ["🟢" if x == 'w' else "🦜" if x == 'l' else "⚠️" for x in prediction_results if x in ['w', 'l', 'd']])
+        ["🟢" if x == 'w' else "🦜" if x == 'l' else "." if x == 'yet_to' else "⚠️" for x in prediction_results if x in ['w', 'l', 'd', 'yet_to']])
 
     ttl_w = prediction_results.count('w')
-    ttl_a: int = len(prediction_results)
+    ttl_a: int = len([x for x in prediction_results if x and str(x).strip().lower() not in ["", "nan", "none", "."]])
     percent_ = ((ttl_w /ttl_a) * 100) if ttl_a > 0 else 0
     percent_2026 = f"{percent_:.1f}%"
 
