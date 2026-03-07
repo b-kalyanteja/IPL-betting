@@ -96,7 +96,8 @@ def display_match_afterstart():
     # 1. Fetch all data
     df_today, df_schedule = cached_bet_data()
     conn = st.connection("gsheets", type=GSheetsConnection)
-    df_logs = conn.read(worksheet="2026_bets_raw", ttl=0)
+    df_raw = conn.read(worksheet="2026_bets_raw", ttl=0)
+    df_schedule = conn.read(worksheet="2026_schedule", ttl=0)
 
     india_tz = pytz.timezone('Asia/Kolkata')
     current_time_str = datetime.now(india_tz).strftime("%H:%M")
@@ -111,23 +112,30 @@ def display_match_afterstart():
         if pd.isna(match_id) or str(match_id).strip().lower() == 'nil':
             continue
 
-        # 2. Extract Match Details from Schedule
         schedule_row = df_schedule[df_schedule.iloc[:, 0] == match_id]
+
+        schedule_row_data = schedule_row.squeeze()
+        deadline = str(schedule_row_data['match_time']).strip()
+
+        # 2. Extract Match Details from Schedule
+        match_row = df_raw[df_raw.iloc[:, 0] == match_id]
         if schedule_row.empty:
             continue
 
-        row_data = schedule_row.squeeze()
+        row_data = match_row.squeeze()
         team_1 = str(row_data['t1']).strip()
         team_2 = str(row_data['t2']).strip()
-        deadline = str(row_data['match_time']).strip()
-        logo_1 = row_data.get('logo1', '')
-        logo_2 = row_data.get('logo2', '')
 
-        # 3. Time Logic
+        logo_1 = logos_map.get(team_1)
+        logo_2 = logos_map.get(team_2)
+
+        deadline = str(row_data['match_time']).strip()
+
+
         is_started = current_time_str >= deadline
 
         # 4. Filter Bet Logs for this Match
-        match_bets = df_logs[df_logs['match_id'] == match_id]
+        match_bets = df_raw[df_raw['match_id'] == match_id]
         t1_voters = match_bets[match_bets['choice'].str.strip().lower() == team_1.lower()]
         t2_voters = match_bets[match_bets['choice'].str.strip().lower() == team_2.lower()]
 
@@ -149,30 +157,30 @@ def display_match_afterstart():
 
         # 6. Render the HTML Card (Ensure zero indentation on the triple quotes)
         st.markdown(f"""
-<div style="background: linear-gradient(135deg, #1e1e1e 0%, #000000 100%); border: 1px solid #333; border-radius: 20px; padding: 20px; width: 100%; box-shadow: 0 10px 20px rgba(0,0,0,0.5); margin: 10px 0;">
-<table style="width:100%; border-collapse:collapse; text-align:center; table-layout:fixed; border:none;">
-<tr style="border:none;">
-<td style="width:40%; vertical-align:middle; border:none;">
-<div style="display: flex; flex-direction: column; align-items: center;">
-<img src="{logo_1}" style="width:65px; height:65px; border-radius:50%; background:#fff; padding:4px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); object-fit:contain;">
-<div style="color:#fff; font-weight:900; font-size:16px; margin-top:10px; letter-spacing:1px;">{team_1.upper()}</div>
-<div style="margin-top:5px;">{t1_content}</div>
-</div>
-</td>
-<td style="width:20%; vertical-align:middle; border:none;">
-<div style="color:#555; font-weight:bold; font-size:18px; position:relative;">
-<span style="background:#111; padding:5px 10px; border-radius:10px; border:1px solid #333;">VS</span>
-</div>
-</td>
-<td style="width:40%; vertical-align:middle; border:none;">
-<div style="display: flex; flex-direction: column; align-items: center;">
-<img src="{logo_2}" style="width:65px; height:65px; border-radius:50%; background:#fff; padding:4px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); object-fit:contain;">
-<div style="color:#fff; font-weight:900; font-size:16px; margin-top:10px; letter-spacing:1px;">{team_2.upper()}</div>
-<div style="margin-top:5px;">{t2_content}</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-""", unsafe_allow_html=True)
+        <div style="background: linear-gradient(135deg, #1e1e1e 0%, #000000 100%); border: 1px solid #333; border-radius: 20px; padding: 20px; width: 100%; box-shadow: 0 10px 20px rgba(0,0,0,0.5); margin: 10px 0;">
+        <table style="width:100%; border-collapse:collapse; text-align:center; table-layout:fixed; border:none;">
+        <tr style="border:none;">
+        <td style="width:40%; vertical-align:middle; border:none;">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+        <img src="{logo_1}" style="width:65px; height:65px; border-radius:50%; background:#fff; padding:4px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); object-fit:contain;">
+        <div style="color:#fff; font-weight:900; font-size:16px; margin-top:10px; letter-spacing:1px;">{team_1.upper()}</div>
+        <div style="margin-top:5px;">{t1_content}</div>
+        </div>
+        </td>
+        <td style="width:20%; vertical-align:middle; border:none;">
+        <div style="color:#555; font-weight:bold; font-size:18px; position:relative;">
+        <span style="background:#111; padding:5px 10px; border-radius:10px; border:1px solid #333;">VS</span>
+        </div>
+        </td>
+        <td style="width:40%; vertical-align:middle; border:none;">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+        <img src="{logo_2}" style="width:65px; height:65px; border-radius:50%; background:#fff; padding:4px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); object-fit:contain;">
+        <div style="color:#fff; font-weight:900; font-size:16px; margin-top:10px; letter-spacing:1px;">{team_2.upper()}</div>
+        <div style="margin-top:5px;">{t2_content}</div>
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        """, unsafe_allow_html=True)
 
