@@ -56,7 +56,7 @@ def cached_bet_data():
 
 @st.fragment(run_every=60)
 def display_matches():
-
+    st.write("UPCOMING MATCHES")
     df_today, df_bets , df_schedule = cached_bet_data()
     india_tz = pytz.timezone('Asia/Kolkata')
     current_time_str = datetime.now(india_tz).strftime("%H:%M")
@@ -97,6 +97,7 @@ def display_matches():
 
 
 def display_match_afterstart():
+    st.write("ON GOING MATCHES")
     # 1. Fetch all data
     df_today, df_bets , df_schedule = cached_bet_data()
     conn = st.connection("gsheets", type=GSheetsConnection)
