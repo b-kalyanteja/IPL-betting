@@ -57,7 +57,7 @@ def cached_bet_data():
 @st.fragment(run_every=60)
 def display_matches():
 
-    df_today, df_bets , df_schedule= cached_bet_data()
+    df_today, df_bets , df_schedule = cached_bet_data()
     india_tz = pytz.timezone('Asia/Kolkata')
     current_time_str = datetime.now(india_tz).strftime("%H:%M")
 
