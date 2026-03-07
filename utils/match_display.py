@@ -151,17 +151,16 @@ def display_match_afterstart():
 
         # 5. Prepare Content based on Time
         if is_started:
-            t1_content = "".join(
-                [f"<div style='color:#aaa; font-size:11px;'>{r['player']} ({r['bet']}zł)</div>" for _, r in
-                 t1_voters.iterrows()])
-            t2_content = "".join(
-                [f"<div style='color:#aaa; font-size:11px;'>{r['player']} ({r['bet']}zł)</div>" for _, r in
-                 t2_voters.iterrows()])
+            # If it started, show the list of names vertically
+            # Note: Using {name} directly because r['player'] doesn't exist in a list
+            t1_content = "".join([f"<div style='color:#aaa; font-size:11px;'>👤 {name}</div>" for name in t1_voters])
+            t2_content = "".join([f"<div style='color:#aaa; font-size:11px;'>👤 {name}</div>" for name in t2_voters])
         else:
-            # Mask names until match starts - just show icons
+            # If not started, just show the gold icons
             t1_content = f"<div style='color:#ffcc00; font-size:18px;'>{'👤' * len(t1_voters)}</div>"
             t2_content = f"<div style='color:#ffcc00; font-size:18px;'>{'👤' * len(t2_voters)}</div>"
 
+        # Fallback if the lists are empty
         if not t1_content: t1_content = "<div style='color:#444; font-size:10px;'>No Bets</div>"
         if not t2_content: t2_content = "<div style='color:#444; font-size:10px;'>No Bets</div>"
 
