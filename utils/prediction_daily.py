@@ -31,7 +31,7 @@ def today_prediction():
     raw_vals = df_09[cols].iloc[0].tolist()
 
     # 2. Keep only values that are NOT empty (removes NaN and None)
-    teams = [str(t) for t in raw_vals if pd.notna(t)]
+    teams = [str(t) for t in raw_vals if pd.notna(t)and str(t).lower() != "nil"]
 
     if len(teams) == 2:
         title = "Predictor's Double Dhamaaka"
