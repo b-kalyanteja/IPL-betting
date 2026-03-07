@@ -108,13 +108,12 @@ def display_match_afterstart():
         val = df_today.iloc[0][col]
 
         match_id = val
-        st.write(match_id)
 
         # Skip if the cell is empty or 'nil'
         if pd.isna(match_id) or str(match_id).strip().lower() == 'nil':
             continue
 
-        schedule_row = df_schedule[df_schedule.iloc[:, 0] == match_id]
+        schedule_row = df_schedule[df_schedule['match_id'] == match_id]
         schedule_row_data = schedule_row.squeeze()
         deadline = str(schedule_row_data['match_time']).strip()
 
