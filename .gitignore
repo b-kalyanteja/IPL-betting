@@ -177,3 +177,6 @@ notes.txt
 __pycache__/
 *.pyc
 
+/.streamlit/
+/.github/
+/.devcontainer/
