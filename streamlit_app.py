@@ -5,7 +5,7 @@ import pandas as pd
 import time
 from utils.match_display import display_matches
 from utils.cumilative_graph import performance_graph, current_status
-from utils.prediction_daily import today_prediction
+#from utils.prediction_daily import today_prediction
 from utils.match_display import  display_match_afterstart
 import plotly.express as px
 
