@@ -41,7 +41,7 @@ def today_prediction():
         content = f"<b>{teams[0].upper()}</b>"
     else:
         title = "Predictor is Sleeping 😴"
-        content = "Predictions coming soon... "
+        content = "Please Wait coming soon... "
 
     st.markdown(f"""
             <div style="

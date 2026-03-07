@@ -40,11 +40,14 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
     if is_deadline_passed:
         st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
         st.error(f"OOPS ⌛️ TIME UP! Betting closed (Deadline: {dead_line} IST)")
+        if user_bet == 0 :
+            st.write(f"OOPS you forgot to bet too 🤷🏻‍♂️")
+        else:
+            st.write(f"Your bet: {user_bet} zł on {user_team}")
         st.stop()
-        return
 
     # --- STATE 2: User has already bet ---
-    if user_team and user_bet:
+    else :
         st.write(f"Your bet: {user_bet} zł on {user_team}")
 
         with st.form(key=f"form_{match_id}", clear_on_submit=True):
