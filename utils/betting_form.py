@@ -66,6 +66,9 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
 
             else:
                 with st.spinner("Locking your bet..."):
+
+                    worksheet = connection.conn.worksheet("2026_bets_log")
+
                     new_row = pd.DataFrame([{
                         "human_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                         "unix_time": int(time.time()),
@@ -77,21 +80,17 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
                         "agent": st.context.headers.get("User-Agent")
                     }])
 
-                    # Fetch and Update
-                    fresh_df_05 = connection.read(worksheet="2026_bets_log")
-                    updated_log = pd.concat([fresh_df_05, new_row], ignore_index=True)
-                    connection.update(worksheet="2026_bets_log", data=updated_log)
+                    worksheet.append_rows(new_row)
 
-                # Success Feedback
-                st.toast("Bet Submitted. Good Luck!", icon="🤞")
-                random.choice([st.snow, st.balloons])()
-                time.sleep(2)
+                    st.toast("Bet Submitted. Good Luck!", icon="🤞")
+                    random.choice([st.snow, st.balloons])()
+                    time.sleep(2)
 
-                st.cache_data.clear()
+                    st.cache_data.clear()
 
-                # Reset submission flag and refresh
-                st.session_state[f"submitting_{match_id}"] = False
-                st.rerun()
+                    # Reset submission flag and refresh
+                    st.session_state[f"submitting_{match_id}"] = False
+                    st.rerun()
 
 
 def betting_manager(current_email):
