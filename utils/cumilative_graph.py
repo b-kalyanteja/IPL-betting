@@ -91,7 +91,7 @@ def current_status():
         card = f'<div style="flex: 0 0 auto; text-align: center; background: #1E1E1E; padding: 10px; border-radius: 15px; border: 1px solid #333; min-width: 80px;">'
         card += f'<div style="font-size: 12px; margin-bottom: 5px;">{medal}</div>'
         card += f'<img src="{p["img"]}" style="width: 55px; height: 55px; border-radius: 50%; border: 2px solid {color}; object-fit: cover;">'
-        card += f'<div style="font-size: 14px; font-weight: bold; color: {color}; margin-top: 5px;">₹{int(p["amt"])}</div>'
+        card += f'<div style="font-size: 14px; font-weight: bold; color: {color}; margin-top: 5px;">💰{int(p["amt"])}</div>'
         card += '</div>'
         html += card
 
