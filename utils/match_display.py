@@ -116,7 +116,9 @@ def display_match_afterstart():
         match_row_data = match_row.squeeze()
         deadline = str(match_row_data['match_time']).strip()
 
-        row_data = match_row.squeeze()
+
+        bets_row = df_bets[df_bets['match_id'] == match_id]
+        row_data = bets_row.squeeze()
         team_1 = str(row_data['team_1']).strip()
         team_2 = str(row_data['team_2']).strip()
 
@@ -127,10 +129,9 @@ def display_match_afterstart():
 
         # 4. Filter Bet Logs for this Match
         match_bets = df_bets[df_bets['match_id'] == match_id]
+
         player_cols = ['kalyan_team', 'subba_team', 'jaggu_team', 'balu_team', 'sravan_team', 'darsi_team']
 
-        # 2. Get the choices for the current match row
-        # 'row_data' is the single row from your schedule
         choices = row_data[player_cols]
 
         # 3. Filter/Count who picked Team 1
