@@ -5,7 +5,7 @@ import time
 
 from utils.players import player_map
 from utils.sheets_data import df_02, df_07, df_05
-from utils.betting_form import betting_manager, clock_bar
+from utils.betting_form import betting_manager
 
 st.set_page_config(
     page_title="🎰 Place Bets",
@@ -14,6 +14,11 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+def clock_bar():
+    # india_tz = pytz.timezone('Asia/Kolkata')
+    # ist_now = datetime.now(india_tz).strftime("%H:%M:%S")
+     st.markdown("### 🕒 Indian Time : ")
+    # st.title(f"{ist_now}")
 clock_bar()
 
 st.divider()
