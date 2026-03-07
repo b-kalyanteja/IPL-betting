@@ -125,8 +125,8 @@ def display_match_afterstart():
         team_1 = str(row_data['team_1']).strip()
         team_2 = str(row_data['team_2']).strip()
 
-        logo_1 = logos_map.get(team_1)
-        logo_2 = logos_map.get(team_2)
+        logo_1 = logos_map.get(team_1.lower())
+        logo_2 = logos_map.get(team_2.lower())
 
         is_started = current_time_str >= deadline
 
