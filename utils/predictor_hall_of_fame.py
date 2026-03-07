@@ -14,11 +14,18 @@ def predictor_stats():
         if str(x).strip().lower() in ['w', 'l', 'd']
     ]
 
-    values_2026 = "".join(
-        ["🟢" if x == 'w' else "🦜" if x == 'l' else "." if x == 'yet_to' else "⚠️" for x in prediction_results if x in ['w', 'l', 'd', 'yet_to']])
+    emoji_map = {
+        "w": "🟢",  # Win
+        "l": "🦜",  # Loss
+        "d": "⚠️",  # Draw (as requested)
+        "yet_to": "⚪"  # Future Match
+    }
+
+    values_2026 = "".join([emoji_map.get(x, "") for x in prediction_results if x in emoji_map])
+
 
     ttl_w = prediction_results.count('w')
-    ttl_a: int = len([x for x in prediction_results if x and str(x).strip().lower() not in ["", "nan", "none", "."]])
+    ttl_a: int = len([x for x in prediction_results if x and str(x).strip().lower() not in ["", "nan", "none", ".", "yet_to"]])
     percent_ = ((ttl_w /ttl_a) * 100) if ttl_a > 0 else 0
     percent_2026 = f"{percent_:.1f}%"
 
