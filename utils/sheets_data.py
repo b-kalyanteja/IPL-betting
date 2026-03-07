@@ -4,8 +4,6 @@ from streamlit_gsheets import GSheetsConnection
 # Establish connection
 conn = st.connection("gsheets", type=GSheetsConnection)
 
-
-df_01 = conn.read(worksheet="2026_summary", ttl=1)
 df_02 = conn.read(worksheet="2026_bets",  ttl=1)
 df_03 = conn.read(worksheet="2026_cumilative", ttl=1)
 df_04 = conn.read(worksheet="2026_bets_raw", ttl=1)
