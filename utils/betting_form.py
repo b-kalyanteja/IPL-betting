@@ -15,8 +15,88 @@ def clock_bar():
         st.markdown(f"### 🕒 Indian Time  `{ist_now}`")
 
 
-
 def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, connection):
+
+
+    # 2. Time Logic
+    india_tz = pytz.timezone('Asia/Kolkata')
+    now_india = datetime.now(india_tz)
+    current_time_str = now_india.strftime("%H:%M")
+    is_deadline_passed = current_time_str > dead_line
+
+    # --- STATE 1: User Already Bet ---
+    if not user_bet.empty:
+        with st.container(border=True):
+            st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
+            recorded_choice = user_bet.iloc[0]['choice']
+            recorded_amt = user_bet.iloc[0]['bet']
+            st.success(f"✅ **Bet Locked:** {recorded_amt} zł on **{recorded_choice}**")
+            st.info("You have already placed your bet for this match.")
+        return  # Exit function early
+
+    # --- STATE 2: Time is Up ---
+    if is_deadline_passed:
+        with st.container(border=True):
+            st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
+            st.error(f"🚫 **TIME UP!** (Deadline: {dead_line} IST)")
+            st.caption("Betting is closed for this match.")
+        return  # Exit function early
+
+    # --- STATE 3: Place Bet (The Form) ---
+    if f"submitting_{match_id}" not in st.session_state:
+        st.session_state[f"submitting_{match_id}"] = False
+
+    with st.form(key=f"form_{match_id}", clear_on_submit=True):
+        st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
+
+        # Match type limits
+        bet_min, bet_max = 5, 10
+        if match_type.lower() == "semis":
+            bet_min, bet_max = 8, 12
+        elif match_type.lower() == "final":
+            bet_min, bet_max = 15, 20
+
+        choice = st.radio("Choose your side", [team_1, team_2], horizontal=True)
+        amount = st.number_input("Bet Amount (zł)", bet_min, bet_max, step=1)
+        st.caption(f"🕒 today at {dead_line.lower()} ist")
+
+        submit = st.form_submit_button("Confirm Bet 🔒", disabled=st.session_state[f"submitting_{match_id}"])
+
+        if submit:
+            st.session_state[f"submitting_{match_id}"] = True
+
+            # Final Security Re-check
+            if datetime.now(india_tz).strftime("%H:%M") > dead_line:
+                st.error("Too late! Match started.")
+                time.sleep(2)
+                st.rerun()
+            else:
+                with st.spinner("Writing to ledger..."):
+                    # Create the new row
+                    new_row = pd.DataFrame([{
+                        "human_time": datetime.now(india_tz).strftime("%Y-%m-%d %H:%M:%S"),
+                        "email": current_email,
+                        "match_id": match_id,
+                        "choice": choice,
+                        "bet": amount,
+                        "player": player_map.get(current_email),
+                    }])
+
+                    # Push to Sheets
+                    updated_log = pd.concat([all_bets, new_row], ignore_index=True)
+                    connection.update(worksheet="2026_bets_log", data=updated_log)
+
+                random.choice([st.snow, st.balloons])()
+                st.toast(f"Good luck on {choice}!", icon="🤞")
+                time.sleep(2)
+                st.session_state[f"submitting_{match_id}"] = False
+                st.cache_data.clear()
+                st.rerun()
+
+
+
+
+def match_bet_old(match_id, team_1, team_2, current_email, dead_line, match_type, connection):
     # 1. Check if we are currently "in progress"
     if f"submitting_{match_id}" not in st.session_state:
         st.session_state[f"submitting_{match_id}"] = False

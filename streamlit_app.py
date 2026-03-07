@@ -3,7 +3,7 @@ import streamlit.components.v1 as components
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import time
-from utils.match_display import display_matches
+from utils.match_display import display_matches, display_match_afterstart
 from utils.cumilative_graph import performance_graph, current_status
 from utils.prediction_daily import today_prediction
 import plotly.express as px
@@ -24,6 +24,7 @@ st.set_page_config(
 st.title("🏆 IPL'26 Bets")
 
 st.write("Today's matches")
+display_match_afterstart()
 display_matches()
 st.divider()
 
