@@ -29,7 +29,7 @@ display_match_afterstart()
 display_matches()
 st.divider()
 
-today_prediction()
+# today_prediction()
 st.divider()
 
 st.write("Player's Performance")
