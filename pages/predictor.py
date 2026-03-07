@@ -2,7 +2,7 @@ import streamlit as st
 import time
 from utils.players import predictor
 from utils.predictor_hall_of_fame import hall_of_fame
-from utils.prediction_daily import prediction_next_match
+#from utils.prediction_daily import prediction_next_match
 
 
 
