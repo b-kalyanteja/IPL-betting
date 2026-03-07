@@ -84,4 +84,4 @@ def today_prediction():
             </div>
         """, unsafe_allow_html=True)
 
- today_prediction()
+today_prediction()
