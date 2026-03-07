@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from pathlib import Path
 from datetime import datetime
-    import time
+import time
 from streamlit_gsheets import GSheetsConnection
 
 from utils.match_display import cached_bet_data
