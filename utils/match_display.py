@@ -50,13 +50,14 @@ def cached_bet_data():
     conn = st.connection("gsheets", type=GSheetsConnection)
     df_today = conn.read(worksheet="2026_today", ttl=0)
     df_bets = conn.read(worksheet="2026_bets_raw", ttl=0)
-    return df_today, df_bets
+    df_schedule = conn.read(worksheet="schedule", ttl=0)
+    return df_today, df_bets , df_schedule
 
 
 @st.fragment(run_every=60)
 def display_matches():
 
-    df_today, df_bets = cached_bet_data()
+    df_today, df_bets , df_schedule= cached_bet_data()
     india_tz = pytz.timezone('Asia/Kolkata')
     current_time_str = datetime.now(india_tz).strftime("%H:%M")
 
@@ -68,9 +69,12 @@ def display_matches():
         if pd.notna(val) and str(val).strip().lower() != 'nil' :
             match_id = val
             bets_row = df_bets[df_bets.iloc[:, 0] == match_id]
-
             row_data = bets_row.squeeze()
-            deadline = str(row_data['match_time']).strip()
+
+            #for dealline
+            deadline_row = df_schedule[df_schedule['match_id'] == match_id]
+            deadline_row_data = deadline_row.squeeze()
+            deadline = str(deadline_row_data['match_time']).strip()
             if current_time_str > deadline:
                 continue # skips it
 
@@ -94,9 +98,8 @@ def display_matches():
 
 def display_match_afterstart():
     # 1. Fetch all data
-    df_today, df_bets = cached_bet_data()
+    df_today, df_bets , df_schedule= cached_bet_data()
     conn = st.connection("gsheets", type=GSheetsConnection)
-    df_schedule = conn.read(worksheet="2026_schedule", ttl=0)
     india_tz = pytz.timezone('Asia/Kolkata')
     current_time_str = datetime.now(india_tz).strftime("%H:%M")
 
