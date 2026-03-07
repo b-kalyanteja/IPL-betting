@@ -95,7 +95,7 @@ def display_matches():
 def display_match_afterstart():
     # 1. Fetch all data
     df_today, df_schedule = cached_bet_data()
-    conn = st.connection("gsheets", type=GSheetsConnection)
+    connection = st.connection("gsheets", type=GSheetsConnection)
     df_logs = connection.read(worksheet="2026_bets_raw", ttl=0)
 
     india_tz = pytz.timezone('Asia/Kolkata')
