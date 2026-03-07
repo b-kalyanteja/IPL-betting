@@ -112,7 +112,7 @@ def display_match_afterstart():
             continue
 
         schedule_row = df_schedule[df_schedule.iloc[:, 0] == match_id]
-
+        st.write(schedule_row)
         schedule_row_data = schedule_row.squeeze()
         st.write(schedule_row_data)
         deadline = str(schedule_row_data['match_time']).strip()
