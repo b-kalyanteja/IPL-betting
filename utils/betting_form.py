@@ -33,8 +33,8 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
     # --- Identify user ---
     user = player_map.get(current_email)
     user_row = df_bet[df_bet['match_id'] == match_id]
-    user_team = user_row['user_team'].iloc[0] if not user_row.empty else None
-    user_bet = user_row['user_bet'].iloc[0] if not user_row.empty else None
+    user_team = user_row[f'{user}_team'].iloc[0] if not user_row.empty else None
+    user_bet = user_row[f'{user}_bet'].iloc[0] if not user_row.empty else None
 
     # --- STATE 1: Time up ---
     if is_deadline_passed:
