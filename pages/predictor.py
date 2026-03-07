@@ -1,8 +1,10 @@
 import streamlit as st
 import time
+
+from utils.betting_form import clock_bar
 from utils.players import predictor
 from utils.predictor_hall_of_fame import hall_of_fame
-#from utils.prediction_daily import prediction_next_match
+from utils.prediction_daily import prediction_next_match
 
 
 
@@ -14,6 +16,7 @@ st.set_page_config(
 
 st.title("🧞‍♂️ Predictor's Dashboard")
 
+clock_bar()
 
 hall_of_fame(img_file_name="predictor.png")
 
@@ -35,10 +38,9 @@ else:
     if current_email not in predictor:
         st.error(f" ⚠️ STAY AWAY ఇది 🧞‍♂️ ( మున్నా ) కి మాత్రమే")
         time.sleep(1)
-
+        st.session_state.clear()
         st.logout()
         st.rerun()
-        st.stop()  #  CRITICAL: This kills the script here so the form never shows
 
     else:
         # STATE 3: Logged in and Authorized
@@ -49,10 +51,7 @@ else:
             st.logout()
             st.rerun()
 
-        st.write("humbak")
-        #prediction_next_match()
+        prediction_next_match(current_email)
 
-st.divider()
-prediction_next_match()
 st.divider()
 

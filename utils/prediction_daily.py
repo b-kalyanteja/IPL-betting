@@ -1,3 +1,4 @@
+import pytz
 import streamlit as st
 import pandas as pd
 from pathlib import Path
@@ -7,76 +8,84 @@ from streamlit_gsheets import GSheetsConnection
 
 from utils.match_display import cached_bet_data
 
-#@st.cache_data(ttl=1)
-# def prediction_next_match():
-#     conn = st.connection("gsheets", type=GSheetsConnection)
-#     df_log = conn.read(worksheet="2026_bets_log", ttl=0)
-#     df_nxt = conn.read(worksheet="2026_next_match", ttl=0)
-#     df_bets = conn.read(worksheet="2026_bets_raw", ttl=0)
-#
-#     conn = st.connection("gsheets", type=GSheetsConnection)
-#
-#     row = df_today.iloc[0]
-#
-#
-#     # 3. Check if there is anything to predict
-#     if not match_ids:
-#         st.info("🛋️ Nothing to predict today... Take rest!")
-#         return
-#         st.stop()
-#
-#     st.subheader("Predictions Poll")
-#
-#         match_row = df_bets[df_bets['match_id'] == m_id]
-#
-#         if match_row.empty:
-#             st.error(f"Match ID `{m_id}` not found in bets sheet.")
-#             continue
-#
-#         row_index = match_row.index[0]
-#         t1 = str(match_row.at[row_index, 'team_1']).strip()
-#         t2 = str(match_row.at[row_index, 'team_2']).strip()
-#
-#         # Check if prediction already exists in the row
-#         current_pred = match_row.at[row_index, 'prediction'] if 'prediction' in df_bets.columns else None
-#
-#         # Display the UI
-#         st.write(f"**Match: {t1.upper()} vs {t2.upper()}**")
-#
-#         if not pd.isna(current_pred) and str(current_pred).strip() != "":
-#             st.success(f"Locked Prediction: **{str(current_pred).upper()}**")
-#             continue  # Move to next match if already predicted
-#
-#         # Form for prediction
-#         with st.form(key=f"poll_{m_id}"):
-#             choice = st.radio("Who will win?", [t1, t2], horizontal=True, key=f"radio_{m_id}")
-#             submit = st.form_submit_button("Submit Prediction 🚀")
-#
-#             if submit:
-#                 # A. Update the Raw Sheet (Horizontal)
-#                 if 'prediction' not in df_bets.columns:
-#                     df_bets['prediction'] = ""
-#
-#                 df_bets.at[row_index, 'prediction'] = choice
-#                 conn.update(worksheet="2026_bets_raw", data=df_bets)
-#
-#                 # B. Save a copy to the Log Sheet
-#                 new_log = pd.DataFrame([{
-#                     "human_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-#                     "match_id": m_id,
-#                     "type": "POLL_PREDICTION",
-#                     "choice": choice,
-#                     "user": st.session_state.get('user_email', 'admin')  # Adjust based on your login
-#                 }])
-#
-#                 updated_log = pd.concat([df_log, new_log], ignore_index=True)
-#                 conn.update(worksheet="2026_bets_log", data=updated_log)
-#
-#                 st.toast(f"Prediction for {m_id} saved!")
-#                 st.cache_data.clear()
-#                 time.sleep(1)
-#                 st.rerun()
+def prediction_next_match(current_email):
 
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    df_log = conn.read(worksheet="2026_bets_log", ttl=0)
+    df_nxt = conn.read(worksheet="2026_next_match", ttl=0)
+    df_bets = conn.read(worksheet="2026_bets_raw", ttl=0)
+    df_schedule = conn.read(worksheet="2026_schedule", ttl=0)
+
+    india_tz = pytz.timezone('Asia/Kolkata')
+    now_india = datetime.now(india_tz)
+    current_time_str = now_india.strftime("%H:%M")
+
+
+    nxt_match_id = df_nxt['next_match'].iloc[0]
+
+    if  nxt_match_id == 'nil' :
+        st.write (" No Matches For today.. Go Sleep 😴")
+        st.stop()
+    else :
+        match_row = df_schedule[df_schedule['match_id'] == nxt_match_id]
+        deadline_time = str(match_row['pred_deadline'].iloc[0])
+        team_1 = str(match_row['team_1'].iloc[0]).strip()
+        team_2 = str(match_row['team_2'].iloc[0]).strip()
+        prediction = match_row['prediction'].fillna("empty").iloc[0]
+
+
+        if ( current_time_str > deadline_time) :
+            st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
+            st.error(f"OOPS ⌛️ TIME UP! Betting closed (Deadline: {deadline_time} IST)")
+            if prediction == 'empty':
+                st.write(f"OOPS you forgot to predict too 🤷🏻‍♂️")
+            else:
+                st.write(f"Your Victory Prediction :**{prediction.upper()}**")
+            st.stop()
+
+        else :
+            with st.form(key=f"form_{nxt_match_id}", clear_on_submit=True):
+                st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
+
+                choice = st.radio("Choose your side", [team_1, team_2], horizontal=True)
+                choice_lower = choice.lower()
+
+                st.caption(f"🕒 Deadline today at {deadline_time} IST")
+
+                submit = st.form_submit_button("Confirm Bet 🔒")
+
+                if submit:
+                    st.session_state[f"submitting_{nxt_match_id}"] = True
+
+                    # time re-check
+                    now_india = datetime.now(india_tz).strftime("%H:%M")
+                    if now_india > deadline_time:
+                        st.error("Just Miss !!! dead line crossed Macha")
+                        st.rerun()
+                    else:
+                        # Add bet to log
+                        new_row = pd.DataFrame([{
+                            "human_time": datetime.now(india_tz).strftime("%Y-%m-%d %H:%M:%S"),
+                            "unix_time": int(time.time()),
+                            "email": current_email,
+                            "match_id": nxt_match_id,
+                            "choice": choice_lower,
+                            "bet": 0,
+                            "player": "predictor",
+                            "agent": st.context.headers.get("User-Agent")
+                        }])
+
+                        updated_log = pd.concat([df_log, new_row], ignore_index=True)
+                        conn.update(worksheet="2026_bets_log", data=updated_log)
+
+
+                        st.toast(f"Good luck on {choice}!", icon="🤞")
+                        time.sleep(1)
+                        st.balloons()
+                        time.sleep(2)
+                        st.session_state[f"submitting_{nxt_match_id}"] = False
+                        st.cache_data.clear()
+                    st.stop()
 
 
 
