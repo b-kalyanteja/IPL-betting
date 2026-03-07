@@ -16,33 +16,41 @@ def clock_bar():
 
 
 def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, connection):
+    import pytz, time, random
+    from datetime import datetime
+    import pandas as pd
+    import streamlit as st
 
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    df_bet_log = conn.read(worksheet="2026_bets_log", ttl=1)
+    df_bet = conn.read(worksheet="2026_bets", ttl=1)
 
-    # 2. Time Logic
     india_tz = pytz.timezone('Asia/Kolkata')
     now_india = datetime.now(india_tz)
     current_time_str = now_india.strftime("%H:%M")
     is_deadline_passed = current_time_str > dead_line
 
-    # --- STATE 1: User Already Bet ---
-    if not user_bet.empty:
-        with st.container(border=True):
-            st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
-            recorded_choice = user_bet.iloc[0]['choice']
-            recorded_amt = user_bet.iloc[0]['bet']
-            st.success(f"✅ **Bet Locked:** {recorded_amt} zł on **{recorded_choice}**")
-            st.info("You have already placed your bet for this match.")
-        return  # Exit function early
+    # --- Identify user ---
+    user = player_map.get(current_email)
+    user_row = df_bet[df_bet['match_id'] == match_id]
+    user_team = user_row['user_team'].iloc[0] if not user_row.empty else None
+    user_bet = user_row['user_bet'].iloc[0] if not user_row.empty else None
 
-    # --- STATE 2: Time is Up ---
+    # --- STATE 1: Time up ---
     if is_deadline_passed:
-        with st.container(border=True):
-            st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
-            st.error(f"🚫 **TIME UP!** (Deadline: {dead_line} IST)")
-            st.caption("Betting is closed for this match.")
-        return  # Exit function early
+        st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
+        st.error(f"⌛️ TIME UP! Betting closed (Deadline: {dead_line} IST)")
+        st.button("Logout")
+        return
 
-    # --- STATE 3: Place Bet (The Form) ---
+    # --- STATE 2: User has already bet ---
+    if user_team and user_bet:
+        st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
+        st.success(f"✅ Your bet: {user_bet} zł on {user_team}")
+        st.button("Logout")
+        return
+
+    # --- STATE 3: User has not bet yet & time is OK ---
     if f"submitting_{match_id}" not in st.session_state:
         st.session_state[f"submitting_{match_id}"] = False
 
@@ -57,42 +65,45 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
             bet_min, bet_max = 15, 20
 
         choice = st.radio("Choose your side", [team_1, team_2], horizontal=True)
+        choice_lower = choice.lower()
         amount = st.number_input("Bet Amount (zł)", bet_min, bet_max, step=1)
-        st.caption(f"🕒 today at {dead_line.lower()} ist")
+        st.caption(f"🕒 Deadline today at {dead_line} IST")
 
-        submit = st.form_submit_button("Confirm Bet 🔒", disabled=st.session_state[f"submitting_{match_id}"])
+        submit = st.form_submit_button(
+            "Confirm Bet 🔒",
+            disabled=st.session_state[f"submitting_{match_id}"]
+        )
 
         if submit:
             st.session_state[f"submitting_{match_id}"] = True
 
-            # Final Security Re-check
-            if datetime.now(india_tz).strftime("%H:%M") > dead_line:
+            # Security re-check
+            now_india = datetime.now(india_tz).strftime("%H:%M")
+            if now_india > dead_line:
                 st.error("Too late! Match started.")
-                time.sleep(2)
                 st.rerun()
             else:
-                with st.spinner("Writing to ledger..."):
-                    # Create the new row
-                    new_row = pd.DataFrame([{
-                        "human_time": datetime.now(india_tz).strftime("%Y-%m-%d %H:%M:%S"),
-                        "email": current_email,
-                        "match_id": match_id,
-                        "choice": choice,
-                        "bet": amount,
-                        "player": player_map.get(current_email),
-                    }])
+                # Add bet to log
+                new_row = pd.DataFrame([{
+                    "human_time": datetime.now(india_tz).strftime("%Y-%m-%d %H:%M:%S"),
+                    "email": current_email,
+                    "match_id": match_id,
+                    "choice": choice_lower,
+                    "bet": amount,
+                    "player": player_map.get(current_email),
+                }])
 
-                    # Push to Sheets
-                    updated_log = pd.concat([all_bets, new_row], ignore_index=True)
-                    connection.update(worksheet="2026_bets_log", data=updated_log)
+                updated_log = pd.concat([df_bet_log, new_row], ignore_index=True)
+                connection.update(worksheet="2026_bets_log", data=updated_log)
 
+                # Celebration + auto logout
                 random.choice([st.snow, st.balloons])()
                 st.toast(f"Good luck on {choice}!", icon="🤞")
                 time.sleep(2)
+                st.button("Logout")  # user clicks to leave
                 st.session_state[f"submitting_{match_id}"] = False
                 st.cache_data.clear()
                 st.rerun()
-
 
 
 
