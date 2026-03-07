@@ -5,7 +5,7 @@ import time
 
 from utils.players import player_map
 from utils.sheets_data import df_02, df_07, df_05
-from utils.betting_form import betting_manager
+from utils.betting_form import betting_manager, clock_bar
 
 st.set_page_config(
     page_title="🎰 Place Bets",
@@ -14,6 +14,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+clock_bar():
 
 st.divider()
 
