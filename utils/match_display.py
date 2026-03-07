@@ -105,15 +105,17 @@ def display_match_afterstart():
     match_cols = ["today_01", "today_02"]
 
     for col in match_cols:
-        match_id = df_today.iloc[0].get(col)
+        val = df_today.iloc[0][col]
+
+        match_id = val
+        st.write(match_id)
 
         # Skip if the cell is empty or 'nil'
         if pd.isna(match_id) or str(match_id).strip().lower() == 'nil':
             continue
-        st.write(match_id)
+
         schedule_row = df_schedule[df_schedule.iloc[:, 0] == match_id]
         schedule_row_data = schedule_row.squeeze()
-        st.write(schedule_row_data)
         deadline = str(schedule_row_data['match_time']).strip()
 
         # 2. Extract Match Details from Schedule
