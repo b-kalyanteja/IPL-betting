@@ -14,7 +14,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-clock_bar():
+clock_bar()
 
 st.divider()
 
