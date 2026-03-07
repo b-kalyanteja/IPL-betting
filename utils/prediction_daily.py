@@ -4,7 +4,7 @@ from pathlib import Path
 from streamlit_gsheets import GSheetsConnection
 
 from utils.match_display import cached_bet_data
-
+#@st.cache_data(ttl=1)
 def prediction_next_match():
     conn = st.connection("gsheets", type=GSheetsConnection)
     df_bets = conn.read(worksheet="2026_bets_raw", ttl=0)
