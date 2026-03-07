@@ -10,10 +10,10 @@ import random
 
 
 def clock_bar():
-    india_tz = pytz.timezone('Asia/Kolkata')
-    ist_now = datetime.now(india_tz).strftime("%H:%M:%S")
-    st.markdown("### 🕒 Indian Time : ")
-    st.title(f"{ist_now}")
+    # india_tz = pytz.timezone('Asia/Kolkata')
+    # ist_now = datetime.now(india_tz).strftime("%H:%M:%S")
+     st.markdown("### 🕒 Indian Time : ")
+    # st.title(f"{ist_now}")
 
 
 def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, connection):
