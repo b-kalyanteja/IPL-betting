@@ -136,33 +136,38 @@ def display_match_afterstart():
         # 4. Filter Bet Logs for this Match
         match_bets = df_bets[df_bets['match_id'] == match_id]
 
-        player_cols = ['kalyan_team', 'subba_team', 'jaggu_team', 'balu_team', 'sravan_team', 'darsi_team']
+        players = ['kalyan', 'subba', 'jaggu', 'balu', 'sravan', 'darsi']
 
-        choices = row_data[player_cols]
+        t1_list = []
+        t2_list = []
 
-        # 3. Filter/Count who picked Team 1
-        # This creates a list of players who chose Team 1
-        t1_voters = [col.replace('_team', '').title() for col in player_cols if
-                     str(row_data[col]).strip().lower() == team_1.lower()]
+        # 2. Loop through players to collect their choice and bet amount
+        for p in players:
+            # Get team choice and bet amount from the row
+            choice = str(row_data.get(f'{p}_team', '')).strip().lower()
+            amount = row_data.get(f'{p}_bet', 0)
+            display_name = p.title()
 
-        # 4. Filter/Count who picked Team 2
-        t2_voters = [col.replace('_team', '').title() for col in player_cols if
-                     str(row_data[col]).strip().lower() == team_2.lower()]
+            if choice == team_1.lower():
+                t1_list.append(
+                    f"<div style='color:#aaa; font-size:11px; margin-bottom:2px;'>👤 {display_name} ({amount}zł)</div>")
+            elif choice == team_2.lower():
+                t2_list.append(
+                    f"<div style='color:#aaa; font-size:11px; margin-bottom:2px;'>👤 {display_name} ({amount}zł)</div>")
 
-        # 5. Prepare Content based on Time
+        # 3. Prepare Content based on Time
         if is_started:
-            # If it started, show the list of names vertically
-            # Note: Using {name} directly because r['player'] doesn't exist in a list
-            t1_content = "".join([f"<div style='color:#aaa; font-size:11px;'>👤 {name}</div>" for name in t1_voters])
-            t2_content = "".join([f"<div style='color:#aaa; font-size:11px;'>👤 {name}</div>" for name in t2_voters])
+            # REVEAL MODE: Join the pre-formatted list of strings
+            t1_content = "".join(t1_list) if t1_list else "<div style='color:#444; font-size:10px;'>No Bets</div>"
+            t2_content = "".join(t2_list) if t2_list else "<div style='color:#444; font-size:10px;'>No Bets</div>"
         else:
-            # If not started, just show the gold icons
-            t1_content = f"<div style='color:#ffcc00; font-size:18px;'>{'👤' * len(t1_voters)}</div>"
-            t2_content = f"<div style='color:#ffcc00; font-size:18px;'>{'👤' * len(t2_voters)}</div>"
+            # HIDDEN MODE: Just show the icons count
+            t1_content = f"<div style='color:#ffcc00; font-size:18px;'>{'👤' * len(t1_list)}</div>"
+            t2_content = f"<div style='color:#ffcc00; font-size:18px;'>{'👤' * len(t2_list)}</div>"
 
-        # Fallback if the lists are empty
-        if not t1_content: t1_content = "<div style='color:#444; font-size:10px;'>No Bets</div>"
-        if not t2_content: t2_content = "<div style='color:#444; font-size:10px;'>No Bets</div>"
+            # Fallback for hidden mode if 0 bets
+            if not t1_list: t1_content = "<div style='color:#444; font-size:10px;'>No Bets</div>"
+            if not t2_list: t2_content = "<div style='color:#444; font-size:10px;'>No Bets</div>"
 
         # 6. Render the HTML Card (Ensure zero indentation on the triple quotes)
         st.markdown(f"""
