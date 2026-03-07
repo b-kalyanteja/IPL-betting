@@ -36,12 +36,25 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
 
             india_tz = pytz.timezone('Asia/Kolkata')
             now_india = datetime.now(india_tz)
-            current_time = now_india.strftime("%H:%M")
-            if current_time > dead_line:
-                st.error("🚫 TIME UP! Match has started.")
-                st.toast("Too late!", icon="⏰")
+
+            try:
+
+                deadline_hour, deadline_minute = map(int, dead_line.split(':'))
+                deadline_time_obj = datetime.strptime(f"{deadline_hour}:{deadline_minute}", "%H:%M").time()
+
+                # Compare it with the current time
+                if now_india.time() > deadline_time_obj:
+                    st.error("🚫 TIME UP! The betting deadline has passed.")
+                    st.toast("Too late!", icon="⏰")
+                    st.session_state[f"submitting_{match_id}"] = False
+                    st.rerun()  # Use rerun instead of stop for a cleaner refresh
+                    return
+
+            except ValueError:
+                st.error("Internal error: Invalid deadline format.")
                 st.session_state[f"submitting_{match_id}"] = False
-                st.stop()
+                st.rerun()
+                return
 
             else:
                 with st.spinner("Locking your bet..."):
