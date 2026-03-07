@@ -23,7 +23,7 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
 
     conn = st.connection("gsheets", type=GSheetsConnection)
     df_bet_log = conn.read(worksheet="2026_bets_log", ttl=1)
-    df_bet = conn.read(worksheet="2026_bets", ttl=1)
+    df_bet = conn.read(worksheet="2026_bets_raw", ttl=1)
 
     india_tz = pytz.timezone('Asia/Kolkata')
     now_india = datetime.now(india_tz)
