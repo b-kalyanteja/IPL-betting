@@ -114,6 +114,7 @@ def display_match_afterstart():
         schedule_row = df_schedule[df_schedule.iloc[:, 0] == match_id]
 
         schedule_row_data = schedule_row.squeeze()
+        st.writw(schedule_row_data)
         deadline = str(schedule_row_data['match_time']).strip()
 
         # 2. Extract Match Details from Schedule
