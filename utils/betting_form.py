@@ -7,7 +7,7 @@ from streamlit_gsheets import GSheetsConnection
 import pytz
 import random
 
-@st.cache_data(ttl=1)
+@st.fragment(run_every=1)
 def clock_bar():
     india_tz = pytz.timezone('Asia/Kolkata')
     ist_now = datetime.now(india_tz).strftime("%H:%M:%S")
