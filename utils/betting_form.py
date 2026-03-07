@@ -98,7 +98,7 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
                     time.sleep(2)
                     st.session_state[f"submitting_{match_id}"] = False
                     st.cache_data.clear()
-                    st.stop()
+                st.stop()
 
 
 
