@@ -86,11 +86,13 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
                 # Add bet to log
                 new_row = pd.DataFrame([{
                     "human_time": datetime.now(india_tz).strftime("%Y-%m-%d %H:%M:%S"),
+                    "unix_time": int(time.time()),
                     "email": current_email,
                     "match_id": match_id,
                     "choice": choice_lower,
                     "bet": amount,
                     "player": player_map.get(current_email),
+                    "agent": st.context.headers.get("User-Agent")
                 }])
 
                 updated_log = pd.concat([df_bet_log, new_row], ignore_index=True)
