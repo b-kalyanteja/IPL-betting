@@ -45,12 +45,12 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
 
 
 #have to cache as the API have limits
-#@st.cache_data(ttl=10)
+@st.cache_data(ttl=10)
 def cached_bet_data():
     conn = st.connection("gsheets", type=GSheetsConnection)
     df_today = conn.read(worksheet="2026_today", ttl=0)
     df_bets = conn.read(worksheet="2026_bets_raw", ttl=0)
-    df_schedule = conn.read(worksheet="schedule", ttl=0)
+    df_schedule = conn.read(worksheet="2026_schedule", ttl=0)
     return df_today, df_bets , df_schedule
 
 
