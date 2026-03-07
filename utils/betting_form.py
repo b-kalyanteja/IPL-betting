@@ -21,8 +21,6 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
     import pandas as pd
     import streamlit as st
 
-
-
     conn = st.connection("gsheets", type=GSheetsConnection)
     df_bet_log = conn.read(worksheet="2026_bets_log", ttl=1)
     df_bet = conn.read(worksheet="2026_bets_raw", ttl=1)
@@ -97,7 +95,7 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
                     st.balloons()
                     time.sleep(2)
                     st.session_state[f"submitting_{match_id}"] = False
-                st.cache_data.clear()
+                    st.cache_data.clear()
                 st.stop()
 
 
