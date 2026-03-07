@@ -62,7 +62,7 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
 
             choice = st.radio("Choose your side", [team_1, team_2], horizontal=True)
             choice_lower = choice.lower()
-            amount = st.slider("Select Bet", min_value =bet_min,max_value= bet_max, value = bet_min step=1)
+            amount = st.slider("Select Bet", min_value =bet_min,max_value= bet_max, value = bet_min, step=1)
             st.caption(f"🕒 Deadline today at {dead_line} IST")
 
             submit = st.form_submit_button("Confirm Bet 🔒")
