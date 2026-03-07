@@ -113,14 +113,9 @@ def display_match_afterstart():
         if pd.isna(match_id) or str(match_id).strip().lower() == 'nil':
             continue
 
-        schedule_row = df_schedule[df_schedule['match_id'] == match_id]
-        schedule_row_data = schedule_row.squeeze()
-        deadline = str(schedule_row_data['match_time']).strip()
-
-        # 2. Extract Match Details from Schedule
-        match_row = df_raw[df_raw.iloc[:, 0] == match_id]
-        if schedule_row.empty:
-            continue
+        match_row = df_schedule[df_schedule['match_id'] == match_id]
+        match_row_data = match_row.squeeze()
+        deadline = str(match_row_data['match_time']).strip()
 
         row_data = match_row.squeeze()
         team_1 = str(row_data['t1']).strip()
