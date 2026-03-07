@@ -130,6 +130,9 @@ def display_match_afterstart():
 
         is_started = current_time_str >= deadline
 
+        if not is_started:
+            continue
+
         # 4. Filter Bet Logs for this Match
         match_bets = df_bets[df_bets['match_id'] == match_id]
 
