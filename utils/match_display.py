@@ -114,7 +114,9 @@ def display_match_afterstart():
             continue
 
         match_row = df_schedule[df_schedule['match_id'] == match_id]
+        st.dataframe(match_row)
         match_row_data = match_row.squeeze()
+        st.dataframe(match_row_data)
         deadline = str(match_row_data['match_time']).strip()
 
         row_data = match_row.squeeze()
