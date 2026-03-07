@@ -8,74 +8,74 @@ from streamlit_gsheets import GSheetsConnection
 from utils.match_display import cached_bet_data
 
 #@st.cache_data(ttl=1)
-def prediction_next_match():
-    conn = st.connection("gsheets", type=GSheetsConnection)
-    df_log = conn.read(worksheet="2026_bets_log", ttl=0)
-    df_nxt = conn.read(worksheet="2026_next_match", ttl=0)
-    df_bets = conn.read(worksheet="2026_bets_raw", ttl=0)
-
-    conn = st.connection("gsheets", type=GSheetsConnection)
-
-    row = df_today.iloc[0]
-
-
-    # 3. Check if there is anything to predict
-    if not match_ids:
-        st.info("🛋️ Nothing to predict today... Take rest!")
-        return
-        st.stop()
-
-    st.subheader("Predictions Poll")
-
-        match_row = df_bets[df_bets['match_id'] == m_id]
-
-        if match_row.empty:
-            st.error(f"Match ID `{m_id}` not found in bets sheet.")
-            continue
-
-        row_index = match_row.index[0]
-        t1 = str(match_row.at[row_index, 'team_1']).strip()
-        t2 = str(match_row.at[row_index, 'team_2']).strip()
-
-        # Check if prediction already exists in the row
-        current_pred = match_row.at[row_index, 'prediction'] if 'prediction' in df_bets.columns else None
-
-        # Display the UI
-        st.write(f"**Match: {t1.upper()} vs {t2.upper()}**")
-
-        if not pd.isna(current_pred) and str(current_pred).strip() != "":
-            st.success(f"Locked Prediction: **{str(current_pred).upper()}**")
-            continue  # Move to next match if already predicted
-
-        # Form for prediction
-        with st.form(key=f"poll_{m_id}"):
-            choice = st.radio("Who will win?", [t1, t2], horizontal=True, key=f"radio_{m_id}")
-            submit = st.form_submit_button("Submit Prediction 🚀")
-
-            if submit:
-                # A. Update the Raw Sheet (Horizontal)
-                if 'prediction' not in df_bets.columns:
-                    df_bets['prediction'] = ""
-
-                df_bets.at[row_index, 'prediction'] = choice
-                conn.update(worksheet="2026_bets_raw", data=df_bets)
-
-                # B. Save a copy to the Log Sheet
-                new_log = pd.DataFrame([{
-                    "human_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                    "match_id": m_id,
-                    "type": "POLL_PREDICTION",
-                    "choice": choice,
-                    "user": st.session_state.get('user_email', 'admin')  # Adjust based on your login
-                }])
-
-                updated_log = pd.concat([df_log, new_log], ignore_index=True)
-                conn.update(worksheet="2026_bets_log", data=updated_log)
-
-                st.toast(f"Prediction for {m_id} saved!")
-                st.cache_data.clear()
-                time.sleep(1)
-                st.rerun()
+# def prediction_next_match():
+#     conn = st.connection("gsheets", type=GSheetsConnection)
+#     df_log = conn.read(worksheet="2026_bets_log", ttl=0)
+#     df_nxt = conn.read(worksheet="2026_next_match", ttl=0)
+#     df_bets = conn.read(worksheet="2026_bets_raw", ttl=0)
+#
+#     conn = st.connection("gsheets", type=GSheetsConnection)
+#
+#     row = df_today.iloc[0]
+#
+#
+#     # 3. Check if there is anything to predict
+#     if not match_ids:
+#         st.info("🛋️ Nothing to predict today... Take rest!")
+#         return
+#         st.stop()
+#
+#     st.subheader("Predictions Poll")
+#
+#         match_row = df_bets[df_bets['match_id'] == m_id]
+#
+#         if match_row.empty:
+#             st.error(f"Match ID `{m_id}` not found in bets sheet.")
+#             continue
+#
+#         row_index = match_row.index[0]
+#         t1 = str(match_row.at[row_index, 'team_1']).strip()
+#         t2 = str(match_row.at[row_index, 'team_2']).strip()
+#
+#         # Check if prediction already exists in the row
+#         current_pred = match_row.at[row_index, 'prediction'] if 'prediction' in df_bets.columns else None
+#
+#         # Display the UI
+#         st.write(f"**Match: {t1.upper()} vs {t2.upper()}**")
+#
+#         if not pd.isna(current_pred) and str(current_pred).strip() != "":
+#             st.success(f"Locked Prediction: **{str(current_pred).upper()}**")
+#             continue  # Move to next match if already predicted
+#
+#         # Form for prediction
+#         with st.form(key=f"poll_{m_id}"):
+#             choice = st.radio("Who will win?", [t1, t2], horizontal=True, key=f"radio_{m_id}")
+#             submit = st.form_submit_button("Submit Prediction 🚀")
+#
+#             if submit:
+#                 # A. Update the Raw Sheet (Horizontal)
+#                 if 'prediction' not in df_bets.columns:
+#                     df_bets['prediction'] = ""
+#
+#                 df_bets.at[row_index, 'prediction'] = choice
+#                 conn.update(worksheet="2026_bets_raw", data=df_bets)
+#
+#                 # B. Save a copy to the Log Sheet
+#                 new_log = pd.DataFrame([{
+#                     "human_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+#                     "match_id": m_id,
+#                     "type": "POLL_PREDICTION",
+#                     "choice": choice,
+#                     "user": st.session_state.get('user_email', 'admin')  # Adjust based on your login
+#                 }])
+#
+#                 updated_log = pd.concat([df_log, new_log], ignore_index=True)
+#                 conn.update(worksheet="2026_bets_log", data=updated_log)
+#
+#                 st.toast(f"Prediction for {m_id} saved!")
+#                 st.cache_data.clear()
+#                 time.sleep(1)
+#                 st.rerun()
 
 
 
