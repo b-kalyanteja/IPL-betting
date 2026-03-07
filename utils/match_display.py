@@ -127,8 +127,20 @@ def display_match_afterstart():
 
         # 4. Filter Bet Logs for this Match
         match_bets = df_bets[df_bets['match_id'] == match_id]
-        t1_voters = match_bets[match_bets['choice'].str.strip().lower() == team_1.lower()]
-        t2_voters = match_bets[match_bets['choice'].str.strip().lower() == team_2.lower()]
+        player_cols = ['kalyan_team', 'subba_team', 'jaggu_team', 'balu_team', 'sravan_team', 'darsi_team']
+
+        # 2. Get the choices for the current match row
+        # 'row_data' is the single row from your schedule
+        choices = row_data[player_cols]
+
+        # 3. Filter/Count who picked Team 1
+        # This creates a list of players who chose Team 1
+        t1_voters = [col.replace('_team', '').title() for col in player_cols if
+                     str(row_data[col]).strip().lower() == team_1.lower()]
+
+        # 4. Filter/Count who picked Team 2
+        t2_voters = [col.replace('_team', '').title() for col in player_cols if
+                     str(row_data[col]).strip().lower() == team_2.lower()]
 
         # 5. Prepare Content based on Time
         if is_started:
