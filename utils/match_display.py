@@ -74,8 +74,8 @@ def display_matches():
             if current_time_str > deadline:
                 continue # skips it
 
-            team_1:str = str(row_data['t1']).strip().lower()
-            team_2:str = str(row_data['t2']).strip().lower()
+            team_1:str = str(row_data['team_1']).strip().lower()
+            team_2:str = str(row_data['team_2']).strip().lower()
 
             bet_cols = ['kalyan_team','jaggu_team','subba_team','balu_team','sravan_team','darsi_team']
             bet_rows = row_data.loc[bet_cols]
@@ -117,8 +117,8 @@ def display_match_afterstart():
         deadline = str(match_row_data['match_time']).strip()
 
         row_data = match_row.squeeze()
-        team_1 = str(row_data['t1']).strip()
-        team_2 = str(row_data['t2']).strip()
+        team_1 = str(row_data['team_1']).strip()
+        team_2 = str(row_data['team_2']).strip()
 
         logo_1 = logos_map.get(team_1)
         logo_2 = logos_map.get(team_2)
