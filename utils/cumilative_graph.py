@@ -127,9 +127,7 @@ def committee_status():
         st.stop()
 
     earnings_value = float(df_committee.iloc[0, 0])
-    percent_2026 = predictor_stats()
-    pred_precent = float(percent_2026)
-
+    percent_win: float = predictor_stats()
     earnings: float = float(earnings_value) if earnings_value and not pd.isna(earnings_value) else 0.0
     dev_share:float = (earnings * 0.25)
     predictor_share:float = ((earnings/2) * pred_precent) if earnings else 0.0
