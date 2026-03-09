@@ -41,6 +41,9 @@ def hall_of_fame(img_file_name):
     st.divider()
 
     values_2026, percent_2026, percent_win = predictor_stats()
+    st.write(percent_2026)
+    st.write(values_2026)
+    st.write(percent_win)
 
     root_path = Path(__file__).parent.parent
     img_path = root_path / "img" / img_file_name
@@ -61,7 +64,7 @@ def hall_of_fame(img_file_name):
         st.markdown("### 📅 2024 Season : 84.6%")
         st.write("🟢🟢🟢🟢🦜🟢🦜🟢🟢🟢🟢🟢🟢")
 
-        st.markdown("#### Predictor Gets 0.5% for 100% on every correct prediction form commitee Fund")
+        st.markdown("#### Predictor Gets 0.5% for 100% on every correct prediction form committee Fund")
 
     st.divider()
 
