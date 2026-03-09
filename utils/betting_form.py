@@ -49,12 +49,15 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
         if user_bet == 0 :
             st.write(f"OOPS you forgot to bet too 🤷🏻‍♂️")
         else:
-            st.write(f"📊 **Your Current Bet:** {user_bet} zł on **{user_team}**")
+            st.write(f"📊 **Your final Bet:** {user_bet} zł on **{user_team}**")
         st.stop()
 
     # --- STATE 2: User has already bet ---
     else :
-        st.markdown(f"### 💰 {user_bet} zł on {user_team}")
+        if user_bet > 0:
+            st.markdown(f"### 📊Your Current Bet :  {user_bet} 💰 on {user_team}")
+        else:
+            st.markdown(f"### 📊Your Current Bet :  {user_bet} 💰 on {user_team}")
 
         with st.form(key=f"form_{match_id}", clear_on_submit=True):
             st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
@@ -99,13 +102,14 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
 
                     # Celebration + auto logout
 
+                    st.cache_data.clear()
                     st.toast(f"Good luck on {choice}!", icon="🤞")
                     time.sleep(1)
                     st.balloons()
-                    time.sleep(2)
                     st.session_state[f"submitting_{match_id}"] = False
-                    st.cache_data.clear()
-                st.stop()
+                    time.sleep(1)
+                    st.rerun()
+                #st.stop()
 
 
 
