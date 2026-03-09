@@ -4,7 +4,7 @@ from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import time
 from utils.match_display import display_matches
-from utils.cumilative_graph import performance_graph, current_status
+from utils.cumilative_graph import performance_graph, current_status, committee_status
 from utils.prediction_daily import today_prediction
 from utils.match_display import  display_match_afterstart
 import plotly.express as px
@@ -37,4 +37,7 @@ st.divider()
 
 
 current_status()
+st.divider()
+
+committee_status()
 st.divider()
