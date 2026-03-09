@@ -40,7 +40,7 @@ else:
 
     else:
         # STATE 3: Logged in and Authorized
-        st.write(f" ✅ Active Player: **{current_email}**")
+        st.write(f" 🙋🏻‍♂️ Active Player: **{current_email}**")
 
         if st.button("Log out"):
             st.session_state.clear()  # added newly
