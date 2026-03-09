@@ -114,7 +114,7 @@ def current_status():
     # 3. Render flat string
     st.markdown(html.replace("\n", ""), unsafe_allow_html=True)
 
-@st.cache_data(ttl=200)
+@st.cache_data(ttl=30)
 def committee_status():
 
     try:
@@ -126,12 +126,14 @@ def committee_status():
             st.rerun()
         st.stop()
 
+    earnings_value = float(df_committee.iloc[0, 0])
     percent_2026 = predictor_stats()
 
-    earnings: float = float(df_committee.iloc[0, 0])
+
+    earnings: float = float(earnings_value) if earnings_value and not pd.isna(earnings_value) else 0.0
     dev_share:float = (earnings * 0.25)
-    predictor_share:float = (earnings/2) * percent_2026
-    rem:float = ((earnings)-(dev_share)-(predictor_share))
+    predictor_share:float = (earnings/2) * percent_2026 if earnings else 0.0
+    rem:float = ((earnings)-(dev_share)-(predictor_share)) if earnings else 0.0
 
 
     st.markdown(f"""
