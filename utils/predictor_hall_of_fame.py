@@ -31,16 +31,16 @@ def predictor_stats():
 
     ttl_w = prediction_results.count('w')
     ttl_a: int = len([x for x in prediction_results if x and str(x).strip().lower() not in ["", "nan", "none", ".", "yet_to"]])
-    percent_ = ((ttl_w /ttl_a) * 100) if ttl_a > 0 else 0
-    percent_2026 = f"{percent_:.1f}"
+    percent_win = ((ttl_w /ttl_a) * 100) if ttl_a > 0 else 0
+    percent_2026 = f"{percent_win:.1f}"
 
-    return values_2026, percent_2026
+    return values_2026, percent_2026, percent_win
 
 @st.cache_data(ttl=30)
 def hall_of_fame(img_file_name):
     st.divider()
 
-    values_2026, percent_2026 = predictor_stats()
+    values_2026, percent_2026, percent_win = predictor_stats()
 
     root_path = Path(__file__).parent.parent
     img_path = root_path / "img" / img_file_name
@@ -52,7 +52,7 @@ def hall_of_fame(img_file_name):
 
     with col2:
 
-        st.markdown(f"### 📅 2026 Season : {percent_2026}%")
+        st.markdown(f"### 📅 2026 Season : {percent_win:.1f}%")
         st.write(values_2026)
 
         st.markdown("### 📅 2025 Season : 56.4%")
