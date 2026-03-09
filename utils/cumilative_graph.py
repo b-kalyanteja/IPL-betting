@@ -137,7 +137,7 @@ def committee_status():
 
     st.markdown(f"""
     <div style="background-color: #1E1E1E; padding: 12px 15px; border-radius: 12px; border: 1px solid #333; text-align: center; line-height: 1.4;">
-        <p style="color: #00FFCC; margin: 0; font-size: 14px; font-weight: bold;">Committee 💰</p>
+        <p style="color: #00FFCC; margin: 0; font-size: 20px; font-weight: bold;">Committee 💰</p>
         <h2 style="color: #FFFFFF; margin: 5px 0; font-size: 24px;">{earnings:.2f} Zl</h2>
         <hr style="border: 0; border-top: 1px solid #333; margin: 10px 0;">
         <div style="text-align: left; font-size: 16px; color: #EEEEEE;">
