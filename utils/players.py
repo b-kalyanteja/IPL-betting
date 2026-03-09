@@ -21,8 +21,8 @@ players: list = [
 ]
 
 
-predictor: list = ["jagadeeswarabojja@gmail.com"]
-#predictor: str = "prnesh.ak47@gmail.com"
+predictor: list = ["prnesh.ak47@gmail.com"]
+
 
 
 player_images: dict = {
