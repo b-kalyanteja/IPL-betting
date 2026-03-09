@@ -130,7 +130,7 @@ def committee_status():
     percent_win: float = predictor_stats()
     earnings: float = float(earnings_value) if earnings_value and not pd.isna(earnings_value) else 0.0
     dev_share:float = (earnings * 0.25)
-    predictor_share:float = ((earnings/2) * pred_precent) if earnings else 0.0
+    predictor_share:float = ((earnings/2) * percent_win) if earnings else 0.0
     rem:float = ((earnings)-(dev_share)-(predictor_share)) if earnings else 0.0
 
 
