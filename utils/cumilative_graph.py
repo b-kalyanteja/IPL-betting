@@ -6,6 +6,8 @@ from streamlit.components.v1 import components
 from utils.players import logos_map
 from streamlit_gsheets import GSheetsConnection
 from utils.players import player_images
+from utils.predictor_hall_of_fame import predictor_stats
+
 
 @st.cache_data(ttl=200)
 def performance_graph():
@@ -111,3 +113,36 @@ def current_status():
 
     # 3. Render flat string
     st.markdown(html.replace("\n", ""), unsafe_allow_html=True)
+
+@st.cache_data(ttl=200)
+def committee_status():
+
+    try:
+        conn = st.connection("gsheets", type=GSheetsConnection)
+        df_committee = conn.read(worksheet="2026_committee", ttl=30)
+    except Exception as e:
+        st.error("📉 Database server -API Free Limit or wait 30 seconds")
+        if st.button("Try Again 🔄"):
+            st.rerun()
+        st.stop()
+
+    percent_2026 = predictor_stats()
+
+    earnings: float = float(df_committee.iloc[0, 0])
+    dev_share:float = (earnings * 0.25)
+    predictor_share:float = (earnings/2) * percent_2026
+    rem:float = ((earnings)-(dev_share)-(predictor_share))
+
+
+    st.markdown(f"""
+    <div style="background-color: #1E1E1E; padding: 20px; border-radius: 15px; border: 1px solid #333; text-align: center;">
+        <h3 style="color: #00FFCC; margin-bottom: 5px;">🏛️ Committee Earnings</h3>
+        <h2 style="color: #FFFFFF; margin-top: 0px;">{earnings:.2f} Zl</h2>
+        <hr style="border: 0.5px solid #333;">
+        <div style="text-align: left; font-size: 14px; color: #BBBBBB;">
+            <p>👨‍💻 <b>Developer's Share (25%):</b> {dev_share:.2f} Zl</p>
+            <p>🔮 <b>Predictor's Share:</b> {predictor_share:.2f} Zl</p>
+            <p>💰 <b>Remaining (Decide later):</b> {rem:.2f} Zl</p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)

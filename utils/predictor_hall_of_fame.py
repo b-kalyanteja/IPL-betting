@@ -6,7 +6,7 @@ from streamlit_gsheets import GSheetsConnection
 def predictor_stats():
     try:
         conn = st.connection("gsheets", type=GSheetsConnection)
-        df_04 = conn.read(worksheet="2026_bets_raw", ttl=0)
+        df_04 = conn.read(worksheet="2026_bets_raw", ttl=5)
     except Exception as e:
         st.error("📉 Database server -API Free Limit or wait 30 seconds")
         if st.button("Try Again 🔄"):
@@ -32,7 +32,7 @@ def predictor_stats():
     ttl_w = prediction_results.count('w')
     ttl_a: int = len([x for x in prediction_results if x and str(x).strip().lower() not in ["", "nan", "none", ".", "yet_to"]])
     percent_ = ((ttl_w /ttl_a) * 100) if ttl_a > 0 else 0
-    percent_2026 = f"{percent_:.1f}%"
+    percent_2026 = f"{percent_:.1f}"
 
     return values_2026, percent_2026
 
@@ -52,7 +52,7 @@ def hall_of_fame(img_file_name):
 
     with col2:
 
-        st.markdown(f"### 📅 2026 Season : {percent_2026}")
+        st.markdown(f"### 📅 2026 Season : {percent_2026}%")
         st.write(values_2026)
 
         st.markdown("### 📅 2025 Season : 56.4%")
@@ -60,6 +60,8 @@ def hall_of_fame(img_file_name):
 
         st.markdown("### 📅 2024 Season : 84.6%")
         st.write("🟢🟢🟢🟢🦜🟢🦜🟢🟢🟢🟢🟢🟢")
+
+        st.markdown("#### Predictor Gets 0.5% for 100% on every correct prediction form commitee Fund")
 
     st.divider()
 
