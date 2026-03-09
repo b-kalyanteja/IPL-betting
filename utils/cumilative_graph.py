@@ -130,7 +130,6 @@ def committee_status():
 
     values_2026, percent_2026, percent_win = predictor_stats()
 
-    st.write(percent_win)
     earnings: float = float(earnings_value) if earnings_value and not pd.isna(earnings_value) else 0.0
     dev_share:float = (earnings * 0.25)
     predictor_share:float = ((earnings/2) * percent_win) if earnings else 0.0
@@ -140,7 +139,7 @@ def committee_status():
     st.markdown(f"""
     <div style="background-color: #1E1E1E; padding: 20px; border-radius: 15px; border: 1px solid #333; text-align: center;">
         <h3 style="color: #00FFCC; margin-bottom: 5px;">🏛️ Committee Earnings</h3>
-        <h2 style="color: #FFFFFF; margin-top: 0px;">{earnings:.2f} Zl</h2>
+        <h3 style="color: #FFFFFF; margin-top: 0px;">{earnings:.2f} Zl</h3>
         <hr style="border: 0.5px solid #333;">
         <div style="text-align: left; font-size: 14px; color: #BBBBBB;">
             <p>👨‍💻 <b>Developer's Share (25%):</b> {dev_share:.2f} Zl</p>
