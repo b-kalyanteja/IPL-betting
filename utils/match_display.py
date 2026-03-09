@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from streamlit import cache_data
-from utils.logos import logos_map
+from utils.players import logos_map
 from streamlit_gsheets import GSheetsConnection
 import pytz
 from datetime import datetime
@@ -45,12 +45,20 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
 
 
 #have to cache as the API have limits
-@st.cache_data(ttl=10)
+@st.cache_data(ttl=5)
 def cached_bet_data():
-    conn = st.connection("gsheets", type=GSheetsConnection)
-    df_today = conn.read(worksheet="2026_today", ttl=0)
-    df_bets = conn.read(worksheet="2026_bets_raw", ttl=0)
-    df_schedule = conn.read(worksheet="2026_schedule", ttl=0)
+
+    try:
+        conn = st.connection("gsheets", type=GSheetsConnection)
+        df_today = conn.read(worksheet="2026_today", ttl=5)
+        df_bets = conn.read(worksheet="2026_bets_raw", ttl=5)
+        df_schedule = conn.read(worksheet="2026_schedule", ttl=5)
+    except Exception as e:
+        st.error("📉 Database server -API Free Limit or wait 30 seconds")
+        if st.button("Try Again 🔄"):
+            st.rerun()
+        st.stop()
+
     return df_today, df_bets , df_schedule
 
 

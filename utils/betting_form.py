@@ -21,9 +21,15 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
     import pandas as pd
     import streamlit as st
 
-    conn = st.connection("gsheets", type=GSheetsConnection)
-    df_bet_log = conn.read(worksheet="2026_bets_log", ttl=1)
-    df_bet = conn.read(worksheet="2026_bets_raw", ttl=1)
+    try:
+        conn = st.connection("gsheets", type=GSheetsConnection)
+        df_bet_log = conn.read(worksheet="2026_bets_log", ttl=1)
+        df_bet = conn.read(worksheet="2026_bets_raw", ttl=1)
+    except Exception as e:
+        st.error("📉 Database server -API Free Limit or wait 30 seconds")
+        if st.button("Try Again 🔄"):
+            st.rerun()
+        st.stop()
 
     india_tz = pytz.timezone('Asia/Kolkata')
     now_india = datetime.now(india_tz)

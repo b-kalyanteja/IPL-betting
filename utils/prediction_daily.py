@@ -10,11 +10,17 @@ from utils.match_display import cached_bet_data
 
 def prediction_next_match(current_email):
 
-    conn = st.connection("gsheets", type=GSheetsConnection)
-    df_log = conn.read(worksheet="2026_bets_log", ttl=0)
-    df_nxt = conn.read(worksheet="2026_next_match", ttl=0)
-    df_bets = conn.read(worksheet="2026_bets_raw", ttl=0)
-    df_schedule = conn.read(worksheet="2026_schedule", ttl=0)
+    try:
+        conn = st.connection("gsheets", type=GSheetsConnection)
+        df_log = conn.read(worksheet="2026_bets_log", ttl=5)
+        df_nxt = conn.read(worksheet="2026_next_match", ttl=5)
+        df_bets = conn.read(worksheet="2026_bets_raw", ttl=5)
+        df_schedule = conn.read(worksheet="2026_schedule", ttl=5)
+    except Exception as e:
+        st.error("📉 Database server -API Free Limit or wait 30 seconds")
+        if st.button("Try Again 🔄"):
+            st.rerun()
+        st.stop()
 
     india_tz = pytz.timezone('Asia/Kolkata')
     now_india = datetime.now(india_tz)
@@ -90,11 +96,16 @@ def prediction_next_match(current_email):
 
 
 # ON MAIN PAGE  : Prediction Status
-@st.cache_data(ttl=30)
+@st.cache_data(ttl=10)
 def today_prediction():
-
-    conn = st.connection("gsheets", type=GSheetsConnection)
-    df_09= conn.read(worksheet="2026_today_prediction", ttl=0)
+    try:
+        conn = st.connection("gsheets", type=GSheetsConnection)
+        df_09= conn.read(worksheet="2026_today_prediction", ttl=10)
+    except Exception as e:
+        st.error("📉 Database server -API Free Limit or wait 30 seconds")
+        if st.button("Try Again 🔄"):
+            st.rerun()
+        st.stop()
 
     cols = ["today_01", "today_02"]
 

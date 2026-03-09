@@ -36,7 +36,7 @@ else:
 
         st.logout()
         st.rerun()
-        st.stop()  #  CRITICAL: This kills the script here so the form never shows
+        st.stop()  # This kills the script here so the form never shows
 
     else:
         # STATE 3: Logged in and Authorized

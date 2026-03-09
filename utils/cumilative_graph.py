@@ -3,14 +3,20 @@ import plotly.express as px
 import streamlit as st
 from streamlit import cache_data
 from streamlit.components.v1 import components
-from utils.logos import logos_map
+from utils.players import logos_map
 from streamlit_gsheets import GSheetsConnection
 from utils.players import player_images
 
-@st.cache_data(ttl=300)
+@st.cache_data(ttl=200)
 def performance_graph():
-    conn = st.connection("gsheets", type=GSheetsConnection)
-    df_03 = conn.read(worksheet="2026_cumilative", ttl=0)
+    try:
+        conn = st.connection("gsheets", type=GSheetsConnection)
+        df_03 = conn.read(worksheet="2026_cumilative", ttl=30)
+    except Exception as e:
+        st.error("📉 Database server -API Free Limit or wait 30 seconds")
+        if st.button("Try Again 🔄"):
+            st.rerun()
+        st.stop()
 
     import plotly.graph_objects as go
     fig = go.Figure()
@@ -58,11 +64,17 @@ def performance_graph():
                     })
 
 
-
-#@st.cache_data(ttl=300)
+@st.cache_data(ttl=200)
 def current_status():
-    conn = st.connection("gsheets", type=GSheetsConnection)
-    df_status = conn.read(worksheet="2026_status", ttl=0)
+
+    try:
+        conn = st.connection("gsheets", type=GSheetsConnection)
+        df_status = conn.read(worksheet="2026_status", ttl=30)
+    except Exception as e:
+        st.error("📉 Database server -API Free Limit or wait 30 seconds")
+        if st.button("Try Again 🔄"):
+            st.rerun()
+        st.stop()
 
     # 1. Collect and Sort Data
     players_data = []

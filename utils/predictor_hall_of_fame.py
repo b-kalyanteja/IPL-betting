@@ -4,9 +4,14 @@ from streamlit_gsheets import GSheetsConnection
 
 @st.cache_data(ttl=30)
 def predictor_stats():
-
-    conn = st.connection("gsheets", type=GSheetsConnection)
-    df_04 = conn.read(worksheet="2026_bets_raw", ttl=0)
+    try:
+        conn = st.connection("gsheets", type=GSheetsConnection)
+        df_04 = conn.read(worksheet="2026_bets_raw", ttl=0)
+    except Exception as e:
+        st.error("📉 Database server -API Free Limit or wait 30 seconds")
+        if st.button("Try Again 🔄"):
+            st.rerun()
+        st.stop()
 
     prediction_results = [
         str(x).strip().lower()
