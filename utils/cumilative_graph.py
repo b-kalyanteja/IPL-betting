@@ -136,14 +136,14 @@ def committee_status():
     rem:float = ((earnings)-(dev_share)-(predictor_share)) if earnings else 0.0
 
     st.markdown(f"""
-    <div style="background-color: #1E1E1E; padding: 12px 15px; border-radius: 12px; border: 1px solid #333; text-align: center; line-height: 1.2;">
+    <div style="background-color: #1E1E1E; padding: 12px 15px; border-radius: 12px; border: 1px solid #333; text-align: center; line-height: 1.4;">
         <p style="color: #00FFCC; margin: 0; font-size: 14px; font-weight: bold;">Committee 💰</p>
         <h2 style="color: #FFFFFF; margin: 5px 0; font-size: 24px;">{earnings:.2f} Zl</h2>
-        <hr style="border: 0; border-top: 1px solid #333; margin: 8px 0;">
+        <hr style="border: 0; border-top: 1px solid #333; margin: 10px 0;">
         <div style="text-align: left; font-size: 16px; color: #EEEEEE;">
-            <p style="margin: 4px 0;">👨‍💻 <b>Dev (25%):</b> {dev_share:.2f} 💰</p>
-            <p style="margin: 4px 0;">🧞‍♂️ <b>Predictor:</b> {predictor_share:.2f} 💰</p>
-            <p style="margin: 4px 0; color: #888;">🏆 <b>Rem:</b> {rem:.2f} 💰</p>
+            <p style="margin-bottom: 10px; margin-top: 0;">👨‍💻 <b>Developer share (25%):</b> {dev_share:.2f} 💰</p>
+            <p style="margin-bottom: 10px; margin-top: 0;">🧞‍♂️ <b>Predictor share:</b> {predictor_share:.2f} 💰</p>
+            <p style="margin-bottom: 5px; margin-top: 0; color: #888;">🏆 <b>Remaining:</b> {rem:.2f} 💰</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
