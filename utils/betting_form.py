@@ -55,9 +55,9 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
     # --- STATE 2: User has already bet ---
     else :
         if user_bet > 0:
-            st.markdown(f"### 📊Your Current Bet :  {user_bet} 💰 on {user_team}")
+            st.markdown(f"### 🎰 Your Current Bet :  {user_bet} 💰 on {user_team}")
         else:
-            st.markdown(f"### 📊Your Current Bet :  {user_bet} 💰 on {user_team}")
+            st.markdown(f"### 🎰 Your Current Bet :  {user_bet} 💰 on {user_team}")
 
         with st.form(key=f"form_{match_id}", clear_on_submit=True):
             st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
