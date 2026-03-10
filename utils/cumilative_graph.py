@@ -36,7 +36,7 @@ def performance_graph():
             y=y_data,
             mode='lines',  # No markers for the "soft" look
             name=player.title(),
-            line=dict(width=3, shape='spline', smoothing=0.5),  # 'spline' curves the lines
+            line=dict(width=3, shape='spline', smoothing=0.1),  # 'spline' curves the lines
             connectgaps=True
         ))
 
