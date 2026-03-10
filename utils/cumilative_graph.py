@@ -49,11 +49,12 @@ def performance_graph():
         height=350,
         xaxis=dict(
             showgrid=False,
+            showticklabels=False,
             title="Matches",
-            nticks=8,
-            fixedrange=True
+            fixedrange=True,
+            zeroline=False
         ),
-        yaxis=dict(showgrid=True, gridcolor='#333', title="💰", fixedrange=True),
+        yaxis=dict(showgrid=True, gridcolor='#333', title="Amount💰", fixedrange=True),
         hovermode="x unified",
         dragmode=False,
     )
