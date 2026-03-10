@@ -14,56 +14,51 @@ def performance_graph():
     try:
         conn = st.connection("gsheets", type=GSheetsConnection)
         df_03 = conn.read(worksheet="2026_cumilative", ttl=30)
+
+        if "Countable" in df_03.columns:
+            df_03 = df_03[df_03["Countable"] == True].copy()
+
+            df_03 = df_03.drop(columns=["Countable"])
+
     except Exception as e:
-        st.error("📉 Database server -API Free Limit or wait 30 seconds")
-        if st.button("Try Again 🔄"):
-            st.rerun()
+        st.error("📉 Database server - API Limit")
         st.stop()
 
     import plotly.graph_objects as go
     fig = go.Figure()
 
     for player in df_03.columns:
+        y_data = df_03[player].tolist()
+        x_data = list(range(1, len(y_data) + 1))
 
-        y_data = df_03[player].dropna().tolist()
-        x_data = list(range(len(y_data)))
-        if y_data:
-            fig.add_trace(go.Scatter(
-                x=x_data,
-                y=y_data,
-                mode='lines+markers',
-                name=player.title(),  # Capitalizes names (e.g., 'kalyan' -> 'Kalyan')
-                line=dict(width=3),
-                marker=dict(size=6)
-            ))
+        fig.add_trace(go.Scatter(
+            x=x_data,
+            y=y_data,
+            mode='lines',  # No markers for the "soft" look
+            name=player.title(),
+            line=dict(width=3, shape='spline', smoothing=1.3),  # 'spline' curves the lines
+            connectgaps=True
+        ))
 
-    # 4. Professional Styling
+    # Professional Styling
     fig.update_layout(
         template="plotly_dark",
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
-        margin=dict(l=0, r=0, t=30, b=10),
+        margin=dict(l=10, r=10, t=30, b=10),
         height=350,
-        legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1.02,
-            xanchor="right",
-            x=1),
-
-        xaxis=dict(showgrid=False, dtick=1,tickformat="d",title="Matches",fixedrange=True),
-        yaxis=dict(showgrid=True, gridcolor='#333', title="Earnings (zl)",fixedrange=True),
+        xaxis=dict(
+            showgrid=False,
+            title="Matches",
+            nticks=8,
+            fixedrange=True
+        ),
+        yaxis=dict(showgrid=True, gridcolor='#333', title="💰", fixedrange=True),
         hovermode="x unified",
         dragmode=False,
     )
 
-    st.plotly_chart(fig,
-                    use_container_width=True,
-                    config = {
-                        'staticPlot': False,
-                        'displayModeBar': False,
-                        'scrollZoom': False
-                    })
+    st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
 
 
 @st.cache_data(ttl=200)
