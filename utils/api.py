@@ -1,6 +1,4 @@
 import requests
-nr_draw will be given
-
 gemini_jey = "AIzaSyAbtS8y4tL79UE_qhc6BslYJ_d32UbWYL8"
 
 import google.generativeai as genai
@@ -10,7 +8,7 @@ system_instruction = (
     "You are a cricket match analyzer for IPL 2025 and 2026. "
     "Your ONLY task is to output the winning team's abbreviation. "
     "Valid abbreviations: [csk, mi, pbks, rcb, rr, srh, kkr, dc, gt, lsg, nr_draw]."
-    " if there is not result for the match give nr_draw will be given"
+    "if there is not result for the match give nr_draw will be given."
     "Constraint: You must respond with exactly ONE word from the list. "
     "No punctuation, no explanations, no bolding."
 )
