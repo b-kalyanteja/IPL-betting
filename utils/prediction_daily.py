@@ -40,7 +40,7 @@ def prediction_next_match(current_email):
 
     already_predicted = df_log[(df_log['email'] == current_email) & (df_log['match_id'] == nxt_match_id)]
     if not already_predicted.empty:
-        st.info(f"✅ You have already placed your bet for **{already_predicted['choice'].iloc.upper()}** .. He HE He")
+        st.info(f"✅ You have already Predicted .. He HE He")
         st.stop()
 
     else :
