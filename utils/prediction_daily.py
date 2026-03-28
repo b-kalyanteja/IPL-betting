@@ -25,6 +25,7 @@ def get_all_data():
 def prediction_next_match(current_email):
 
     df_log, df_nxt, df_bets, df_schedule = get_all_data()
+    conn = st.connection("gsheets", type=GSheetsConnection)
 
     india_tz = pytz.timezone('Asia/Kolkata')
     now_india = datetime.now(india_tz)
