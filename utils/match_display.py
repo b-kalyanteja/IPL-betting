@@ -45,14 +45,14 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
 
 
 #have to cache as the API have limits
-@st.cache_data(ttl=5)
+@st.cache_data(ttl=10)
 def cached_bet_data():
 
     try:
         conn = st.connection("gsheets", type=GSheetsConnection)
-        df_today = conn.read(worksheet="2026_today", ttl=5)
+        df_today = conn.read(worksheet="2026_today", ttl=60)
         df_bets = conn.read(worksheet="2026_bets_raw", ttl=5)
-        df_schedule = conn.read(worksheet="2026_schedule", ttl=5)
+        df_schedule = conn.read(worksheet="2026_schedule", ttl=60)
     except Exception as e:
         st.error("📉 Database server -API Free Limit or wait 30 seconds")
         if st.button("Try Again 🔄"):

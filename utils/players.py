@@ -5,7 +5,6 @@ player_map :dict = {
     "narasimharao416@gmail.com": "darsi",
     "jagadeeswarabojja@gmail.com": "jaggu",
     "gbmkrishnayadav@gmail.com": "balu",
-    "subbareddy9599@gmail.com": "subba"
 }
 
 player_emails: list = list(player_map.keys())
@@ -17,11 +16,10 @@ players: list = [
     "narasimharao416@gmail.com",
     "jagadeeswarabojja@gmail.com",
     "gbmkrishnayadav@gmail.com",
-    "subbareddy9599@gmail.com"
 ]
 
 
-predictor: list = ["prnesh.ak47@gmail.com"]
+predictor: list = ["pranesh.ak47@gmail.com"]
 
 
 

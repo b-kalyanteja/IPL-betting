@@ -23,8 +23,8 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
 
     try:
         conn = st.connection("gsheets", type=GSheetsConnection)
-        df_bet_log = conn.read(worksheet="2026_bets_log", ttl=1)
-        df_bet = conn.read(worksheet="2026_bets_raw", ttl=1)
+        df_bet_log = conn.read(worksheet="2026_bets_log", ttl=5)
+        df_bet = conn.read(worksheet="2026_bets_raw", ttl=5)
     except Exception as e:
         st.error("📉 Database server -API Free Limit or wait 30 seconds")
         if st.button("Try Again 🔄"):
@@ -112,84 +112,6 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
                 #st.stop()
 
 
-
-def match_bet_old(match_id, team_1, team_2, current_email, dead_line, match_type, connection):
-    # 1. Check if we are currently "in progress"
-    if f"submitting_{match_id}" not in st.session_state:
-        st.session_state[f"submitting_{match_id}"] = False
-
-    with st.form(key=f"form_{match_id}", clear_on_submit=True):
-        st.subheader(f"🏏 {team_1.upper()} vs {team_2.upper()}")
-
-        # Determine limits based on match type
-        bet_min, bet_max = 5, 10
-        if match_type.lower() == "semis":
-            bet_min, bet_max = 8, 12
-        elif match_type.lower() == "final":
-            bet_min, bet_max = 15, 20
-
-        choice = st.radio("choose your side", [team_1, team_2], horizontal=True)
-        amount = st.number_input("Bet Amount (zł)", bet_min, bet_max, step=1)
-
-        st.caption(f"🕒 today at {dead_line.lower()} ist")
-
-        # 2. Disable button if already clicked
-        submit = st.form_submit_button("Confirm Bet 🔒", disabled=st.session_state[f"submitting_{match_id}"])
-
-        if submit:
-            st.session_state[f"submitting_{match_id}"] = True
-
-            india_tz = pytz.timezone('Asia/Kolkata')
-            now_india = datetime.now(india_tz)
-
-            try:
-
-                deadline_hour, deadline_minute = map(int, dead_line.split(':'))
-                deadline_time_obj = datetime.strptime(f"{deadline_hour}:{deadline_minute}", "%H:%M").time()
-
-                # Compare it with the current time
-                if now_india.time() > deadline_time_obj:
-                    st.error("🚫 TIME UP! The betting deadline has passed.")
-                    st.toast("Too late!", icon="⏰")
-                    st.session_state[f"submitting_{match_id}"] = False
-                    st.rerun()  # Use rerun instead of stop for a cleaner refresh
-                    return
-
-            except ValueError:
-                st.error("Internal error: Invalid deadline format.")
-                st.session_state[f"submitting_{match_id}"] = False
-                st.rerun()
-                return
-
-            else:
-                with st.spinner("Locking your bet..."):
-
-                    worksheet = connection.conn.worksheet("2026_bets_log")
-
-                    new_row = pd.DataFrame([{
-                        "human_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                        "unix_time": int(time.time()),
-                        "email": current_email,
-                        "match_id": match_id,
-                        "choice": choice,
-                        "bet": amount,
-                        "player": player_map.get(current_email),
-                        "agent": st.context.headers.get("User-Agent")
-                    }])
-
-                    worksheet.append_rows(new_row)
-
-                    st.toast("Bet Submitted. Good Luck!", icon="🤞")
-                    random.choice([st.snow, st.balloons])()
-                    time.sleep(2)
-
-                    st.cache_data.clear()
-
-                    # Reset submission flag and refresh
-                    st.session_state[f"submitting_{match_id}"] = False
-                    st.rerun()
-
-
 def betting_manager(current_email):
     ist = pytz.timezone('Asia/Kolkata')
     now_ist = pd.Timestamp.now(tz=ist)
@@ -198,7 +120,7 @@ def betting_manager(current_email):
     current_month = now_ist.month
 
     conn = st.connection("gsheets", type=GSheetsConnection)
-    df_07 = conn.read(worksheet="2026_schedule", ttl=1)
+    df_07 = conn.read(worksheet="2026_schedule", ttl=5)
 
     df_07['date'] = pd.to_numeric(df_07['date'], errors='coerce')
     df_07['month'] = pd.to_numeric(df_07['month'], errors='coerce')

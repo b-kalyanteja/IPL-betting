@@ -1,34 +1,10 @@
 import requests
-gemini_jey = "AIzaSyAbtS8y4tL79UE_qhc6BslYJ_d32UbWYL8"
-
-import google.generativeai as genai
+series_id = "87c62aac-bc3c-4738-ab93-19da0690488f"
 
 
-system_instruction = (
-    "You are a cricket match analyzer for IPL 2025 and 2026. "
-    "Your ONLY task is to output the winning team's abbreviation. "
-    "Valid abbreviations: [csk, mi, pbks, rcb, rr, srh, kkr, dc, gt, lsg, nr_draw]."
-    "if there is not result for the match give nr_draw will be given."
-    "Constraint: You must respond with exactly ONE word from the list. "
-    "No punctuation, no explanations, no bolding."
-)
-
-genai.configure(api_key="AIzaSyAbtS8y4tL79UE_qhc6BslYJ_d32UbWYL8")
-model = genai.GenerativeModel(model_name="gemini-2.5-flash",system_instruction=system_instruction)
+series_list = "https://api.cricapi.com/v1/series_info?apikey=e0ab91c5-ec2b-4249-a521-b5874281b790&offset=0&id=87c62aac-bc3c-4738-ab93-19da0690488f"
 
 
-def get_prediction(team_a, team_b, match_date):
-    prompt = f"Match: {team_a} vs {team_b}, Date: {match_date}"
+match_id "736f3e02-212a-49bc-8b3b-08a106312702"
 
-    # Temperature 0.0 ensures the output is consistent and non-creative
-    response = model.generate_content(
-        prompt,
-        generation_config=genai.types.GenerationConfig(temperature=0.0)
-    )
-
-    return response.text.strip().lower()
-
-
-# --- Example Usage ---
-winner = get_prediction("kkr", "csk", "7/5/2025")
-print({winner})
+"https://api.cricapi.com/v1/match_info?apikey=e0ab91c5-ec2b-4249-a521-b5874281b790&offset=0&id=736f3e02-212a-49bc-8b3b-08a106312702"

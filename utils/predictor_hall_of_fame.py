@@ -2,11 +2,11 @@ import streamlit as st
 from pathlib import Path
 from streamlit_gsheets import GSheetsConnection
 
-@st.cache_data(ttl=30)
+@st.cache_data(ttl=20)
 def predictor_stats():
     try:
         conn = st.connection("gsheets", type=GSheetsConnection)
-        df_04 = conn.read(worksheet="2026_bets_raw", ttl=5)
+        df_04 = conn.read(worksheet="2026_bets_raw", ttl=10)
     except Exception as e:
         st.error("📉 Database server -API Free Limit or wait 30 seconds")
         if st.button("Try Again 🔄"):
