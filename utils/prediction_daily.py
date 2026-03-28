@@ -15,13 +15,12 @@ def get_all_data():
         df_nxt = conn.read(worksheet="2026_next_match", ttl=10)
         df_bets = conn.read(worksheet="2026_bets_raw", ttl=10)
         df_schedule = conn.read(worksheet="2026_schedule", ttl=10)
+        return df_log, df_nxt, df_bets, df_schedule
     except Exception as e:
         st.error("📉 Database server -API Free Limit or wait 30 seconds")
         if st.button("Try Again 🔄"):
             st.rerun()
         st.stop()
-
-
 
 def prediction_next_match(current_email):
 
