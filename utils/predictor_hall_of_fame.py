@@ -36,7 +36,7 @@ def predictor_stats():
 
     return values_2026, percent_2026, percent_win
 
-@st.cache_data(ttl=30)
+@st.cache_data(ttl=60)
 def hall_of_fame(img_file_name):
     st.divider()
 
