@@ -37,6 +37,12 @@ def prediction_next_match(current_email):
     if  nxt_match_id == 'nil' :
         st.write (" No Matches For today.. Go Sleep 😴")
         st.stop()
+
+    already_predicted = df_log[(df_log['email'] == current_email) & (df_log['match_id'] == nxt_match_id)]
+    if not already_predicted.empty:
+        st.info(f"✅ You have already placed your bet for **{already_predicted['choice'].iloc.upper()}** .. He HE He")
+        st.stop()
+
     else :
         match_row = df_schedule[df_schedule['match_id'] == nxt_match_id]
         deadline_time = str(match_row['pred_deadline'].iloc[0])
