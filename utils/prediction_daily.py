@@ -7,15 +7,15 @@ import time
 from streamlit_gsheets import GSheetsConnection
 
 from utils.match_display import cached_bet_data
-
+@st.cache_data(ttl=10)
 def prediction_next_match(current_email):
 
     try:
         conn = st.connection("gsheets", type=GSheetsConnection)
-        df_log = conn.read(worksheet="2026_bets_log", ttl=5)
-        df_nxt = conn.read(worksheet="2026_next_match", ttl=5)
-        df_bets = conn.read(worksheet="2026_bets_raw", ttl=5)
-        df_schedule = conn.read(worksheet="2026_schedule", ttl=5)
+        df_log = conn.read(worksheet="2026_bets_log", ttl=10)
+        df_nxt = conn.read(worksheet="2026_next_match", ttl=10)
+        df_bets = conn.read(worksheet="2026_bets_raw", ttl=10)
+        df_schedule = conn.read(worksheet="2026_schedule", ttl=10)
     except Exception as e:
         st.error("📉 Database server -API Free Limit or wait 30 seconds")
         if st.button("Try Again 🔄"):
