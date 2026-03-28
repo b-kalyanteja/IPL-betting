@@ -8,8 +8,7 @@ from streamlit_gsheets import GSheetsConnection
 
 from utils.match_display import cached_bet_data
 @st.cache_data(ttl=10)
-def prediction_next_match(current_email):
-
+def get_all_data():
     try:
         conn = st.connection("gsheets", type=GSheetsConnection)
         df_log = conn.read(worksheet="2026_bets_log", ttl=10)
@@ -21,6 +20,12 @@ def prediction_next_match(current_email):
         if st.button("Try Again 🔄"):
             st.rerun()
         st.stop()
+
+
+
+def prediction_next_match(current_email):
+
+    df_log, df_nxt, df_bets, df_schedule = get_all_data()
 
     india_tz = pytz.timezone('Asia/Kolkata')
     now_india = datetime.now(india_tz)
