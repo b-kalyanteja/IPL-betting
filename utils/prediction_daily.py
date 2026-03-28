@@ -7,7 +7,7 @@ import time
 from streamlit_gsheets import GSheetsConnection
 
 from utils.match_display import cached_bet_data
-@st.cache_data(ttl=10)
+@st.cache_data(ttl=20)
 def get_all_data():
     try:
         conn = st.connection("gsheets", type=GSheetsConnection)
