@@ -141,7 +141,7 @@ def committee_status():
     dev_share:float = (earnings * 0.25)
     predictor_share:float  = ((earnings * percent_win)/ 200) if earnings else 0.0
     rem:float = ((earnings)-(dev_share)-(predictor_share)) if earnings else 0.0
-    st.write (f'{earnings=}, {percent_win=}')
+    #st.write (f'{earnings=}, {percent_win=}')
 
     st.markdown(f"""
     <div style="background-color: #1E1E1E; padding: 12px 15px; border-radius: 12px; border: 1px solid #333; text-align: center; line-height: 1.4;">
