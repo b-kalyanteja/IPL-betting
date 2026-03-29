@@ -42,28 +42,34 @@ def performance_graph():
     for player in df_03.columns:
         y_data = df_03[player].tolist()
         x_data = list(range(len(y_data)))
-        last_x = x_data[-1]
-        last_y = y_data[-1]
 
-        # Add the line
+        # Identify the last coordinates
+        last_x = x_data[-1]
+
+        # SAFE CHECK: Get the last value, but default to 0 if it's NaN/None
+        import math
+        val = y_data[-1]
+        last_y = val if (val is not None and not (isinstance(val, float) and math.isnan(val))) else 0
+
+        # 1. Add the trace
         fig.add_trace(go.Scatter(
             x=x_data,
             y=y_data,
             mode='lines',
-            name=player.title(),
+            name=player.upper(),
             line=dict(width=2, shape='linear'),
-            connectgaps=True,
-            showlegend=True  # Hide the side legend since we are adding labels
+            connectgaps=True,  # This helps bridge any empty spots in the middle
+            showlegend=True
         ))
+
+        # 2. Add the annotation safely
         fig.add_annotation(
             x=last_x,
             y=last_y,
-            # Shows name and value like "CSK (450)"
             text=f" {player.upper()} ({int(last_y)})",
             showarrow=False,
             xanchor="left",
             font=dict(size=10),
-            # This pushes the label slightly to the right of the last point
             xshift=5
         )
 
