@@ -53,25 +53,49 @@ def performance_graph():
             name=player.title(),
             line=dict(width=2, shape='linear'),
             connectgaps=True,
-            showlegend=False  # Hide the side legend since we are adding labels
+            showlegend=True  # Hide the side legend since we are adding labels
         ))
+        fig.add_annotation(
+            x=last_x,
+            y=last_y,
+            # Shows name and value like "CSK (450)"
+            text=f" {player.upper()} ({int(last_y)})",
+            showarrow=False,
+            xanchor="left",
+            font=dict(size=10),
+            # This pushes the label slightly to the right of the last point
+            xshift=5
+        )
 
     # Professional Styling
     fig.update_layout(
         template="plotly_dark",
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
-        margin=dict(l=10, r=10, t=30, b=40),
+        # Increased 'r' (right margin) to 100 so labels don't get cut off
+        margin=dict(l=10, r=100, t=30, b=10),
         height=350,
-        showlegend=True,  # Ensure legends are visible
+        showlegend=True,
+        legend=dict(
+            orientation="h",  # Horizontal legend looks better with line labels
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        ),
         xaxis=dict(
             showgrid=False,
             showticklabels=False,
-            title="Matches",
+            title=None,
             fixedrange=True,
             zeroline=False
         ),
-        yaxis=dict(showgrid=True, gridcolor='#333', title="Amount💰", fixedrange=True),
+        yaxis=dict(
+            showgrid=True,
+            gridcolor='#333',
+            title="Amount💰",
+            fixedrange=True
+        ),
         hovermode="x unified",
         dragmode=False,
     )
