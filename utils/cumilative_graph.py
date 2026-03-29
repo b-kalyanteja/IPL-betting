@@ -7,6 +7,7 @@ from utils.players import logos_map
 from streamlit_gsheets import GSheetsConnection
 from utils.players import player_images
 from utils.predictor_hall_of_fame import predictor_stats
+import math
 
 
 @st.cache_data(ttl=200)
@@ -43,30 +44,34 @@ def performance_graph():
         y_data = df_03[player].tolist()
         x_data = list(range(len(y_data)))
 
-        # Identify the last coordinates
-        last_x = x_data[-1]
+        # 1. Identify the last value in the list
+        val = y_data[-1] if y_data else 0
 
-        # SAFE CHECK: Get the last value, but default to 0 if it's NaN/None
-        import math
-        val = y_data[-1]
-        last_y = val if (val is not None and not (isinstance(val, float) and math.isnan(val))) else 0
+        # 2. SAFE CHECK: If it's NaN, None, or not a number, set it to 0
+        try:
+            if val is None or (isinstance(val, float) and math.isnan(val)):
+                safe_y = 0
+            else:
+                safe_y = int(float(val))  # Convert to float first, then int for safety
+        except (ValueError, TypeError):
+            safe_y = 0
 
-        # 1. Add the trace
+        # 3. Add the trace
         fig.add_trace(go.Scatter(
             x=x_data,
             y=y_data,
             mode='lines',
             name=player.upper(),
             line=dict(width=2, shape='linear'),
-            connectgaps=True,  # This helps bridge any empty spots in the middle
+            connectgaps=True,
             showlegend=True
         ))
 
-        # 2. Add the annotation safely
+        # 4. Add the annotation using our safe value
         fig.add_annotation(
-            x=last_x,
-            y=last_y,
-            text=f" {player.upper()} ({int(last_y)})",
+            x=x_data[-1] if x_data else 0,
+            y=safe_y,
+            text=f" {player.upper()} ({safe_y})",
             showarrow=False,
             xanchor="left",
             font=dict(size=10),
