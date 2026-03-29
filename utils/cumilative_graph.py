@@ -16,13 +16,16 @@ def performance_graph():
         df_03 = conn.read(worksheet="2026_cumilative", ttl=30)
 
         if "Countable" in df_03.columns:
-            df_03 = df_03[df_03["Countable"] == True].copy()
+            df_03 = df_03[df_03["Countable"].astype(str).str.strip().str.upper()== "TRUE"].copy()
 
-            df_03 = df_03.drop(columns=["Countable"])
+            if not df_03.empty:
+                df_03 = df_03.drop(columns=["Countable"])
 
-        target_columns = ["A", "B", "C", "D", "E", "F"]
-        existing_targets = [col for col in target_columns if col in df_03.columns]
-        df_03 = df_03[existing_targets]
+            target_columns = ["A", "B", "C", "D", "E", "F"]
+            existing_targets = [col for col in target_columns if col in df_03.columns]
+
+            if existing_targets:
+                df_03 = df_03[existing_targets]
 
     except Exception as e:
         st.error("📉 Database server - API Limit")
