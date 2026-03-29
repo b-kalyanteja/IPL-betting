@@ -20,6 +20,10 @@ def performance_graph():
 
             df_03 = df_03.drop(columns=["Countable"])
 
+        target_columns = ["A", "B", "C", "D", "E", "F"]
+        existing_targets = [col for col in target_columns if col in df_03.columns]
+        df_03 = df_03[existing_targets]
+
     except Exception as e:
         st.error("📉 Database server - API Limit")
         st.stop()
@@ -27,16 +31,23 @@ def performance_graph():
     import plotly.graph_objects as go
     fig = go.Figure()
 
+    # If df_03 is empty after filtering, show a warning
+    if df_03.empty:
+        st.warning("No 'Countable' data found to plot.")
+        return
+
     for player in df_03.columns:
         y_data = df_03[player].tolist()
-        x_data = list(range(1, len(y_data) + 1))
+        # Start X-axis from 0 to show the starting point
+        x_data = list(range(len(y_data)))
 
         fig.add_trace(go.Scatter(
             x=x_data,
             y=y_data,
-            mode='lines',  # No markers for the "soft" look
-            name=player.title(),
+            mode='lines+markers',  # Added markers so 0-value points are visible
+            name=f"Player {player}",
             line=dict(width=2, shape='linear'),
+            marker=dict(size=4),
             connectgaps=True
         ))
 
@@ -45,11 +56,12 @@ def performance_graph():
         template="plotly_dark",
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
-        margin=dict(l=10, r=10, t=30, b=10),
+        margin=dict(l=10, r=10, t=30, b=40),
         height=350,
+        showlegend=True,  # Ensure legends are visible
         xaxis=dict(
             showgrid=False,
-            showticklabels=False,
+            showticklabels=True,
             title="Matches",
             fixedrange=True,
             zeroline=False
@@ -60,7 +72,6 @@ def performance_graph():
     )
 
     st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
-
 
 @st.cache_data(ttl=200)
 def current_status():
