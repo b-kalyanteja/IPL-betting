@@ -40,74 +40,45 @@ def performance_graph():
         st.warning("No 'Countable' data found to plot.")
         return
 
-    used_y_positions = []
     for player in df_03.columns:
         y_data = df_03[player].tolist()
-        if not y_data:
-            continue  # Skip if no data
 
-        x_data = list(range(len(y_data)))
+        # SAFETY: Remove any trailing None/NaN values that cause crashes
+        # This ensures the line only draws where there is actual data
+        y_clean = [0 if (x is None or (isinstance(x, float) and math.isnan(x))) else x for x in y_data]
+        x_data = list(range(len(y_clean)))
 
-        # 2. Get the last value safely
-        try:
-            raw_val = y_data[-1]
-            last_val = int(float(raw_val)) if raw_val is not None and not (
-                        isinstance(raw_val, float) and math.isnan(raw_val)) else 0
-        except:
-            last_val = 0
-
-        # 3. COLLISION PREVENTION: If this Y-position is taken, nudge it
-        display_y = last_val
-        for used_y in used_y_positions:
-            if abs(display_y - used_y) < 15:  # If labels are within 15 units of each other
-                display_y -= 20  # Nudge the new label down
-
-        used_y_positions.append(display_y)
-
-        # 4. Add the Trace
+        # Add the line - Simple and Clean
         fig.add_trace(go.Scatter(
             x=x_data,
-            y=y_data,
-            mode='lines',
+            y=y_clean,
+            mode='lines+markers',  # Markers help see individual match points
             name=player.upper(),
             line=dict(width=2),
+            marker=dict(size=4),
             connectgaps=True
         ))
 
-        # 5. Add the label at the nudged position
-        fig.add_annotation(
-            x=x_data[-1],
-            y=display_y,
-            text=f" {player.upper()} ({last_val})",
-            showarrow=False,
-            xanchor="left",
-            xshift=5,
-            font=dict(size=10, color="white"),
-            bgcolor="rgba(0,0,0,0.4)"  # Adds a tiny shadow for readability
-        )
-
-    # Professional Styling
+        # Professional Styling with Legend at Top
     fig.update_layout(
         template="plotly_dark",
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
-        # Increased 'r' (right margin) to 100 so labels don't get cut off
-        margin=dict(l=10, r=100, t=30, b=10),
-        height=350,
+        margin=dict(l=10, r=10, t=50, b=10),  # t=50 gives room for the legend
+        height=380,
         showlegend=True,
         legend=dict(
-            orientation="h",  # Horizontal legend looks better with line labels
+            orientation="h",  # Horizontal legend
             yanchor="bottom",
-            y=1.02,
-            xanchor="right",
-            x=1
+            y=1.02,  # Places legend slightly above the chart
+            xanchor="center",
+            x=0.5,
+            font=dict(size=10)
         ),
         xaxis=dict(
             showgrid=False,
-            showticklabels=False,
-            title=None,
-            fixedrange=True,
-            zeroline=False
+            showticklabels=False,  # Keeps it clean without 0.2, 0.4 etc
+            fixedrange=True
         ),
         yaxis=dict(
             showgrid=True,
