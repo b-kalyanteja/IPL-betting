@@ -60,11 +60,12 @@ def performance_graph():
         fig.add_trace(go.Scatter(
             x=x_data,
             y=y_data,
-            mode='lines',
+            mode='lines+text',  # Added 'text' mode here
             name=player.upper(),
-            line=dict(width=2, shape='linear'),
-            connectgaps=True,
-            showlegend=True
+            text=[None] * (len(y_data) - 1) + [f" {player.upper()} ({last_val})"],  # Text ONLY for the last point
+            textposition="middle right",  # Helps with alignment
+            line=dict(width=2),
+            connectgaps=True
         ))
 
         # 4. Add the annotation using our safe value
