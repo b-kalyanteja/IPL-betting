@@ -77,7 +77,8 @@ def performance_graph():
         ),
         xaxis=dict(
             showgrid=False,
-            showticklabels=False,  # Keeps it clean without 0.2, 0.4 etc
+            showticklabels=False,
+            title="Matches 🏏",# Keeps it clean without 0.2, 0.4 etc
             fixedrange=True
         ),
         yaxis=dict(
