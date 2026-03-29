@@ -93,7 +93,7 @@ def performance_graph():
 
     st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
 
-@st.cache_data(ttl=200)
+@st.cache_data(ttl=10)
 def current_status():
 
     try:
