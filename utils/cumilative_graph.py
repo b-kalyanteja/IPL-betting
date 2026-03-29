@@ -40,43 +40,50 @@ def performance_graph():
         st.warning("No 'Countable' data found to plot.")
         return
 
+    used_y_positions = []
     for player in df_03.columns:
         y_data = df_03[player].tolist()
+        if not y_data:
+            continue  # Skip if no data
+
         x_data = list(range(len(y_data)))
 
-        # 1. Identify the last value in the list
-        val = y_data[-1] if y_data else 0
-
-        # 2. SAFE CHECK: If it's NaN, None, or not a number, set it to 0
+        # 2. Get the last value safely
         try:
-            if val is None or (isinstance(val, float) and math.isnan(val)):
-                safe_y = 0
-            else:
-                safe_y = int(float(val))  # Convert to float first, then int for safety
-        except (ValueError, TypeError):
-            safe_y = 0
+            raw_val = y_data[-1]
+            last_val = int(float(raw_val)) if raw_val is not None and not (
+                        isinstance(raw_val, float) and math.isnan(raw_val)) else 0
+        except:
+            last_val = 0
 
-        # 3. Add the trace
+        # 3. COLLISION PREVENTION: If this Y-position is taken, nudge it
+        display_y = last_val
+        for used_y in used_y_positions:
+            if abs(display_y - used_y) < 15:  # If labels are within 15 units of each other
+                display_y -= 20  # Nudge the new label down
+
+        used_y_positions.append(display_y)
+
+        # 4. Add the Trace
         fig.add_trace(go.Scatter(
             x=x_data,
             y=y_data,
-            mode='lines+text',  # Added 'text' mode here
+            mode='lines',
             name=player.upper(),
-            text=[None] * (len(y_data) - 1) + [f" {player.upper()} ({last_val})"],  # Text ONLY for the last point
-            textposition="middle right",  # Helps with alignment
             line=dict(width=2),
             connectgaps=True
         ))
 
-        # 4. Add the annotation using our safe value
+        # 5. Add the label at the nudged position
         fig.add_annotation(
-            x=x_data[-1] if x_data else 0,
-            y=safe_y,
-            text=f" {player.upper()} ({safe_y})",
+            x=x_data[-1],
+            y=display_y,
+            text=f" {player.upper()} ({last_val})",
             showarrow=False,
             xanchor="left",
-            font=dict(size=10),
-            xshift=5
+            xshift=5,
+            font=dict(size=10, color="white"),
+            bgcolor="rgba(0,0,0,0.4)"  # Adds a tiny shadow for readability
         )
 
     # Professional Styling
