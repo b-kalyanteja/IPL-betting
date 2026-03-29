@@ -64,7 +64,7 @@ def performance_graph():
         showlegend=True,  # Ensure legends are visible
         xaxis=dict(
             showgrid=False,
-            showticklabels=True,
+            showticklabels=False,
             title="Matches",
             fixedrange=True,
             zeroline=False
