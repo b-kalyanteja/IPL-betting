@@ -45,7 +45,7 @@ def match_widget(team_1, team_2, t1_bets,t2_bets):
 
 
 #have to cache as the API have limits
-@st.cache_data(ttl=10)
+@st.cache_data(ttl=15)
 def cached_bet_data():
 
     try:
@@ -62,7 +62,7 @@ def cached_bet_data():
     return df_today, df_bets , df_schedule
 
 
-@st.fragment(run_every=60)
+@st.fragment(run_every=100)
 def display_matches():
     st.write("UPCOMING MATCHES")
     df_today, df_bets , df_schedule = cached_bet_data()
@@ -103,7 +103,7 @@ def display_matches():
         else:
             continue
 
-
+@st.cache_data(ttl=500)
 def display_match_afterstart():
     st.write("ON GOING MATCHES")
     # 1. Fetch all data
