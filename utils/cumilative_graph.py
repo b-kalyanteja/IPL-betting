@@ -41,17 +41,19 @@ def performance_graph():
 
     for player in df_03.columns:
         y_data = df_03[player].tolist()
-        # Start X-axis from 0 to show the starting point
         x_data = list(range(len(y_data)))
+        last_x = x_data[-1]
+        last_y = y_data[-1]
 
+        # Add the line
         fig.add_trace(go.Scatter(
             x=x_data,
             y=y_data,
-            mode='lines+markers',  # Added markers so 0-value points are visible
-            name=f"Player {player}",
+            mode='lines',
+            name=player.title(),
             line=dict(width=2, shape='linear'),
-            marker=dict(size=4),
-            connectgaps=True
+            connectgaps=True,
+            showlegend=False  # Hide the side legend since we are adding labels
         ))
 
     # Professional Styling
