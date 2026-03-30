@@ -112,6 +112,7 @@ def current_status():
         try:
             amt = float(df_status[player].iloc[0])
             img = player_images.get(player.lower())
+            st.write(f'{player} = {amt}')
         except:
             amt, img = 0.0, ""
         players_data.append({"amt": amt, "img": img})
