@@ -108,11 +108,10 @@ def current_status():
     # 1. Collect and Sort Data
     players_data = []
     for player in df_status.columns:
-        #st.write(player)
         try:
             amt = float(df_status[player].iloc[0])
             img = player_images.get(player.lower())
-            st.write(f'{player} = {amt}')
+            #st.write(f'{player} = {amt}')
         except:
             amt, img = 0.0, ""
         players_data.append({"amt": amt, "img": img})
