@@ -138,7 +138,6 @@ def current_status():
 
     html += '</div>'
 
-    # 3. Render flat string
     st.markdown(html.replace("\n", ""), unsafe_allow_html=True)
 
 @st.cache_data(ttl=30)
