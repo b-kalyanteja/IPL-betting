@@ -24,7 +24,7 @@ st.set_page_config(
 
 st.title("🏆 IPL'26 Bets")
 
-@st.dialog("Check this out!")
+@st.dialog("super cena 🛍️")
 def show_ad():
     # GIF linked to temp.com
     st.write(
