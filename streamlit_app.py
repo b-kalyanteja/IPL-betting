@@ -24,6 +24,18 @@ st.set_page_config(
 
 st.title("🏆 IPL'26 Bets")
 
+@st.dialog("Check this out!")
+def show_ad():
+    # GIF linked to temp.com
+    st.write(
+        '<a href="https://temp.com" target="_blank">'
+        '<img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExamFmbmtwMnN2MXY5bGZrZ2IycGExOHY0djNvanF1Z3c4MGtkNjR6MSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/c9MRRmDxtnlMZMN5Ye/giphy.gif" style="width:100%;">'
+        '</a>',
+        unsafe_allow_html=True
+    )
+
+show_ad()
+
 display_match_afterstart()
 display_matches()
 st.divider()
