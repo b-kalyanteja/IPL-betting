@@ -129,6 +129,7 @@ def today_prediction():
     logo_size = "40px"
     st.write(teams)
 
+
     # if len(teams) == 2:
     #     title = "Predictor's Double Dhamaaka"
     #     # Access index and specifically
