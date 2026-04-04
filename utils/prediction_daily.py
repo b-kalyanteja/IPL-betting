@@ -127,6 +127,7 @@ def today_prediction():
     teams = [str(t).strip() for t in raw_vals if pd.notna(t) and str(t).lower() != "nil"]
 
     logo_size = "40px"
+    st.write(teams)
 
     if len(teams) == 2:
         title = "Predictor's Double Dhamaaka"
