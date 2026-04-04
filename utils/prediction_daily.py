@@ -127,7 +127,8 @@ def today_prediction():
     teams: list = [str(t).strip() for t in raw_vals if pd.notna(t) and str(t).lower() != "nil"]
 
     logo_size = "40px"
-    #st.write(teams)
+    st.write(teams)
+    st.write(teams[1])
 
 
     if len(teams) == 2:
