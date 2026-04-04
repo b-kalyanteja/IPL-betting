@@ -50,7 +50,7 @@ def match_bet(match_id, team_1, team_2, current_email, dead_line, match_type, co
             st.write(f"OOPS you forgot to bet too 🤷🏻‍♂️")
         else:
             st.write(f"📊 **Your final Bet:** {user_bet} zł on **{user_team}**")
-        st.stop()
+        return
 
     # --- STATE 2: User has already bet ---
     else :
@@ -127,7 +127,7 @@ def betting_manager(current_email):
 
     #prod formula for upcoming
     upcoming = df_07[(df_07['date'] == current_day) & (df_07['month'] == current_month) &(df_07['result'].isna())].sort_values('match_time')
-    st.write(upcoming)
+    #st.dataframe(upcoming)
 
 
     if upcoming.empty:
