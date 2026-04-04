@@ -155,8 +155,7 @@ def today_prediction():
                 <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
                     <img src="{logo_1}" width="{logo_size}">
                     <b>{teams[0].upper()}</b>
-                </div>
-            """
+                </div>"""
 
         # CASE: No Teams
     else:
