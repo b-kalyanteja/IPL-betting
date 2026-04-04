@@ -5,6 +5,7 @@ from pathlib import Path
 from datetime import datetime
 import time
 from streamlit_gsheets import GSheetsConnection
+from utils.players import logos_map
 
 from utils.match_display import cached_bet_data
 @st.cache_data(ttl=20)
@@ -125,12 +126,33 @@ def today_prediction():
     # 2. Keep only values that are NOT empty (removes NaN and None)
     teams = [str(t) for t in raw_vals if pd.notna(t)and str(t).lower() != "nil"]
 
+    logo_size = "40px"
+
     if len(teams) == 2:
         title = "Predictor's Double Dhamaaka"
-        content = f"<b>{teams[0].upper()}</b> <span style='color:#555;'>➕</span> <b>{teams[1].upper()}</b>"
+        # Get logos, default to IPL logo if team key not found
+        logo_1 = logos_map.get(teams.lower(), logos_map['ipl'])
+        logo_2 = logos_map.get(teams.lower(), logos_map['ipl'])
+
+        content = f"""
+            <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+                <img src="{logo_1}" width="{logo_size}">
+                <b>{teams.upper()}</b> 
+                <span style='color:#555; font-size: 25px;'>+</span> 
+                <b>{teams.upper()}</b>
+                <img src="{logo_2}" width="{logo_size}">
+            </div>
+        """
     elif len(teams) == 1:
-        title = "Predictor's Pick "
-        content = f"<b>{teams[0].upper()}</b>"
+        title = "Predictor's Pick"
+        logo_1 = logos_map.get(teams.lower(), logos_map['ipl'])
+
+        content = f"""
+            <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+                <img src="{logo_1}" width="{logo_size}">
+                <b>{teams.upper()}</b>
+            </div>
+        """
     else:
         title = "Predictor is Sleeping 😴"
         content = "Please Wait coming soon... "
@@ -145,11 +167,11 @@ def today_prediction():
                 margin: 10px 0;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             ">
-                <div style="color: #00FFCC; font-size: 15px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; opacity: 0.8;">
+                <div style="color: #00FFCC; font-size: 15px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; opacity: 0.8;">
                     {title} 🧞‍♂️
                 </div>
-                <div style="color: Black; font-size: 20px; font-weight: 700; letter-spacing: 0.5px;">
-                    {content} <span style="font-style: normal; margin-left: 5px;">✌🏼</span>
+                <div style="color: Black; font-size: 22px; font-weight: 700; letter-spacing: 0.5px;">
+                    {content}
                 </div>
             </div>
         """, unsafe_allow_html=True)
