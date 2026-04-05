@@ -131,7 +131,7 @@ def today_prediction():
 
 
     if len(teams) == 2:
-        title = "Predictor's Double Dhamaaka"
+        title = "Predictor's Double Prophecies"
 
         logo_1 = logos_map.get(teams[0].lower(), logos_map['ipl'])
         logo_2 = logos_map.get(teams[1].lower(), logos_map['ipl'])
