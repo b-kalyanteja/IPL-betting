@@ -140,9 +140,7 @@ def today_prediction():
         content = f"""
                 <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
                     <img src="{logo_1}" width="{logo_size}">
-                    <b>{teams[0].upper()}</b>
                     <span style='color:#555; font-size: 25px;'>+</span>
-                    <b>{teams[1].upper()}</b>
                     <img src="{logo_2}" width="{logo_size}">
                 </div>
             """
@@ -155,7 +153,6 @@ def today_prediction():
         content = f"""
                 <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
                     <img src="{logo_1}" width="{logo_size}">
-                    <b>{teams[0].upper()}</b>
                 </div>"""
 
         # CASE: No Teams
