@@ -140,7 +140,7 @@ def today_prediction():
         content = f"""
                 <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
                     <img src="{logo_1}" width="{logo_size}">
-                    <span style='color:#555; font-size: 30px;'>&</span>
+                    <span style='color:#555; font-size: 30px;'> & </span>
                     <img src="{logo_2}" width="{logo_size}">
                 </div>
             """
