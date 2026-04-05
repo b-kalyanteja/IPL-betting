@@ -136,44 +136,30 @@ def today_prediction():
         logo_1 = logos_map.get(teams[0].lower(), logos_map['ipl'])
         logo_2 = logos_map.get(teams[1].lower(), logos_map['ipl'])
 
-        content = f"""
-                <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
-                    <img src="{logo_1}" width="{logo_size}">
-                    <span style='color:#555; font-size: 30px;'> & </span>
-                    <img src="{logo_2}" width="{logo_size}">
-                </div>
-            """
+        content = f"""<div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+        <img src="{logo_1}" width="{logo_size}">
+        <span style='color:#555; font-size: 30px;'> & </span>
+        <img src="{logo_2}" width="{logo_size}">
+        </div>"""
 
         # CASE: One Team (Predictor's Pick)
     elif len(teams) == 1:
         title = "Predictor's Pick"
         logo_1 = logos_map.get(teams[0].lower(), logos_map['ipl'])
 
-        content = f"""
-                <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
-                    <img src="{logo_1}" width="{logo_size}">
-                </div>"""
+        content = f"""<div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+        <img src="{logo_1}" width="{logo_size}">
+        </div>"""
 
-        # CASE: No Teams
     else:
         title = "Predictor on power nap 😴"
         content = "Please be Patient"
 
-    st.markdown(f"""
-                <div style="
-                    background: rgba(0, 255, 204, 0.05);
-                    border: 1px solid rgba(0, 255, 204, 0.2);
-                    border-radius: 15px;
-                    padding: 15px;
-                    text-align: center;
-                    margin: 10px 0;
-                    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-                ">
-                    <div style="color: #FF6B6B; font-size: 15px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; opacity: 0.8;">
-                        {title} 🧞‍♂️
-                    </div>
-                    <div style="color: #333333; font-size: 22px; font-weight: 700; letter-spacing: 0.5px;">
-                        {content}
-                    </div>
-                </div>
-            """, unsafe_allow_html=True)
+    st.markdown(f"""<div style="background: rgba(0, 255, 204, 0.05); border: 1px solid rgba(0, 255, 204, 0.2); border-radius: 15px; padding: 15px; text-align: center; margin: 10px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+    <div style="color: #FF6B6B; font-size: 15px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; opacity: 0.8;">
+    {title} 🧞‍♂️
+    </div>
+    <div style="color: #333333; font-size: 22px; font-weight: 700; letter-spacing: 0.5px;">
+    {content}
+    </div>
+    </div>""", unsafe_allow_html=True)
