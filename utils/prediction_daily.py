@@ -121,7 +121,7 @@ def today_prediction():
 
     cols = ["today_01", "today_02"]
     raw_vals = df_09[cols].values.flatten().tolist() if not df_09.empty else []
-    st.write(raw_vals)
+    #st.write(raw_vals)
     # 2. Keep only values that are NOT empty (removes NaN and None)
     teams: list = [str(t).strip() for t in raw_vals if pd.notna(t) and str(t).lower() != "nil"]
 
