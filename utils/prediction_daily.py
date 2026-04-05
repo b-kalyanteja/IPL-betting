@@ -126,7 +126,7 @@ def today_prediction():
     # 2. Keep only values that are NOT empty (removes NaN and None)
     teams: list = [str(t).strip() for t in raw_vals if pd.notna(t) and str(t).lower() != "nil"]
 
-    logo_size = "40px"
+    logo_size = "60px"
     st.write(teams)
     st.write(teams[1])
 
@@ -140,7 +140,7 @@ def today_prediction():
         content = f"""
                 <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
                     <img src="{logo_1}" width="{logo_size}">
-                    <span style='color:#555; font-size: 25px;'>+</span>
+                    <span style='color:#555; font-size: 30px;'>&</span>
                     <img src="{logo_2}" width="{logo_size}">
                 </div>
             """
