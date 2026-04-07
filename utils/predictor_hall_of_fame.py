@@ -30,8 +30,10 @@ def predictor_stats():
 
 
     ttl_w = prediction_results.count('w')
+    ttl_d = prediction_results.count('d')
     ttl_a: int = len([x for x in prediction_results if x and str(x).strip().lower() not in ["", "nan", "none", ".", "yet_to"]])
-    percent_win: float = ((ttl_w /ttl_a) * 100) if ttl_a > 0 else 0
+    actual_ttl_a :int =  (ttl_a - ttl_d)
+    percent_win: float = ((ttl_w /actual_ttl_a) * 100) if actual_ttl_a > 0 else 0
     percent_2026 = f"{percent_win:.1f}"
 
     return values_2026, percent_2026, percent_win
