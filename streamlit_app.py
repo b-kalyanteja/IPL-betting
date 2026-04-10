@@ -53,3 +53,25 @@ st.divider()
 
 committee_status()
 st.divider()
+
+
+
+def scoreboard():
+
+    html_code = """
+    <div id="scoreboard-widget" style="width: 100%; overflow: hidden;">
+        <script src="https://cdorgapi.b-cdn.net/widgets/score.js"></script>
+    </div>
+    <style>
+        /* Hide scrollbars within the iframe body */
+        body { 
+            margin: 0; 
+            padding: 0; 
+            overflow: hidden; 
+            background-color: transparent; 
+        }
+    </style>
+    """
+
+    components.html(html_code, height=200, scrolling=False)
+scoreboard()
