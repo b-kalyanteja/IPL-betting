@@ -73,5 +73,5 @@ def scoreboard():
     </style>
     """
 
-    components.html(html_code, height=200, scrolling=False)
+    components.html(html_code, height=400, scrolling=False)
 scoreboard()
