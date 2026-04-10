@@ -21,6 +21,11 @@ def about_page():
         st.markdown("""
         ### Hi, We are group of 6 friends + 1 predictor! 
         
+        #### Developer    : Kalyan
+        #### Co-Developer : Jagadeesh
+        #### Data-entry   : Pranesh
+        #### Testing      : Subba Reddy
+        
 
         we built this platform because keeping track of bets in WhatsApp groups is a nightmare and the old google site was static and need manual intervention for updating status.
 
