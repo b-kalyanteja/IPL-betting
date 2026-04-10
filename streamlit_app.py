@@ -24,7 +24,7 @@ st.set_page_config(
 
 st.title("🏆 IPL'26 Bets")
 
-@st.dialog("super cena 🛍️")
+#@st.dialog("super cena 🛍️")
 def show_ad():
     # GIF linked to temp.com
     st.write(
@@ -34,7 +34,7 @@ def show_ad():
         unsafe_allow_html=True
     )
 
-show_ad()
+#show_ad()
 
 display_match_afterstart()
 display_matches()
@@ -53,25 +53,3 @@ st.divider()
 
 committee_status()
 st.divider()
-
-
-
-def scoreboard():
-
-    html_code = """
-    <div id="scoreboard-widget" style="width: 100%; overflow: hidden;">
-        <script src="https://cdorgapi.b-cdn.net/widgets/score.js"></script>
-    </div>
-    <style>
-        /* Hide scrollbars within the iframe body */
-        body { 
-            margin: 0; 
-            padding: 0; 
-            overflow: hidden; 
-            background-color: transparent; 
-        }
-    </style>
-    """
-
-    components.html(html_code, height=400, scrolling=False)
-scoreboard()
