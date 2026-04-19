@@ -35,8 +35,7 @@ def show_ad():
     )
 
 #show_ad()
-st.write ( "KKR vs RR : Issue with API Loading. will be back in 12156 seconds")
-#display_match_afterstart()
+display_match_afterstart()
 display_matches()
 st.divider()
 
