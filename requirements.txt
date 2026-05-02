@@ -1,3 +1,4 @@
+streamlit==1.37.0
 streamlit[auth]
 Authlib==1.5.2
 st-gsheets-connection==0.1.0
