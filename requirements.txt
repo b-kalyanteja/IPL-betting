@@ -1,4 +1,5 @@
-streamlit[auth]
+streamlit>=1.42.0
+Authlib==1.5.2
 st-gsheets-connection==0.1.0
 pandas
 google-api-python-client
