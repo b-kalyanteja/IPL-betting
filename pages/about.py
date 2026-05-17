@@ -28,6 +28,7 @@ def about_page():
         
 
         we built this platform because keeping track of bets in WhatsApp groups is a nightmare and the old google site was static and need manual intervention for updating status.
+        For players betting : please make sure you get snow fall / baloon animation + a pop up stating successfull placement of bet
 
         ** Mission 2026 :**
         1. Automated tracking so nobody can lie.
