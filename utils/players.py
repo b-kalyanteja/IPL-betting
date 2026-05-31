@@ -17,7 +17,9 @@ players: list = [
     "jagadeeswarabojja@gmail.com",
     "gbmkrishnayadav@gmail.com",
 ]
-
+admins = [
+    "narasimharao416@gmail.com"
+]
 
 predictor: list = ["pranesh.ak47@gmail.com"]
 
